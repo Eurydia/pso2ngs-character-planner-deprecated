@@ -17,6 +17,14 @@ food.push(
 
 food.push(
   makeFood(
+    FoodCategory.VEGETABLE,
+    FoodAttribute.RICH,
+    "winter cozylion",
+  ),
+);
+
+food.push(
+  makeFood(
     FoodCategory.FRUIT,
     FoodAttribute.LIGHT,
     "spring ballooni",
@@ -28,14 +36,6 @@ food.push(
     FoodCategory.VEGETABLE,
     FoodAttribute.ROBUST,
     "anniversartichoke",
-  ),
-);
-
-food.push(
-  makeFood(
-    FoodCategory.VEGETABLE,
-    FoodAttribute.RICH,
-    "winter cozylion",
   ),
 );
 

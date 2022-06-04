@@ -1,4 +1,4 @@
-import { Augment } from "./augment";
+import { Augment } from "../assets/augments";
 import { Stat } from "./stat";
 
 export enum Elements {
@@ -64,9 +64,10 @@ export type Weapon = Equipment & {
 
 export type Unit = Equipment;
 
-export type CompleteEquipment<T extends Equipment> = {
+export type CompleteEquipment<T extends Weapon | Unit> = {
   equipment: T | null;
+  enhancement: number;
   fixa: Fixa | null;
-  level: number;
   augments: (Augment | null)[];
+  potential_level?: number;
 };

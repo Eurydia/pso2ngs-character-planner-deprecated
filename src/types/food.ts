@@ -21,3 +21,8 @@ export type FoodWithAmount = {
   food: Food;
   amount: number;
 };
+
+export type FoodBuff = {
+  origin: FoodAttribute | FoodCategory;
+  level: number;
+};

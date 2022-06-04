@@ -1,7 +1,7 @@
-import { Augment, AugmentGroups, StatTypes } from "../../../types";
 import { OFFENSIVE_POT } from "../../../utility";
-import { makeStatWithManyAmounts } from "../../makeStat";
+import { makeStatWithManyAmounts, StatTypes } from "../../stats";
 import { makeManyAugments } from "../makeAugment";
+import { Augment, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.GIGAS;
@@ -9,22 +9,20 @@ const CONFLICT: AugmentGroups[] = [AugmentGroups.GIGAS];
 let augments: Augment[] = [];
 // --------------------------------------
 
+// --------------------------------------
+// gigas might, prec, tech
 const names = ["might", "precision", "technique"];
 names.forEach((name, i) => {
-    const stat = OFFENSIVE_POT[i];
-
-    augments.push(
-        ...makeManyAugments(
-            `gigas ${name}`,
-            3,
-            [
-                makeStatWithManyAmounts(StatTypes.BP, [6, 8, 10]),
-                makeStatWithManyAmounts(StatTypes.HP, [5, 10, 15]),
-                makeStatWithManyAmounts(stat, [1.015, 1.02, 1.025]),
-            ],
-            GROUP,
-            CONFLICT,
-        ),
-    );
+  const stat = makeStatWithManyAmounts(
+    OFFENSIVE_POT[i],
+    [1.015, 1.02, 1.025],
+  );
+  augments.push(
+    ...makeManyAugments(`gigas ${name}`, 3, GROUP, CONFLICT, [
+      makeStatWithManyAmounts(StatTypes.BP, [6, 8, 10]),
+      makeStatWithManyAmounts(StatTypes.HP, [5, 10, 15]),
+      stat,
+    ]),
+  );
 });
 export default augments;

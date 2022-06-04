@@ -1,10 +1,6 @@
-import { Augment, AugmentGroups, StatTypes } from "../../../types";
-import { OFFENSIVE_POT } from "../../../utility";
-import {
-    makeStat,
-    makeManyStatsWithSameAmount,
-} from "../../makeStat";
+import { makeStat, StatTypes } from "../../stats";
 import { makeAugment } from "../makeAugment";
+import { Augment, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.FUSIA;
@@ -12,17 +8,13 @@ const CONFLICT = [AugmentGroups.FUSIA];
 let augments: Augment[] = [];
 // --------------------------------------
 
+// --------------------------------------
+// fusia
 augments.push(
-    makeAugment(
-        "megas fusia",
-        0,
-        [
-            makeStat(StatTypes.BP, 4),
-            ...makeManyStatsWithSameAmount(OFFENSIVE_POT, 1.01),
-        ],
-        GROUP,
-        CONFLICT,
-    ),
+  makeAugment("megas fusia", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 4),
+    makeStat(StatTypes.POT, 1.01),
+  ]),
 );
 
 export default augments;

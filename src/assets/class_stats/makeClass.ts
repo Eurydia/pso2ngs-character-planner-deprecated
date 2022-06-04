@@ -23,6 +23,5 @@ export const makeClass = (
     base_def,
     base_hp,
     base_pp: 100,
-    non_damaging_skills: non_combat_passive,
   };
 };

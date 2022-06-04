@@ -9,6 +9,7 @@ export const makeFood = (
   if (name_override) {
     name = name_override;
   }
+  name = name.toLowerCase();
   return {
     name,
     category,

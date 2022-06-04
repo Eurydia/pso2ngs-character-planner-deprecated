@@ -80,8 +80,9 @@ export const parseStatToDisplay = (stat: Stat): string => {
     parsed_value = stat.amount.toString();
   } else {
     default_value = 1;
-    const temp = Math.round((stat.amount - 1) * 1000) / 10;
+    const temp = Math.round((stat.amount - 1) * 10000) / 100;
     parsed_value = `${temp.toPrecision(3)}%`;
+    // parsed_value = temp.toString();
   }
 
   let sign = stat.amount < default_value ? "" : "+";

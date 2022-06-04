@@ -1,15 +1,12 @@
-import {
-  Augment,
-  AugmentGroups,
-  Stat,
-  StatTypes,
-} from "../../../types";
 import { OFFENSIVE_POT } from "../../../utility";
 import {
   makeStat,
   makeManyStatsWithSameAmount,
-} from "../../makeStat";
+  Stat,
+  StatTypes,
+} from "../../stats";
 import { makeAugment } from "../makeAugment";
+import { Augment, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.FUSED;
@@ -29,24 +26,20 @@ const s_stats: Stat[] = [
 ];
 p_names.forEach((p_name, i) => {
   const p_stat = p_stats[i];
+
+  // --------------------------------------
   // sta, spi, deft, gua
   s_names.forEach((s_name, j) => {
     const s_stat = s_stats[j];
-
-    let stats: Stat[] = [p_stat, s_stat];
-    if (j < 2) {
-      stats = [s_stat, p_stat];
-    }
+    const stats = j < 2 ? [s_stat, p_stat] : [p_stat, s_stat]; // order the stats
 
     augments.push(
-      makeAugment(
-        `${s_name} ${p_name}`,
-        0,
-        [makeStat(StatTypes.BP, 8), ...stats],
-        GROUP,
-        CONFLICT,
-      ),
+      makeAugment(`${s_name} ${p_name}`, 0, GROUP, CONFLICT, [
+        makeStat(StatTypes.BP, 8),
+        ...stats,
+      ]),
     );
   });
 });
+
 export default augments;

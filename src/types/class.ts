@@ -14,11 +14,15 @@ export type Skill = {
   max_level: number;
 };
 
+export type SkillWithLevel = {
+  skill: Skill;
+  level: number;
+};
+
 export type Class = {
   name: ClassNames;
   base_atk: number;
   base_def: number;
   base_hp: number;
   base_pp: number;
-  non_damaging_skills: Skill[];
 };

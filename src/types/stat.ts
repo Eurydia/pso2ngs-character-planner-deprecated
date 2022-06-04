@@ -32,6 +32,11 @@ export enum StatTypes {
   POISON_RES = "poison resist",
   PHYDOWN_RES = "physical down resist",
   AILMENT_DURATION = "ailment duraion",
+
+  // Stat shorthands,these stats get expanded into other stats
+  POT = "potency",
+  AILMENT_RES = "all ailment resist",
+  PP_GAIN = "PP recovery",
 }
 
 export type Stat = {

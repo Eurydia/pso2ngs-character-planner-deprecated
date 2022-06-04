@@ -5,7 +5,7 @@ import {
   PotentialSeries,
   Elements,
 } from "../../../types";
-import { makeStat } from "../../makeStat";
+import { makeStat } from "../../stats/makeStat";
 import { makeWeapon } from "../makeWeapon";
 
 const RARITY = Rarity.TWO;

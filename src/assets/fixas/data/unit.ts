@@ -1,5 +1,5 @@
 import { Fixa, StatTypes } from "../../../types";
-import { makeStatWithManyAmounts } from "../../makeStat";
+import { makeStatWithManyAmounts } from "../../stats/makeStat";
 import { makeManyFixa } from "../makeFixa";
 
 let fixa: Fixa[] = [];
