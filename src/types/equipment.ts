@@ -11,7 +11,7 @@ export enum Elements {
   DARK = "dark",
 }
 
-export enum PotentialSeries {
+export enum WeaponSeries {
   RECYCLER_UNIT = 0,
   INDOMITABLE_UNIT,
   DEFENSEIVE_FORMATION,
@@ -59,7 +59,7 @@ export type Equipment = {
 
 export type Weapon = Equipment & {
   element: Elements;
-  potential_series: PotentialSeries;
+  potential_series: WeaponSeries;
 };
 
 export type Unit = Equipment;

@@ -1,25 +1,30 @@
-import {
-  Stat,
-  Rarity,
-  Weapon,
-  PotentialSeries,
-  Elements,
-} from "../../types";
+import { Stat } from "../stats";
+import { WeaponSeries, Weapon } from "./types";
 
+/**
+ * Make a weapon
+ * @param name
+ * @param series
+ * @param rarity
+ * @param level_required
+ * @param base_attack
+ * @param stats
+ * @returns
+ */
 export const makeWeapon = (
   name: string,
+  series: WeaponSeries,
+  rarity: number,
   level_required: number,
-  element: Elements,
-  stats_without_bp: Stat[],
-  potential_series: PotentialSeries,
-  rarity: Rarity,
+  base_attack: number,
+  stats: Stat[],
 ): Weapon => {
-  return {
+  return Object.freeze({
     name,
-    level_required,
-    element,
-    stats: stats_without_bp,
-    potential_series,
     rarity,
-  };
+    level_required,
+    series,
+    base_attack,
+    stats,
+  });
 };

@@ -1,109 +1,80 @@
-import {
-  StatTypes,
-  Rarity,
-  Weapon,
-  PotentialSeries,
-  Elements,
-} from "../../../types";
-import { makeStat } from "../../stats/makeStat";
+import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
+import { Weapon, WeaponSeries } from "../types";
 
-const RARITY = Rarity.FOUR;
+// -----------------------
+const RARITY = 4;
 let weapons: Weapon[] = [];
+// -----------------------
 
 weapons.push(
   makeWeapon(
     "resurgia weapons",
-    11,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 240),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.DYNAMO_UNIT,
+    WeaponSeries.DYNAMO_UNIT,
     RARITY,
+    11,
+    240,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
 weapons.push(
   makeWeapon(
     "cattleya weapons",
-    14,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 242),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.OFFENSIVE_FORMATION,
+    WeaponSeries.OFFENSIVE_FORMATION,
     RARITY,
+    14,
+    242,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
 weapons.push(
   makeWeapon(
     "foursis weapons",
-    14,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 242),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.BASTION_UNIT,
+    WeaponSeries.BASTION_UNIT,
     RARITY,
+    14,
+    242,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
-
 weapons.push(
   makeWeapon(
     "vialto weapons",
-    14,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 242),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.MEDITATION_UNIT,
+    WeaponSeries.MEDITATION_UNIT,
     RARITY,
+    14,
+    242,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
-
 weapons.push(
   makeWeapon(
     "straga weapons",
-    15,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 243),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.BERSERK_UNIT,
+    WeaponSeries.BERSERK_UNIT,
     RARITY,
+    15,
+    243,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
-
 weapons.push(
   makeWeapon(
     "evolcoat weapons",
-    15,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 242),
-      makeStat(StatTypes.FLOOR_POT, 1.75),
-    ],
-    PotentialSeries.SOULSPRING_UNIT,
+    WeaponSeries.SOULSPRING_UNIT,
     RARITY,
+    15,
+    242,
+    [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
-
 weapons.push(
   makeWeapon(
     "flamel weapons",
-    14,
-    Elements.FIRE,
-    [
-      makeStat(StatTypes.ATK, 240),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.VALOROUS_UNIT,
+    WeaponSeries.VALOROUS_UNIT,
     RARITY,
+    14,
+    240,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 export default weapons;

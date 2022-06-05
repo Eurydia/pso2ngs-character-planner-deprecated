@@ -1,53 +1,40 @@
-import {
-  StatTypes,
-  Rarity,
-  Weapon,
-  PotentialSeries,
-  Elements,
-} from "../../../types";
-import { makeStat } from "../../stats/makeStat";
+import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
+import { Weapon, WeaponSeries } from "../types";
 
-const RARITY = Rarity.TWO;
+// -----------------------
+const RARITY = 2;
 let weapons: Weapon[] = [];
+// -----------------------
 
 weapons.push(
   makeWeapon(
     "tzvia weapons",
-    4,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 195),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.INDOMITABLE_UNIT,
+    WeaponSeries.INDOMITABLE_UNIT,
     RARITY,
+    4,
+    195,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "silver primm sword",
-    5,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 195),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.RECYCLER_UNIT,
+    WeaponSeries.RECYCLER_UNIT,
     RARITY,
+    5,
+    195,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "n-exp weapon",
-    5,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 195),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.RECYCLER_UNIT,
+    WeaponSeries.RECYCLER_UNIT,
     RARITY,
+    5,
+    195,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 export default weapons;

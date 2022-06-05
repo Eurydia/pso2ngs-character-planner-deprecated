@@ -15,6 +15,8 @@ import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
 import { Equipment, Weapon, Unit, Stat } from "../../../types";
+import WEAPONS from "../../../assets/weapons";
+import { UNITS } from "../../../assets/units";
 
 const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
   return stats.map((stat) => (

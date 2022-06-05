@@ -1,27 +1,20 @@
-import {
-  StatTypes,
-  Rarity,
-  Weapon,
-  PotentialSeries,
-  Elements,
-} from "../../../types";
-import { makeStat } from "../../stats/makeStat";
+import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
+import { Weapon, WeaponSeries } from "../types";
 
-const RARITY = Rarity.ONE;
+// -----------------------
+const RARITY = 1;
 let weapons: Weapon[] = [];
+// -----------------------
 
 weapons.push(
   makeWeapon(
     "primm weapons",
-    1,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 177),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.RECYCLER_UNIT,
+    WeaponSeries.RECYCLER_UNIT,
     RARITY,
+    1,
+    177,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 export default weapons;

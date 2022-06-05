@@ -1,79 +1,60 @@
-import {
-  StatTypes,
-  Rarity,
-  Weapon,
-  PotentialSeries,
-  Elements,
-} from "../../../types";
-import { makeStat } from "../../stats/makeStat";
+import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
+import { Weapon, WeaponSeries } from "../types";
 
-const RARITY = Rarity.THREE;
+// -----------------------
+const RARITY = 3;
 let weapons: Weapon[] = [];
+// -----------------------
 
 weapons.push(
   makeWeapon(
     "theseus weapons",
-    8,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 223),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.DEFENSEIVE_FORMATION,
+    WeaponSeries.DEFENSEIVE_FORMATION,
     RARITY,
+    8,
+    223,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "trois de weapons",
-    8,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 223),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.OFFENSIVE_FORMATION,
+    WeaponSeries.OFFENSIVE_FORMATION,
     RARITY,
+    8,
+    223,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "gold primm sword",
-    10,
-    Elements.NONE,
-    [
-      makeStat(StatTypes.ATK, 223),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.RECYCLER_UNIT,
+    WeaponSeries.RECYCLER_UNIT,
     RARITY,
+    10,
+    223,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "glissen weapons",
-    13,
-    Elements.LIGHTNING,
-    [
-      makeStat(StatTypes.ATK, 225),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.VALOROUS_UNIT,
+    WeaponSeries.VALOROUS_UNIT,
     RARITY,
+    13,
+    225,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 weapons.push(
   makeWeapon(
     "frostel weapons",
-    13,
-    Elements.ICE,
-    [
-      makeStat(StatTypes.ATK, 225),
-      makeStat(StatTypes.FLOOR_POT, 1.7),
-    ],
-    PotentialSeries.VALOROUS_UNIT,
+    WeaponSeries.VALOROUS_UNIT,
     RARITY,
+    13,
+    225,
+    [makeStat(StatTypes.FLOOR_POT, 1.7)],
   ),
 );
 export default weapons;

@@ -1,11 +1,9 @@
-import {
-  Food,
-  FoodAttribute,
-  FoodCategory,
-} from "../../../types/food";
+import { Food, FoodAttribute, FoodCategory } from "../types";
 import { makeFood } from "../makeFood";
 
+// ---------------------------
 let food: Food[] = [];
+// ---------------------------
 
 food.push(
   makeFood(
@@ -14,7 +12,6 @@ food.push(
     "autumn vampkin",
   ),
 );
-
 food.push(
   makeFood(
     FoodCategory.VEGETABLE,
@@ -22,7 +19,6 @@ food.push(
     "winter cozylion",
   ),
 );
-
 food.push(
   makeFood(
     FoodCategory.FRUIT,
@@ -30,7 +26,6 @@ food.push(
     "spring ballooni",
   ),
 );
-
 food.push(
   makeFood(
     FoodCategory.VEGETABLE,
@@ -39,5 +34,4 @@ food.push(
   ),
 );
 
-const FOOD = Object.freeze(food);
-export default FOOD;
+export default food;

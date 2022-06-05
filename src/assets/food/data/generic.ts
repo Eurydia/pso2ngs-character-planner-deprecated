@@ -1,11 +1,9 @@
-import {
-  Food,
-  FoodAttribute,
-  FoodCategory,
-} from "../../../types/food";
+import { Food, FoodAttribute, FoodCategory } from "../types";
 import { makeFood } from "../makeFood";
 
+// ---------------------------
 let food: Food[] = [];
+// ---------------------------
 
 const attributes = [
   FoodAttribute.CRISPY,
@@ -26,5 +24,4 @@ attributes.forEach((attribute) => {
   });
 });
 
-const FOOD = Object.freeze(food);
-export default FOOD;
+export default food;
