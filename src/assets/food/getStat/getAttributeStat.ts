@@ -20,6 +20,14 @@ const RICH_BUFF_REF = Object.freeze([
   0.95, 0.945, 0.94, 0.935, 0.93, 0.925, 0.92,
 ]);
 
+/**
+ * Getter for stat amount.
+ * Should be useful when we need the amount.
+ * Like in tooltips.
+ * @param attribute Attribute to use as reference
+ * @param level 1-7
+ * @returns
+ */
 export const getStatAmountFromAttribute = (
   attribute: FoodAttribute,
   level: number,
@@ -42,14 +50,18 @@ export const getStatAmountFromAttribute = (
   }
   return ref[_level];
 };
-
+/**
+ * @param attribute Attribute to use as reference
+ * @param number_of_items_used Number of items with `attribute` used
+ * @returns
+ */
 export const getStatFromAttribute = (
   attribute: FoodAttribute,
-  food_item_used: number,
+  number_of_items_used: number,
 ): Stat | Conditional => {
   const amount = getStatAmountFromAttribute(
     attribute,
-    food_item_used - 3,
+    number_of_items_used - 3,
   );
 
   if (attribute === FoodAttribute.CRISPY) {

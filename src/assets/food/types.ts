@@ -4,6 +4,7 @@ export enum FoodCategory {
   VEGETABLE = "VEGETABLE",
   SEAFOOD = "SEAFOOD",
 }
+
 export enum FoodAttribute {
   CRISPY = "CRISPY",
   LIGHT = "LIGHT",

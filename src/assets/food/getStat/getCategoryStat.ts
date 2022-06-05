@@ -14,6 +14,14 @@ const FRUIT_BUFF_REF = Object.freeze([
   10, 12, 13, 14, 15, 16, 17, 18, 19, 20,
 ]);
 
+/**
+ * Getter for stat amount.
+ * Should be useful when we need the amount.
+ * Like in tooltips.
+ * @param category Category use as reference
+ * @param level 1-10
+ * @returns
+ */
 export const getStatAmountFromCategory = (
   category: FoodCategory,
   level: number,
@@ -37,11 +45,20 @@ export const getStatAmountFromCategory = (
   return ref[_level];
 };
 
+/**
+ * Get `Stat` from category and number of items used.
+ * @param category Category to use as reference
+ * @param number_of_items_used Number of items with `category` used
+ * @returns
+ */
 export const getStatFromCategory = (
   category: FoodCategory,
-  food_item_used: number,
+  number_of_items_used: number,
 ): Stat => {
-  const amount = getStatAmountFromCategory(category, food_item_used);
+  const amount = getStatAmountFromCategory(
+    category,
+    number_of_items_used,
+  );
 
   let stat = StatTypes.POT;
   switch (category) {
