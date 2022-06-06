@@ -1,16 +1,20 @@
 import { FC, memo, useState } from "react";
 import { Box } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
-import { AugmentData } from "../../assets/augments";
-import { Weapon, Fixa } from "../../types";
 import {
   ENHANCEMENT_MIN,
   ENHNACEMENT_MAX,
   POTENTIAL_MIN,
 } from "../../stores";
+import { AugmentData } from "../../assets/augments";
+import WEAPONS, {
+  getWeaponAttack,
+  WeaponData,
+} from "../../assets/weapons";
+import { FixaData } from "../../assets/fixas";
 import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
-import EquipmentSearch from "./components/EquipmentSearch";
+import WeaponSearch from "./components/WeaponSearch";
 import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
@@ -22,10 +26,10 @@ interface WeaponFormProps {
 }
 const WeaponForm: FC<WeaponFormProps> = memo(
   (props) => {
-    const [weapon, setWeapon] = useState<null | Weapon>(null);
+    const [weapon, setWeapon] = useState<null | WeaponData>(null);
     const [potLevel, setPotLevel] = useState(POTENTIAL_MIN);
     const [enhancement, setEnhancement] = useState(ENHANCEMENT_MIN);
-    const [fixa, setFixa] = useState<null | Fixa>(null);
+    const [fixa, setFixa] = useState<null | FixaData>(null);
     const [augments, setAugments] = useState<(null | AugmentData)[]>([
       null,
       null,
@@ -35,7 +39,6 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     ]);
 
     const disabled = weapon === null && props.isRealistic;
-
     return (
       <CustomCard
         frontTitle="Weapon"
@@ -43,10 +46,10 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         frontContent={
           <EquipmentFormLayout
             equipmentSlot={
-              <EquipmentSearch
-                mode="weapon"
+              <WeaponSearch
                 isRealistic={props.isRealistic}
                 charLevel={props.charLevel}
+                enhancement={enhancement}
                 value={weapon}
                 onChange={setWeapon}
               />

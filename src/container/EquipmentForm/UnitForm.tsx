@@ -2,14 +2,15 @@ import { FC, memo, useState } from "react";
 import { Box } from "@mui/material";
 import { AutoAwesome, Shield } from "@mui/icons-material";
 import { AugmentData } from "../../assets/augments";
-import { Unit, Fixa } from "../../types";
+import { UnitData } from "../../assets/units";
+import { FixaData } from "../../assets/fixas";
 import { ENHANCEMENT_MIN, ENHNACEMENT_MAX } from "../../stores";
 import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
-import EquipmentSearch from "./components/EquipmentSearch";
 import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
+import UnitSearch from "./components/UnitSearch";
 
 interface UnitFormProps {
   isRealistic: boolean;
@@ -17,9 +18,9 @@ interface UnitFormProps {
 }
 const UnitForm: FC<UnitFormProps> = memo(
   (props) => {
-    const [unit, setUnit] = useState<null | Unit>(null);
+    const [unit, setUnit] = useState<null | UnitData>(null);
     const [enhancement, setEnhancement] = useState(ENHANCEMENT_MIN);
-    const [fixa, setFixa] = useState<null | Fixa>(null);
+    const [fixa, setFixa] = useState<null | FixaData>(null);
     const [augments, setAugments] = useState<(null | AugmentData)[]>([
       null,
       null,
@@ -37,10 +38,10 @@ const UnitForm: FC<UnitFormProps> = memo(
         frontContent={
           <EquipmentFormLayout
             equipmentSlot={
-              <EquipmentSearch
+              <UnitSearch
                 isRealistic={props.isRealistic}
-                mode="unit"
                 charLevel={props.charLevel}
+                enhancement={enhancement}
                 value={unit}
                 onChange={setUnit}
               />

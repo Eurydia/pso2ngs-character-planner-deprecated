@@ -44,6 +44,7 @@ const EnhancementSelect: FC<EnhancementSelectProps> = memo(
     if (prev.isDisabled !== next.isDisabled) {
       return false;
     }
+
     if (prev.value !== next.value) {
       return false;
     }

@@ -1,7 +1,6 @@
 import { FC, HTMLAttributes, memo, SyntheticEvent } from "react";
 import {
   Autocomplete,
-  Stack,
   TextField,
   Typography,
   FilterOptionsState,
@@ -14,9 +13,11 @@ import {
 import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
-import { Equipment, Weapon, Unit, Stat } from "../../../types";
-import WEAPONS from "../../../assets/weapons";
-import { UNITS } from "../../../assets/units";
+import { makeStat, StatTypes, Stat } from "../../../assets/stats";
+import UNITS, {
+  getUnitDefense,
+  UnitData,
+} from "../../../assets/units";
 
 const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
   return stats.map((stat) => (
@@ -28,21 +29,25 @@ const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
-  option: Equipment,
+  option: UnitData,
   state: AutocompleteRenderOptionState,
+  enhancement: number,
 ) => {
   return (
     <MenuItem {...props}>
       <Tooltip
         arrow
         title={
-          <Stack
+          <Box
             sx={{
               textTransform: "capitalize",
             }}
           >
-            {getStatsAsTooltip(option.stats)}
-          </Stack>
+            {getStatsAsTooltip([
+              getUnitDefense(option, enhancement),
+              ...option.stats,
+            ])}
+          </Box>
         }
         placement="right"
       >
@@ -68,10 +73,10 @@ const renderOption = (
   );
 };
 
-const filterOptions = <T extends Equipment>(
-  options: T[],
-  state: FilterOptionsState<T>,
-): T[] => {
+const filterOptions = (
+  options: UnitData[],
+  state: FilterOptionsState<UnitData>,
+): UnitData[] => {
   const input_value = state.inputValue.normalize();
   if (!input_value) {
     return options;
@@ -97,18 +102,18 @@ const filterOptions = <T extends Equipment>(
   return result;
 };
 
-interface EquipmentSearchProps<T extends Weapon | Unit> {
+interface UnitSearchProps {
   isRealistic: boolean;
   charLevel: number;
-  options: T[];
-  value: null | T;
-  onChange: (value: null | T) => void;
+  enhancement: number;
+  value: null | UnitData;
+  onChange: (value: null | UnitData) => void;
 }
-const EquipmentSearch: FC<EquipmentSearchProps<Weapon | Unit>> = memo(
+const UnitSearch: FC<UnitSearchProps> = memo(
   (props) => {
     const handleChange = (
       event: SyntheticEvent<Element, Event>,
-      value: Equipment | null,
+      value: UnitData | null,
     ) => {
       props.onChange(value);
     };
@@ -117,11 +122,13 @@ const EquipmentSearch: FC<EquipmentSearchProps<Weapon | Unit>> = memo(
     return (
       <Autocomplete
         value={props.value}
-        options={props.options}
         // -------
+        options={UNITS}
         onChange={handleChange}
         filterOptions={filterOptions}
-        renderOption={renderOption}
+        renderOption={(p, o, s) =>
+          renderOption(p, o, s, props.enhancement)
+        }
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }
@@ -133,13 +140,13 @@ const EquipmentSearch: FC<EquipmentSearchProps<Weapon | Unit>> = memo(
               required
               {...params}
               fullWidth
-              label={props.mode === "weapon" ? "Weapon" : "Unit"}
+              label="Weapon"
               InputProps={{
                 ...params.InputProps,
                 endAdornment: showInfoIcon ? (
                   <Tooltip
                     arrow
-                    title={`Select a ${props.mode} to unlock other fields.`}
+                    title="Select a weapon to unlock other fields."
                     placement="top"
                   >
                     <Info color="info" />
@@ -163,6 +170,10 @@ const EquipmentSearch: FC<EquipmentSearchProps<Weapon | Unit>> = memo(
       return false;
     }
 
+    if (prev.enhancement !== next.enhancement) {
+      return false;
+    }
+
     if (
       (prev.value === null && next.value) ||
       (prev.value && next.value === null)
@@ -182,4 +193,4 @@ const EquipmentSearch: FC<EquipmentSearchProps<Weapon | Unit>> = memo(
   },
 );
 
-export default EquipmentSearch;
+export default UnitSearch;

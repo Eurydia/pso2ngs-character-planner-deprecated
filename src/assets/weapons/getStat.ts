@@ -84,18 +84,22 @@ export const getWeaponAttack = (
     const rate = growth_rate[i];
 
     if (enhancement >= rate.enhancement) {
-      bonus = rate.bonus;
+      bonus += rate.bonus;
 
       if (i < growth_rate.length - 1) {
         const ceiling = growth_rate[i + 1];
-        const bonus_per_ehnancement =
-          (ceiling.bonus - rate.bonus) /
-          (ceiling.enhancement - rate.enhancement);
         bonus +=
-          (ceiling.enhancement - enhancement) * bonus_per_ehnancement;
+          ((enhancement - rate.enhancement) /
+            (ceiling.enhancement - rate.enhancement)) *
+          (ceiling.bonus - rate.bonus);
       }
       break;
+    } else if (enhancement < rate.enhancement && i === 0) {
+      bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(StatTypes.ATK, weapon.base_attack + bonus);
+  return makeStat(
+    StatTypes.ATK,
+    weapon.base_attack + Math.round(bonus),
+  );
 };

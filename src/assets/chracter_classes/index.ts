@@ -10,7 +10,7 @@ import { default as bouncer } from "./data/bouncer";
 export * from "./types";
 export * from "./getStat";
 
-const CHARACTER_CLASSES = [
+const CHARACTER_CLASSES = Object.freeze([
   hunter,
   fighter,
   ranger,
@@ -19,5 +19,5 @@ const CHARACTER_CLASSES = [
   techter,
   braver,
   bouncer,
-];
+]);
 export default CHARACTER_CLASSES;

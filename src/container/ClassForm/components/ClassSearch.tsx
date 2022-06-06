@@ -1,27 +1,27 @@
 import { ChangeEvent, FC, memo } from "react";
 import { MenuItem, Paper, TextField } from "@mui/material";
-import { CLASS_DATA } from "../../../assets/chracter_classes";
-import { Class } from "../../../types";
-
+import CHARACTER_CLASSES, {
+  CharacterClassData,
+} from "../../../assets/chracter_classes";
 interface ClassSearchProps {
   label: string;
-  value: Class;
-  onChange: (value: Class) => void;
+  value: CharacterClassData;
+  onChange: (value: CharacterClassData) => void;
 }
 const ClassSearch: FC<ClassSearchProps> = memo(
   (props) => {
     const handleChange = (
       e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     ) => {
-      let value = CLASS_DATA[0];
       const input_value = e.target.value;
-      CLASS_DATA.forEach((c_data) => {
-        if (c_data.name === input_value) {
-          value = c_data;
-          return;
-        }
-      });
 
+      let value = CHARACTER_CLASSES[0];
+      for (let i = 1; i < CHARACTER_CLASSES.length - 1; i++) {
+        if (CHARACTER_CLASSES[i].name === input_value) {
+          value = CHARACTER_CLASSES[i];
+          break;
+        }
+      }
       props.onChange(value);
     };
 
@@ -34,9 +34,9 @@ const ClassSearch: FC<ClassSearchProps> = memo(
           select
           fullWidth
         >
-          {CLASS_DATA.map((c) => (
-            <MenuItem key={c.name} value={c.name}>
-              {c.name.toLowerCase()}
+          {CHARACTER_CLASSES.map((char_class) => (
+            <MenuItem key={char_class.name} value={char_class.name}>
+              {char_class.name.toLowerCase()}
             </MenuItem>
           ))}
         </TextField>

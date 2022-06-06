@@ -31,6 +31,9 @@ const PotentialSelect: FC<PotentialSelectProps> = memo(
           fullWidth
           label="Potential Level"
           type="number"
+          InputProps={{
+            startAdornment: "Lv.",
+          }}
         />
       </Paper>
     );

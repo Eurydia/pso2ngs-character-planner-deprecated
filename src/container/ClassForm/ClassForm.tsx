@@ -6,16 +6,12 @@ import {
   Paper,
   Stack,
   TextField,
-  Typography,
 } from "@mui/material";
-import {
-  Accessibility,
-  SportsBarOutlined,
-  ThirtyFpsSelect,
-} from "@mui/icons-material";
+import { Accessibility } from "@mui/icons-material";
 
-import { CLASS_DATA } from "../../assets/chracter_classes";
-import { Class, Skill, SkillWithLevel } from "../../types";
+import CHARACTER_CLASSES, {
+  CharacterClassData,
+} from "../../assets/chracter_classes";
 import ClassSearch from "./components/ClassSearch";
 import CustomCard from "../../components/CustomCard";
 import {
@@ -26,8 +22,8 @@ import {
 } from "../../stores";
 import CharLevelSelect from "./components/CharLevelSelect";
 
-const HUNTER = CLASS_DATA[0];
-const FIGHTER = CLASS_DATA[1];
+const HUNTER = CHARACTER_CLASSES[0];
+const FIGHTER = CHARACTER_CLASSES[1];
 
 const constainSPSelection = (
   event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
@@ -48,10 +44,10 @@ interface ClassFormProps {
   onCharLevelChange: (value: number) => void;
 }
 const ClassForm: FC<ClassFormProps> = (props) => {
-  const [mainClass, setMainClass] = useState<Class>(HUNTER);
+  const [mainClass, setMainClass] = useState(HUNTER);
   const [mainSP, setMainSP] = useState(0);
 
-  const [subClass, setSubClass] = useState<Class>(FIGHTER);
+  const [subClass, setSubClass] = useState(FIGHTER);
   const [subSP, setSubSP] = useState(0);
 
   const handleMainSPChange = (
@@ -68,7 +64,7 @@ const ClassForm: FC<ClassFormProps> = (props) => {
     setSubSP(sp);
   };
 
-  const handleMainClassChange = (value: Class) => {
+  const handleMainClassChange = (value: CharacterClassData) => {
     if (value.name === subClass.name) {
       setSubClass(mainClass);
       // So much work just to swap numbers around
@@ -82,7 +78,7 @@ const ClassForm: FC<ClassFormProps> = (props) => {
     setMainClass(value);
   };
 
-  const handleSubClassChange = (value: Class) => {
+  const handleSubClassChange = (value: CharacterClassData) => {
     if (value.name === mainClass.name) {
       setMainClass(subClass);
 
