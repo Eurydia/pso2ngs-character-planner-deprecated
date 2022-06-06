@@ -1,11 +1,11 @@
 import { makeConditional, makeStat, StatTypes } from "../../stats";
 import { makeAugment } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.ELEMENTAL;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.ELEMENTAL];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 const elements = [

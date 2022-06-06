@@ -1,4 +1,4 @@
-import { Augment } from "../assets/augments";
+import { AugmentData } from "../assets/augments";
 import { Stat } from "./stat";
 
 export enum Elements {
@@ -68,6 +68,6 @@ export type CompleteEquipment<T extends Weapon | Unit> = {
   equipment: T | null;
   enhancement: number;
   fixa: Fixa | null;
-  augments: (Augment | null)[];
+  augments: (AugmentData | null)[];
   potential_level?: number;
 };

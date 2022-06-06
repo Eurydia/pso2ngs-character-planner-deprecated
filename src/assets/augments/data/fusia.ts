@@ -1,11 +1,11 @@
 import { makeStat, StatTypes } from "../../stats";
 import { makeAugment } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.FUSIA;
 const CONFLICT = [AugmentGroups.FUSIA];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 // --------------------------------------

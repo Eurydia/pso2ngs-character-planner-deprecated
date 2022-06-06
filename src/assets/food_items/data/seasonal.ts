@@ -1,33 +1,33 @@
-import { Food, FoodAttribute, FoodCategory } from "../types";
-import { makeFood } from "../makeFood";
+import { FoodItemData, FoodAttribute, FoodCategory } from "../types";
+import { makeFoodItem } from "../makeFoodItem";
 
 // ---------------------------
-let food: Food[] = [];
+let food: FoodItemData[] = [];
 // ---------------------------
 
 food.push(
-  makeFood(
+  makeFoodItem(
     FoodCategory.VEGETABLE,
     FoodAttribute.CRISPY,
     "autumn vampkin",
   ),
 );
 food.push(
-  makeFood(
+  makeFoodItem(
     FoodCategory.VEGETABLE,
     FoodAttribute.RICH,
     "winter cozylion",
   ),
 );
 food.push(
-  makeFood(
+  makeFoodItem(
     FoodCategory.FRUIT,
     FoodAttribute.LIGHT,
     "spring ballooni",
   ),
 );
 food.push(
-  makeFood(
+  makeFoodItem(
     FoodCategory.VEGETABLE,
     FoodAttribute.ROBUST,
     "anniversartichoke",

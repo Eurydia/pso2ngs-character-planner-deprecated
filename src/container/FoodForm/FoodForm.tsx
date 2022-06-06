@@ -13,12 +13,10 @@ import {
   FoodAttribute,
   FoodBuff,
 } from "../../types";
-import {
+import FOOD_ITEMS, {
   getStatFromCategory,
   getStatFromAttribute,
-  GENERIC_FOOD,
-  SEASONAL_FOOD,
-} from "../../assets/food";
+} from "../../assets/food_items";
 import { FOOD_ITEM_MAX } from "../../stores";
 import CustomCard from "../../components/CustomCard";
 import FoodList from "./components/FoodList";
@@ -28,7 +26,7 @@ import { matchSorter } from "match-sorter";
 const getInitial = () => {
   let init_values: FoodWithAmount[] = [];
   const amount = 0;
-  for (const food of [...GENERIC_FOOD, ...SEASONAL_FOOD]) {
+  for (const food of FOOD_ITEMS) {
     init_values.push({ food, amount });
   }
   return init_values;

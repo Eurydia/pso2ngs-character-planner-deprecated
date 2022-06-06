@@ -1,11 +1,10 @@
 import { makeStat, Stat, StatTypes } from "../stats";
-import { WeaponData } from "./types";
+import { UnitData } from "./types";
 
 interface GrowthRate {
   enhancement: number;
   bonus: number;
 }
-
 const makeGrowthRate = (
   enhancement: number,
   bonus: number,
@@ -18,53 +17,53 @@ const makeGrowthRate = (
 
 const ONE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
   [
-    makeGrowthRate(10, 22),
-    makeGrowthRate(20, 46),
-    makeGrowthRate(30, 63),
-    makeGrowthRate(40, 82),
-    makeGrowthRate(50, 161),
+    makeGrowthRate(10, 10),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ],
 );
 const TWO_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
   [
-    makeGrowthRate(10, 16),
-    makeGrowthRate(20, 33),
-    makeGrowthRate(30, 50),
-    makeGrowthRate(40, 69),
-    makeGrowthRate(50, 143),
+    makeGrowthRate(10, 10),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ],
 );
 const THREE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
-    makeGrowthRate(20, 21),
-    makeGrowthRate(30, 32),
-    makeGrowthRate(40, 47),
-    makeGrowthRate(50, 115),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ]);
 const FOUR_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
     makeGrowthRate(20, 20),
     makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 108),
+    makeGrowthRate(40, 41),
+    makeGrowthRate(50, 51),
   ]);
 const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
     makeGrowthRate(20, 20),
     makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 92),
+    makeGrowthRate(40, 41),
+    makeGrowthRate(50, 51),
   ]);
 
-export const getWeaponAttack = (
-  weapon: WeaponData,
+export const getUnitDefense = (
+  unit: UnitData,
   enhancement: number,
 ): Stat => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
-  switch (weapon.rarity) {
+  switch (unit.rarity) {
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -97,5 +96,5 @@ export const getWeaponAttack = (
       break;
     }
   }
-  return makeStat(StatTypes.ATK, weapon.base_attack + bonus);
+  return makeStat(StatTypes.DEF, unit.base_defense + bonus);
 };

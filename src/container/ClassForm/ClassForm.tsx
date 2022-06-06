@@ -14,7 +14,7 @@ import {
   ThirtyFpsSelect,
 } from "@mui/icons-material";
 
-import { CLASS_DATA } from "../../assets/class_stats";
+import { CLASS_DATA } from "../../assets/chracter_classes";
 import { Class, Skill, SkillWithLevel } from "../../types";
 import ClassSearch from "./components/ClassSearch";
 import CustomCard from "../../components/CustomCard";

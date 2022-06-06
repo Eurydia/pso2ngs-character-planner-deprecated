@@ -15,12 +15,12 @@ import {
 import { matchSorter } from "match-sorter";
 import { convertToRoman, parseStatToDisplay } from "../../../utility";
 import AUGMENTS, {
-  Augment,
+  AugmentData,
   AugmentGroups,
 } from "../../../assets/augments";
 import { Conditional, Stat } from "../../../assets/stats";
 
-const sortAugment = (a: Augment, b: Augment): number => {
+const sortAugment = (a: AugmentData, b: AugmentData): number => {
   if (a.group < b.group) return -1;
   if (a.group > b.group) return 1;
   return 0;
@@ -28,7 +28,7 @@ const sortAugment = (a: Augment, b: Augment): number => {
 
 const OPTIONS = [...AUGMENTS].sort();
 
-const getLabel = (augment: Augment): string => {
+const getLabel = (augment: AugmentData): string => {
   const name = augment.isSType ? `${augment.name} s` : augment.name;
 
   return `${name} ${convertToRoman(augment.level)}`.trim();
@@ -61,7 +61,7 @@ const getContidtionalAsTooltip = (
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
-  option: Augment,
+  option: AugmentData,
   state: AutocompleteRenderOptionState,
 ) => {
   return (
@@ -93,8 +93,8 @@ const renderOption = (
 };
 
 const filterOptions = (
-  options: Augment[],
-  state: FilterOptionsState<Augment>,
+  options: AugmentData[],
+  state: FilterOptionsState<AugmentData>,
 ) => {
   const input_value = state.inputValue.normalize();
   if (!input_value) {
@@ -125,8 +125,8 @@ const filterOptions = (
 interface AugmentSearchProps {
   isDisabled: boolean;
   label: string;
-  value: Augment | null;
-  onChange: (value: Augment | null) => void;
+  value: AugmentData | null;
+  onChange: (value: AugmentData | null) => void;
 }
 const AugmentSearch: FC<AugmentSearchProps> = memo(
   (props) => {
@@ -174,8 +174,8 @@ const AugmentSearch: FC<AugmentSearchProps> = memo(
 );
 
 const doAugmentsConflict = (
-  next: Augment,
-  prev: Augment,
+  next: AugmentData,
+  prev: AugmentData,
 ): boolean => {
   const same_name = next.name === prev.name;
   const conflict_group = next.conflict.includes(prev.group);
@@ -186,10 +186,10 @@ const doAugmentsConflict = (
 };
 
 const constrainAugments = (
-  new_augment: Augment | null,
+  new_augment: AugmentData | null,
   index: number,
-  prev_augments: (Augment | null)[],
-): (Augment | null)[] => {
+  prev_augments: (AugmentData | null)[],
+): (AugmentData | null)[] => {
   let next = [...prev_augments];
   next[index] = new_augment;
   if (new_augment === null) {
@@ -215,12 +215,15 @@ const getActiveSlots = (enhancement: number): number => {
 interface AugmentGroupProps {
   disabled: boolean;
   enhancement: number;
-  values: (Augment | null)[];
-  onChange: (values: (Augment | null)[]) => void;
+  values: (AugmentData | null)[];
+  onChange: (values: (AugmentData | null)[]) => void;
 }
 const AugmentGroup: FC<AugmentGroupProps> = memo(
   (props) => {
-    const handleChange = (augment: Augment | null, index: number) => {
+    const handleChange = (
+      augment: AugmentData | null,
+      index: number,
+    ) => {
       props.onChange(constrainAugments(augment, index, props.values));
     };
     const active_slots = getActiveSlots(props.enhancement);

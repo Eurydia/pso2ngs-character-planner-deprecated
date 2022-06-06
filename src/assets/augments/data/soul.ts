@@ -1,12 +1,12 @@
 import { OFFENSIVE_POT } from "../../../utility";
 import { makeStatWithManyAmounts, StatTypes } from "../../stats";
 import { makeManyAugments } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.SOUL;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.SOUL];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 // --------------------------------------

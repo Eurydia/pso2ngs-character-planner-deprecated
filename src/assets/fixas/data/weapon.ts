@@ -1,35 +1,43 @@
-import { StatTypes, Fixa } from "../../../types";
-import { makeStatWithManyAmounts } from "../../stats/makeStat";
-import { makeManyFixa } from "../makeFixa";
+import { StatTypes, makeStat } from "../../stats";
+import { makeFixa } from "../makeFixa";
+import { FixaData, FixaTypes } from "../types";
 
-let fixa: Fixa[] = [];
+// ---------------------
+const FIXA_TYPE = FixaTypes.WEAPON;
+let fixa: FixaData[] = [];
+// ---------------------
 
-fixa.push(
-  ...makeManyFixa("attack", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.DMG_BOOST,
-      [1.02, 1.03, 1.04, 1.045, 1.05],
-    ),
-  ]),
+// ---------------------
+// fixa attack
+const ATTACK_AMOUNTS = Object.freeze([1.02, 1.03, 1.04, 1.045, 1.05]);
+ATTACK_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("attack", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.DMG_BOOST, amount),
+    ]),
+  ),
 );
 
-fixa.push(
-  ...makeManyFixa("fatale", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.CRIT_CHANCE,
-      [1.05, 1.08, 1.1, 1.12, 1.13],
-    ),
-  ]),
+// ---------------------
+// fixa fatale
+const FATALE_AMOUNTS = Object.freeze([1.05, 1.08, 1.1, 1.12, 1.13]);
+FATALE_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("fatale", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.CRIT_CHANCE, amount),
+    ]),
+  ),
 );
 
-fixa.push(
-  ...makeManyFixa("termina", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.CRIT_DMG,
-      [1.05, 1.09, 1.12, 1.14, 1.15],
-    ),
-  ]),
+// ---------------------
+// fixa termina
+const TERMINA_AMOUNTS = Object.freeze([1.05, 1.09, 1.12, 1.14, 1.15]);
+TERMINA_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("termina", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.CRIT_DMG, amount),
+    ]),
+  ),
 );
 
-const FIXA = Object.freeze(fixa);
-export default FIXA;
+export default fixa;

@@ -1,5 +1,5 @@
 import { Stat } from "../stats";
-import { WeaponSeries, Weapon } from "./types";
+import { WeaponSeries, WeaponData } from "./types";
 
 /**
  * Make a weapon
@@ -18,7 +18,7 @@ export const makeWeapon = (
   level_required: number,
   base_attack: number,
   stats: Stat[],
-): Weapon => {
+): WeaponData => {
   return Object.freeze({
     name,
     rarity,

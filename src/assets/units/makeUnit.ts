@@ -1,27 +1,37 @@
-import { Stat, StatTypes, Unit, Rarity } from "../../types";
+import { Stat, StatTypes } from "../stats";
+import { UnitData } from "./types";
+
+interface Suffix {
+  name: string;
+  stat_types: StatTypes[];
+}
+const makeSuffix = (
+  name: string,
+  stat_types: StatTypes[],
+): Suffix => {
+  return Object.freeze({
+    name,
+    stat_types,
+  });
+};
+export const SUFFIXES = Object.freeze([
+  makeSuffix("arga", [StatTypes.MEL_POT, StatTypes.RNG_POT]),
+  makeSuffix("belta", [StatTypes.RNG_POT, StatTypes.TEC_POT]),
+  makeSuffix("sheza", [StatTypes.MEL_POT, StatTypes.TEC_POT]),
+]);
 
 export const makeUnit = (
-    name: string,
-    lvl_required: number,
-    stats_without_bp: Stat[],
-    rarity: Rarity,
-): Unit => {
-    return {
-        name,
-        level_required: lvl_required,
-        stats: stats_without_bp,
-        rarity,
-    };
+  name: string,
+  rarity: number,
+  level_required: number,
+  base_defense: number,
+  stats: Stat[],
+): UnitData => {
+  return Object.freeze({
+    name,
+    rarity,
+    level_required,
+    base_defense,
+    stats,
+  });
 };
-
-export const SUFFIXES = [
-    { name: "arga", stats: [StatTypes.MEL_POT, StatTypes.RNG_POT] },
-    {
-        name: "belta",
-        stats: [StatTypes.RNG_POT, StatTypes.TEC_POT],
-    },
-    {
-        name: "sheza",
-        stats: [StatTypes.MEL_POT, StatTypes.TEC_POT],
-    },
-];

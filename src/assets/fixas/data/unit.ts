@@ -1,44 +1,57 @@
-import { Fixa, StatTypes } from "../../../types";
-import { makeStatWithManyAmounts } from "../../stats/makeStat";
-import { makeManyFixa } from "../makeFixa";
+import { StatTypes, makeStat } from "../../stats";
+import { makeFixa } from "../makeFixa";
+import { FixaData, FixaTypes } from "../types";
 
-let fixa: Fixa[] = [];
+// ---------------------
+let fixa: FixaData[] = [];
+const FIXA_TYPE = FixaTypes.UNIT;
+// ---------------------
 
-fixa.push(
-  ...makeManyFixa("guard", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.DMG_RES,
-      [1.01, 1.02, 1.03, 1.035, 1.04],
-    ),
-  ]),
+// ---------------------
+// fixa guard
+const GUARD_AMOUNTS = Object.freeze([1.01, 1.02, 1.03, 1.035, 1.04]);
+GUARD_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("guard", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.DMG_RES, amount),
+    ]),
+  ),
 );
 
-fixa.push(
-  ...makeManyFixa("performa", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.PP_USAGE,
-      [0.99, 0.98, 0.97, 0.965, 0.96],
-    ),
-  ]),
+// ---------------------
+// fixa performa
+const PERFORMA_AMOUNTS = Object.freeze([
+  0.99, 0.98, 0.97, 0.965, 0.96,
+]);
+PERFORMA_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("performa", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.PP_USAGE, amount),
+    ]),
+  ),
 );
 
-fixa.push(
-  ...makeManyFixa("natura", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.PASSIVE_PP_GAIN,
-      [1.02, 1.03, 1.04, 1.045, 1.05],
-    ),
-  ]),
+// ---------------------
+// fixa natura
+const NATURA_AMOUNTS = Object.freeze([1.02, 1.03, 1.04, 1.045, 1.05]);
+NATURA_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("natura", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.PASSIVE_PP_GAIN, amount),
+    ]),
+  ),
 );
 
-fixa.push(
-  ...makeManyFixa("enthusia", 5, [
-    makeStatWithManyAmounts(
-      StatTypes.ACTIVE_PP_GAIN,
-      [1.02, 1.03, 1.04, 1.045, 1.05],
-    ),
-  ]),
+// ---------------------
+// fixa enthusia
+const ENTHUSIA_AMOUNTS = Object.freeze([
+  1.02, 1.03, 1.04, 1.045, 1.05,
+]);
+ENTHUSIA_AMOUNTS.forEach((amount, index) =>
+  fixa.push(
+    makeFixa("enthusia", index + 1, FIXA_TYPE, [
+      makeStat(StatTypes.ACTIVE_PP_GAIN, amount),
+    ]),
+  ),
 );
-
-const FIXA = Object.freeze(fixa);
-export default FIXA;
+export default fixa;

@@ -5,12 +5,12 @@ import {
   StatTypes,
 } from "../../stats";
 import { DOUBLE_STATS, makeAugment } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.NOTE;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.NOTE];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 const suffixes = ["b", "c", "d"];

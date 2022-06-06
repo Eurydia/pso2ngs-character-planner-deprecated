@@ -12,7 +12,7 @@ export enum FoodAttribute {
   RICH = "RICH",
 }
 
-export type Food = Readonly<{
+export type FoodItemData = Readonly<{
   name: string;
   category: FoodCategory;
   attribute: FoodAttribute;

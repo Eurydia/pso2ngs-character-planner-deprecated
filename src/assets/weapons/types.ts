@@ -1,3 +1,5 @@
+import { AugmentData } from "../augments";
+import { FixaData } from "../fixas";
 import { Stat } from "../stats";
 
 export enum WeaponSeries {
@@ -24,7 +26,7 @@ export enum WeaponSeries {
   UNASSAILABLE_UNIT,
 }
 
-export type Weapon = Readonly<{
+export type WeaponData = Readonly<{
   name: string;
   rarity: number;
   level_required: number;
@@ -32,3 +34,11 @@ export type Weapon = Readonly<{
   base_attack: number;
   stats: Stat[];
 }>;
+
+export type Weapon = {
+  weapon: WeaponData | null;
+  enhacement: number;
+  fixa: FixaData | null;
+  potential_level: number;
+  augments: (AugmentData | null)[];
+};

@@ -18,7 +18,7 @@ export enum AugmentGroups {
   S = "S",
 }
 
-export type Augment = {
+export type AugmentData = {
   name: string;
   level: number;
   group: AugmentGroups;

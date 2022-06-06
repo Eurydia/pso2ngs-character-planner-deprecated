@@ -1,7 +1,13 @@
 import { Stat } from "../stats";
 
-export interface Fixa {
+export enum FixaTypes {
+  WEAPON = "WEAPON",
+  UNIT = "UNIT",
+}
+
+export type FixaData = Readonly<{
+  fixa_type: FixaTypes;
   name: string;
   level: number;
   stats: Stat[];
-}
+}>;

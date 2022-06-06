@@ -11,9 +11,17 @@ import {
   Paper,
 } from "@mui/material";
 import { matchSorter } from "match-sorter";
-import { UNIT_FIXA, WEAPON_FIXA } from "../../../assets/fixas";
 import { parseStatToDisplay } from "../../../utility";
-import { Fixa, Stat } from "../../../types";
+import FIXAS, { FixaData, FixaTypes } from "../../../assets/fixas";
+import { Stat } from "../../../assets/stats";
+
+const WEAPON_FIXA = Object.freeze(
+  FIXAS.filter((fixa) => fixa.fixa_type === FixaTypes.WEAPON),
+);
+
+const UNIT_FIXA = Object.freeze(
+  FIXAS.filter((fixa) => fixa.fixa_type === FixaTypes.UNIT),
+);
 
 const SORT_ORDER = [
   "attack",
@@ -25,7 +33,7 @@ const SORT_ORDER = [
   "enthusia",
 ];
 
-const getLabel = (fixa: Fixa): string => {
+const getLabel = (fixa: FixaData): string => {
   return `${fixa.name} lv. ${fixa.level}`;
 };
 
@@ -39,7 +47,7 @@ const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
-  option: Fixa,
+  option: FixaData,
   state: AutocompleteRenderOptionState,
 ) => {
   return (
@@ -70,9 +78,9 @@ const renderOption = (
 };
 
 const filterOptions = (
-  options: Fixa[],
-  state: FilterOptionsState<Fixa>,
-): Fixa[] => {
+  options: FixaData[],
+  state: FilterOptionsState<FixaData>,
+): FixaData[] => {
   const input_value = state.inputValue.trim().normalize();
   if (!input_value) {
     return options;
@@ -102,14 +110,14 @@ const filterOptions = (
 interface FixaSearchProps {
   mode: "weapon" | "unit";
   isDisabled: boolean;
-  value: Fixa | null;
-  onChange: (value: Fixa | null) => void;
+  value: FixaData | null;
+  onChange: (value: FixaData | null) => void;
 }
 const FixaSearch: FC<FixaSearchProps> = memo(
   (props) => {
     const handleChange = (
       event: SyntheticEvent<Event | Element>,
-      value: null | Fixa,
+      value: null | FixaData,
     ) => {
       props.onChange(value);
     };

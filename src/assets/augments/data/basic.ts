@@ -5,12 +5,12 @@ import {
   StatTypes,
 } from "../../stats";
 import { makeAugment, makeManyAugments } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.BASIC;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.FUSED];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 // --------------------------------------

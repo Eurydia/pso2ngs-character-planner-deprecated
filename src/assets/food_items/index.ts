@@ -4,6 +4,6 @@ import { default as seasonal } from "./data/seasonal";
 export * from "./types";
 export * from "./getStat";
 
-const FOOD = Object.freeze([...generic, ...seasonal]);
+const FOOD_ITEMS = Object.freeze([...generic, ...seasonal]);
 
-export default FOOD;
+export default FOOD_ITEMS;

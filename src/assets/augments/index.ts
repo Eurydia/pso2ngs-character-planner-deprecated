@@ -12,11 +12,11 @@ import { default as secreata } from "./data/secreta";
 import { default as soul } from "./data/soul";
 import { default as tria } from "./data/tria";
 import { default as ward } from "./data/ward";
-import { Augment } from "./types";
+import { AugmentData } from "./types";
 
 export * from "./types";
 
-const AUGMENTS: Augment[] = [
+const AUGMENTS: AugmentData[] = [
   ...addi,
   ...basic,
   ...domina,

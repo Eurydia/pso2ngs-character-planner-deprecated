@@ -1,11 +1,11 @@
 import { makeStat, StatTypes } from "../../stats";
 import { OFFENSIVE_POT } from "../../../utility";
 import { makeAugment } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 // --------------------------------------
 const GROUP = AugmentGroups.ADDI;
 const CONFLICT = [AugmentGroups.ADDI];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 const p_names = ["mel", "ra", "tech"];

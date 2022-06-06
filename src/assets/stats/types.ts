@@ -39,29 +39,6 @@ export enum StatTypes {
   PP_GAIN = "PP recovery",
 }
 
-export type Stat = {
-  stat_type: StatTypes;
-  amount: number;
-};
-
-export type StatWithManyAmounts = {
-  stat_type: StatTypes;
-  many_amount: number[];
-};
-
-// TODO: To allow for a more pobust conditional system,
-// the condition might have to use `event trigger` enums
-// instead of simple string
-export type Conditional = {
-  stats: Stat[];
-  condition: string;
-};
-
-export type ConditionalWithManyAmounts = {
-  stats_with_many_amounts: StatWithManyAmounts[];
-  condition: string;
-};
-
 export const OFFENSIVE_POT = [
   StatTypes.MEL_POT,
   StatTypes.RNG_POT,
@@ -77,3 +54,26 @@ export const AILMENT_RES = [
   StatTypes.POISON_RES,
   StatTypes.PHYDOWN_RES,
 ];
+
+export type Stat = {
+  stat_type: StatTypes;
+  amount: number;
+};
+
+export type StatWithManyAmounts = {
+  stat_type: StatTypes;
+  many_amount: number[];
+};
+
+// TODO: To allow for a more robust conditional system,
+// the condition might have to use `event trigger` enums
+// instead of simple string
+export type Conditional = {
+  stats: Stat[];
+  condition: string;
+};
+
+export type ConditionalWithManyAmounts = {
+  stats_with_many_amounts: StatWithManyAmounts[];
+  condition: string;
+};

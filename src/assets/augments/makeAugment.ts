@@ -7,7 +7,7 @@ import {
   ConditionalWithManyAmounts,
   makeConditional,
 } from "../stats";
-import { Augment, AugmentGroups } from "./types";
+import { AugmentData, AugmentGroups } from "./types";
 
 export const makeAugment = (
   name: string,
@@ -17,7 +17,7 @@ export const makeAugment = (
   stats: Stat[],
   conditionals: Conditional[] = [],
   isSType: boolean = false,
-): Augment => {
+): AugmentData => {
   return Object.freeze({
     name,
     level,
@@ -60,8 +60,8 @@ export const makeManyAugments = (
   conflict: AugmentGroups[],
   stat_w_m_amounts_arr: StatWithManyAmounts[],
   conditional_w_m_amounts_arr: ConditionalWithManyAmounts[] = [],
-): Augment[] => {
-  let result: Augment[] = [];
+): AugmentData[] => {
+  let result: AugmentData[] = [];
   for (let i = 0; i < level; i++) {
     const stats = getStatsFromStatsWMAmounts(stat_w_m_amounts_arr, i);
     const conditionals = conditional_w_m_amounts_arr.map(

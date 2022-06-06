@@ -1,7 +1,7 @@
 import { FC, memo, useState } from "react";
 import { Box } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
-import { Augment } from "../../assets/augments";
+import { AugmentData } from "../../assets/augments";
 import { Weapon, Fixa } from "../../types";
 import {
   ENHANCEMENT_MIN,
@@ -26,7 +26,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     const [potLevel, setPotLevel] = useState(POTENTIAL_MIN);
     const [enhancement, setEnhancement] = useState(ENHANCEMENT_MIN);
     const [fixa, setFixa] = useState<null | Fixa>(null);
-    const [augments, setAugments] = useState<(null | Augment)[]>([
+    const [augments, setAugments] = useState<(null | AugmentData)[]>([
       null,
       null,
       null,

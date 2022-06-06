@@ -1,10 +1,10 @@
 import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
-import { Weapon, WeaponSeries } from "../types";
+import { WeaponData, WeaponSeries } from "../types";
 
 // -----------------------
 const RARITY = 1;
-let weapons: Weapon[] = [];
+let weapons: WeaponData[] = [];
 // -----------------------
 
 weapons.push(

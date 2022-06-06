@@ -1,7 +1,7 @@
 import { FC, memo, useState } from "react";
 import { Box } from "@mui/material";
 import { AutoAwesome, Shield } from "@mui/icons-material";
-import { Augment } from "../../assets/augments";
+import { AugmentData } from "../../assets/augments";
 import { Unit, Fixa } from "../../types";
 import { ENHANCEMENT_MIN, ENHNACEMENT_MAX } from "../../stores";
 import CustomCard from "../../components/CustomCard";
@@ -20,7 +20,7 @@ const UnitForm: FC<UnitFormProps> = memo(
     const [unit, setUnit] = useState<null | Unit>(null);
     const [enhancement, setEnhancement] = useState(ENHANCEMENT_MIN);
     const [fixa, setFixa] = useState<null | Fixa>(null);
-    const [augments, setAugments] = useState<(null | Augment)[]>([
+    const [augments, setAugments] = useState<(null | AugmentData)[]>([
       null,
       null,
       null,

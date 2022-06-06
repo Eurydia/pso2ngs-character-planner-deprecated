@@ -1,32 +1,27 @@
-import { StatTypes, Unit, Rarity } from "../../../types";
-import { makeStat } from "../../stats/makeStat";
+import { StatTypes, makeStat } from "../../stats";
 import { makeUnit } from "../makeUnit";
+import { UnitData } from "../types";
 
-const RARITY = Rarity.THREE;
-let units: Unit[] = [];
+// -------------------------
+const RARITY = 3;
+let units: UnitData[] = [];
+// -------------------------
 
+// -------------------------
+// theseus
 units.push(
-  makeUnit(
-    "theseus armor",
-    5,
-    [
-      makeStat(StatTypes.DEF, 10),
-      makeStat(StatTypes.HP, 10),
-      makeStat(StatTypes.PP, 1),
-    ],
-    RARITY,
-  ),
+  makeUnit("theseus armor", RARITY, 5, 10, [
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 1),
+  ]),
 );
+
+// -------------------------
+// gold primm
 units.push(
-  makeUnit(
-    "gold primm armor",
-    5,
-    [
-      makeStat(StatTypes.DEF, 10),
-      makeStat(StatTypes.HP, 10),
-      makeStat(StatTypes.PP, 1),
-    ],
-    RARITY,
-  ),
+  makeUnit("gold primm armor", RARITY, 5, 10, [
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 1),
+  ]),
 );
 export default units;

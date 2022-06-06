@@ -1,11 +1,11 @@
 import { makeStatWithManyAmounts, StatTypes } from "../../stats";
 import { makeManyAugments } from "../makeAugment";
-import { Augment, AugmentGroups } from "../types";
+import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
 const GROUP = AugmentGroups.SECRETA;
 const CONFLICT = [AugmentGroups.SECRETA];
-let augments: Augment[] = [];
+let augments: AugmentData[] = [];
 // --------------------------------------
 
 // --------------------------------------

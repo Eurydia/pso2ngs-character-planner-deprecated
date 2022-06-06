@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, memo } from "react";
 import { MenuItem, Paper, TextField } from "@mui/material";
-import { CLASS_DATA } from "../../../assets/class_stats";
+import { CLASS_DATA } from "../../../assets/chracter_classes";
 import { Class } from "../../../types";
 
 interface ClassSearchProps {
