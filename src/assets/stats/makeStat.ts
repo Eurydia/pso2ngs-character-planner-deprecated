@@ -41,7 +41,7 @@ export const makeManyStatsWithSameAmount = (
 ): Stat[] => {
   let result: Stat[] = [];
   for (const stat_type of stat_types) {
-    result.push({ stat_type, amount });
+    result.push(makeStat(stat_type, amount));
   }
   return result;
 };
@@ -52,7 +52,7 @@ export const makeManyStatsWithSameManyAmounts = (
 ): StatWithManyAmounts[] => {
   let result: StatWithManyAmounts[] = [];
   for (const stat_type of stat_types) {
-    result.push({ stat_type, many_amount });
+    result.push(makeStatWithManyAmounts(stat_type, many_amount));
   }
   return result;
 };

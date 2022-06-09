@@ -4,7 +4,7 @@ import { AutoAwesome, Shield } from "@mui/icons-material";
 import { AugmentData } from "../../assets/augments";
 import { UnitData } from "../../assets/units";
 import { FixaData } from "../../assets/fixas";
-import { ENHANCEMENT_MIN, ENHNACEMENT_MAX } from "../../stores";
+import { ENHANCEMENT_MIN, ENHANCEMENT_MAX } from "../../stores";
 import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
 import FixaSearch from "./components/FixaSearch";
@@ -65,7 +65,7 @@ const UnitForm: FC<UnitFormProps> = memo(
               <AugmentGroup
                 disabled={disabled}
                 enhancement={
-                  props.isRealistic ? enhancement : ENHNACEMENT_MAX
+                  props.isRealistic ? enhancement : ENHANCEMENT_MAX
                 }
                 values={augments}
                 onChange={setAugments}

@@ -11,7 +11,7 @@ export enum StatTypes {
 
   ACTIVE_PP_GAIN = "active PP recovery",
   PASSIVE_PP_GAIN = "natural PP recovery",
-  PP_USAGE = "pp cost reduction",
+  PP_USAGE = "PP cost",
 
   PB_GAUGE_GAIN = "PB gauge charge rate",
 
@@ -39,6 +39,15 @@ export enum StatTypes {
   PP_GAIN = "PP recovery",
 }
 
+export const STAT_SHORTHANDS = [
+  StatTypes.POT,
+  StatTypes.PP_GAIN,
+  StatTypes.AILMENT_RES,
+];
+export const PP_RECOVERY = [
+  StatTypes.ACTIVE_PP_GAIN,
+  StatTypes.PASSIVE_PP_GAIN,
+];
 export const OFFENSIVE_POT = [
   StatTypes.MEL_POT,
   StatTypes.RNG_POT,
@@ -73,7 +82,7 @@ export type Conditional = {
   condition: string;
 };
 
-export type ConditionalWithManyAmounts = {
+export type ConditionalWithManyAmounts = Readonly<{
   stats_with_many_amounts: StatWithManyAmounts[];
   condition: string;
-};
+}>;

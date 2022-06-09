@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, memo } from "react";
 import { Paper, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { ENHANCEMENT_MIN, ENHNACEMENT_MAX } from "../../../stores";
+import { ENHANCEMENT_MIN, ENHANCEMENT_MAX } from "../../../stores";
 
 interface EnhancementSelectProps {
   isDisabled: boolean;
@@ -18,8 +18,8 @@ const EnhancementSelect: FC<EnhancementSelectProps> = memo(
       let level = value ? parseInt(value) : ENHANCEMENT_MIN;
       if (level < ENHANCEMENT_MIN) {
         level = ENHANCEMENT_MIN;
-      } else if (level > ENHNACEMENT_MAX) {
-        level = ENHNACEMENT_MAX;
+      } else if (level > ENHANCEMENT_MAX) {
+        level = ENHANCEMENT_MAX;
       }
 
       props.onChange(level);

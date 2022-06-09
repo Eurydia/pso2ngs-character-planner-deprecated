@@ -150,39 +150,49 @@ const AugmentSearch: FC<AugmentSearchProps> = memo(
     );
   },
   (prev, next) => {
+    // check `isDisabled`
     if (prev.isDisabled !== next.isDisabled) {
       return false;
     }
 
+    // check `value`
+    const prev_val = prev.value;
+    const next_val = next.value;
     if (
-      (prev.value === null && next.value) ||
-      (prev.value && next.value === null)
+      (prev_val === null && next_val) ||
+      (prev_val && next_val === null)
+    ) {
+      return false;
+    } else if (
+      prev_val &&
+      next_val &&
+      (prev_val.name !== next_val.name ||
+        prev_val.level !== next_val.level ||
+        prev_val.isSType !== next_val.isSType)
     ) {
       return false;
     }
 
-    if (
-      prev.value &&
-      next.value &&
-      (prev.value.name !== next.value.name ||
-        prev.value.level !== next.value.level)
-    ) {
-      return false;
-    }
     return true;
   },
 );
 
-const doAugmentsConflict = (
+const augmentsDoConflict = (
   next: AugmentData,
   prev: AugmentData,
 ): boolean => {
-  const same_name = next.name === prev.name;
-  const conflict_group = next.conflict.includes(prev.group);
-  const mastery_exception =
-    next.group === AugmentGroups.FUSED && prev.name === "mastery";
+  if (next.name === prev.name) {
+    return true;
+  }
 
-  return same_name || (conflict_group && !mastery_exception);
+  if (
+    next.conflict.includes(prev.group) &&
+    !(next.group === AugmentGroups.FUSED && prev.name === "mastery")
+  ) {
+    return true;
+  }
+
+  return false;
 };
 
 const constrainAugments = (
@@ -197,17 +207,22 @@ const constrainAugments = (
   }
 
   next.forEach((prev_augment, i) => {
-    if (i !== index && prev_augment) {
-      if (doAugmentsConflict(new_augment, prev_augment)) {
-        next[i] = null;
-      }
+    if (i === index) {
+      return;
+    }
+
+    if (
+      prev_augment &&
+      augmentsDoConflict(new_augment, prev_augment)
+    ) {
+      next[i] = null;
     }
   });
   return next;
 };
 
 const getActiveSlots = (enhancement: number): number => {
-  return enhancement > 20
+  return enhancement >= 20
     ? 1 + Math.floor((enhancement - 10) / 10)
     : 1;
 };

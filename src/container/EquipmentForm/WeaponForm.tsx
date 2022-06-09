@@ -1,17 +1,8 @@
-import { FC, memo, useState } from "react";
-import { Box } from "@mui/material";
+import { FC, memo, useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
-import {
-  ENHANCEMENT_MIN,
-  ENHNACEMENT_MAX,
-  POTENTIAL_MIN,
-} from "../../stores";
-import { AugmentData } from "../../assets/augments";
-import WEAPONS, {
-  getWeaponAttack,
-  WeaponData,
-} from "../../assets/weapons";
-import { FixaData } from "../../assets/fixas";
+import { ENHANCEMENT_MAX } from "../../stores";
+import { Weapon } from "../../assets/weapons";
 import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
 import WeaponSearch from "./components/WeaponSearch";
@@ -19,26 +10,42 @@ import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
+import StatsList from "./components/StatsList";
 
 interface WeaponFormProps {
   isRealistic: boolean;
   charLevel: number;
+  getInitValue: () => Weapon;
+  onChange: (value: Weapon) => void;
 }
 const WeaponForm: FC<WeaponFormProps> = memo(
   (props) => {
-    const [weapon, setWeapon] = useState<null | WeaponData>(null);
-    const [potLevel, setPotLevel] = useState(POTENTIAL_MIN);
-    const [enhancement, setEnhancement] = useState(ENHANCEMENT_MIN);
-    const [fixa, setFixa] = useState<null | FixaData>(null);
-    const [augments, setAugments] = useState<(null | AugmentData)[]>([
-      null,
-      null,
-      null,
-      null,
-      null,
-    ]);
+    const {
+      weapon: init_weapon,
+      potential_level: init_pot_level,
+      fixa: init_fixa,
+      enhancement: init_enhacement,
+      augments: init_augments,
+    } = props.getInitValue();
+
+    const [weapon, setWeapon] = useState(init_weapon);
+    const [potLevel, setPotLevel] = useState(init_pot_level);
+    const [enhancement, setEnhancement] = useState(init_enhacement);
+    const [fixa, setFixa] = useState(init_fixa);
+    const [augments, setAugments] = useState(init_augments);
+
+    useEffect(() => {
+      props.onChange({
+        weapon,
+        potential_level: potLevel,
+        enhancement,
+        fixa,
+        augments,
+      });
+    }, [weapon, potLevel, enhancement, fixa, augments, props]);
 
     const disabled = weapon === null && props.isRealistic;
+
     return (
       <CustomCard
         frontTitle="Weapon"
@@ -80,7 +87,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               <AugmentGroup
                 disabled={disabled}
                 enhancement={
-                  props.isRealistic ? enhancement : ENHNACEMENT_MAX
+                  props.isRealistic ? enhancement : ENHANCEMENT_MAX
                 }
                 values={augments}
                 onChange={setAugments}
@@ -88,10 +95,19 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             }
           />
         }
-        backTitle="Equipment Stats"
+        backTitle="[header]"
         backTitleIcon={<AutoAwesome />}
         backContent={
-          <Box sx={{ height: 400 }}>"nothing to see here."</Box>
+          <Box sx={{ height: 400 }}>
+            <StatsList
+              weapon={weapon}
+              unit={null}
+              fixa={fixa}
+              augments={augments}
+              enhancement={enhancement}
+              potential_level={potLevel}
+            />
+          </Box>
         }
       />
     );

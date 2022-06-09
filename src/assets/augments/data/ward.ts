@@ -1,5 +1,8 @@
-import { AILMENT_RES } from "../../../utility";
-import { makeStatWithManyAmounts, StatTypes } from "../../stats";
+import {
+  makeStatWithManyAmounts,
+  StatTypes,
+  AILMENT_RES,
+} from "../../stats";
 import { makeManyAugments } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 

@@ -1,6 +1,6 @@
 // Enhancement level
 export const ENHANCEMENT_MIN = 0;
-export const ENHNACEMENT_MAX = 50;
+export const ENHANCEMENT_MAX = 50;
 
 // Potential level
 export const POTENTIAL_MIN = 0;

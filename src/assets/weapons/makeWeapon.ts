@@ -1,5 +1,6 @@
 import { Stat } from "../stats";
-import { WeaponSeries, WeaponData } from "./types";
+import { WeaponSeries } from "../weapon-potentials";
+import { WeaponData } from "./types";
 
 /**
  * Make a weapon

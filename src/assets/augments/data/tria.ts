@@ -1,5 +1,9 @@
-import { OFFENSIVE_POT } from "../../../utility";
-import { makeStat, Stat, StatTypes } from "../../stats";
+import {
+  makeStat,
+  Stat,
+  StatTypes,
+  OFFENSIVE_POT,
+} from "../../stats";
 import { makeAugment } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 

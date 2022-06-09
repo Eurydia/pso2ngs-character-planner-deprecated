@@ -5,9 +5,14 @@ export enum FixaTypes {
   UNIT = "UNIT",
 }
 
-export type FixaData = Readonly<{
-  fixa_type: FixaTypes;
+export type FixaDataSignature = {
   name: string;
   level: number;
-  stats: Stat[];
-}>;
+};
+
+export type FixaData = Readonly<
+  FixaDataSignature & {
+    fixa_type: FixaTypes;
+    stats: Stat[];
+  }
+>;

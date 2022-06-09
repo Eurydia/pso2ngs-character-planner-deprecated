@@ -9,27 +9,27 @@ import {
   Divider,
   Tooltip,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../../stores";
 import {
+  FoodItem,
   FoodAttribute,
   FoodCategory,
-  FoodWithAmount,
-} from "../../../types";
-import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../../stores";
-import { Info } from "@mui/icons-material";
+} from "../../../assets/food-items";
 
-const CATEGORY_EFFECT: { [key: string]: string } = {
+const CATEGORY_EFFECT: { [key: string]: string } = Object.freeze({
   MEAT: "+ potency [meat]",
   FRUIT: "+ PP [fruit]",
   VEGETABLE: "+ DMG resist [vegetable]",
   SEAFOOD: "+ HP [seafood]",
-};
+});
 
-const ATTRIBUTE_EFFECT: { [key: string]: string } = {
+const ATTRIBUTE_EFFECT: { [key: string]: string } = Object.freeze({
   CRISPY: "+ weak point DMG [crispy]",
   LIGHT: "+ PP recovery [light]",
   ROBUST: "+ HP recovery [robust]",
   RICH: "- PP cost [rich]",
-};
+});
 
 interface FoodListItemProps {
   isDisabled: boolean;
@@ -41,6 +41,7 @@ interface FoodListItemProps {
 }
 const FoodListItem: FC<FoodListItemProps> = memo(
   (props) => {
+    const theme = useTheme();
     const handleChange = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -86,6 +87,11 @@ const FoodListItem: FC<FoodListItemProps> = memo(
               <Typography
                 sx={{
                   textTransform: "capitalize",
+                  fontWeight: props.value > 0 ? 500 : undefined,
+                  color:
+                    props.value > 0
+                      ? theme.palette.primary.main
+                      : undefined,
                 }}
               >
                 {props.name}
@@ -114,14 +120,6 @@ const FoodListItem: FC<FoodListItemProps> = memo(
       return false;
     }
 
-    if (prev.attribute !== next.attribute) {
-      return false;
-    }
-
-    if (prev.category !== next.category) {
-      return false;
-    }
-
     if (prev.value !== next.value) {
       return false;
     }
@@ -134,36 +132,35 @@ const FoodListItem: FC<FoodListItemProps> = memo(
 );
 
 interface FoodListProps {
-  items: FoodWithAmount[];
-  disableZero: boolean;
+  isFull: boolean;
+  items: FoodItem[];
   onChange: (value: number, item_name: string) => void;
 }
 const FoodList: FC<FoodListProps> = memo(
   (props) => {
     return (
-      <Box paddingY={2}>
-        <Stack spacing={1} divider={<Divider flexItem />}>
-          {props.items.map((item) => (
-            <FoodListItem
-              key={item.food.name}
-              isDisabled={props.disableZero && item.amount === 0}
-              name={item.food.name.toLowerCase()}
-              category={item.food.category}
-              attribute={item.food.attribute}
-              value={item.amount}
-              onChange={(v) => props.onChange(v, item.food.name)}
-            />
-          ))}
-        </Stack>
-      </Box>
+      <Stack spacing={1} divider={<Divider flexItem />}>
+        {props.items.map((item) => (
+          <FoodListItem
+            key={item.name}
+            isDisabled={props.isFull && item.amount === 0}
+            name={item.name.toLowerCase()}
+            category={item.category}
+            attribute={item.attribute}
+            value={item.amount}
+            onChange={(v) => props.onChange(v, item.name)}
+          />
+        ))}
+      </Stack>
     );
   },
   (prev, next) => {
-    // Check `disableZero`
-    if (prev.disableZero !== next.disableZero) {
+    // check `slotIsFull`
+    if (prev.isFull !== next.isFull) {
       return false;
     }
-    // Check `items`
+
+    // check `items`
     if (prev.items.length !== next.items.length) {
       return false;
     }
@@ -171,6 +168,9 @@ const FoodList: FC<FoodListProps> = memo(
       const prev_val = prev.items[i];
       const next_val = next.items[i];
       if (prev_val.amount !== next_val.amount) {
+        return false;
+      }
+      if (prev_val.name !== next_val.name) {
         return false;
       }
     }

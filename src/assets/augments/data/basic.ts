@@ -1,8 +1,8 @@
-import { OFFENSIVE_POT } from "../../../utility";
 import {
   makeStatWithManyAmounts,
   makeStat,
   StatTypes,
+  OFFENSIVE_POT,
 } from "../../stats";
 import { makeAugment, makeManyAugments } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";

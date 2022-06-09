@@ -15,6 +15,7 @@ import { default as ward } from "./data/ward";
 import { AugmentData } from "./types";
 
 export * from "./types";
+export * from "./typeguard";
 
 const AUGMENTS: AugmentData[] = [
   ...addi,

@@ -126,6 +126,7 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
         renderOption={(p, o, s) =>
           renderOption(p, o, s, props.enhancement)
         }
+        isOptionEqualToValue={(o, v) => o.name === v.name}
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }
@@ -177,7 +178,6 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
     ) {
       return false;
     }
-
     if (
       prev.value &&
       next.value &&

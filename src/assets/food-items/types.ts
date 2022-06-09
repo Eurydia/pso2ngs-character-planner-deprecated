@@ -17,3 +17,12 @@ export type FoodItemData = Readonly<{
   category: FoodCategory;
   attribute: FoodAttribute;
 }>;
+
+export type FoodItem = FoodItemData & {
+  amount: number;
+};
+
+export type FoodItemSignature = {
+  name: string;
+  amount: number;
+};

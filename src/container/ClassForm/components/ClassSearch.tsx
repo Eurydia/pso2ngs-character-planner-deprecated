@@ -2,7 +2,7 @@ import { ChangeEvent, FC, memo } from "react";
 import { MenuItem, Paper, TextField } from "@mui/material";
 import CHARACTER_CLASSES, {
   CharacterClassData,
-} from "../../../assets/chracter_classes";
+} from "../../../assets/chracter-classes";
 interface ClassSearchProps {
   label: string;
   value: CharacterClassData;

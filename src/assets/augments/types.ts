@@ -18,12 +18,17 @@ export enum AugmentGroups {
   S = "S",
 }
 
-export type AugmentData = {
+export type AugmentDataSignature = {
   name: string;
   level: number;
-  group: AugmentGroups;
-  conflict: AugmentGroups[];
-  stats: Stat[];
-  conditionals: Conditional[];
   isSType: boolean;
 };
+
+export type AugmentData = Readonly<
+  AugmentDataSignature & {
+    group: AugmentGroups;
+    conflict: AugmentGroups[];
+    stats: Stat[];
+    conditionals: Conditional[];
+  }
+>;

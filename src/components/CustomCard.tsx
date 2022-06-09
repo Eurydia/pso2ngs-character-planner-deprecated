@@ -1,7 +1,9 @@
 import { FC, Fragment, ReactNode, useState } from "react";
 import {
+  Button,
   Card,
   CardActionArea,
+  CardActions,
   CardContent,
   CardHeader,
   Fade,
@@ -17,26 +19,22 @@ interface CustomCardHeaderProps {
 const CustomCardHeader: FC<CustomCardHeaderProps> = (props) => {
   const theme = useTheme();
   return (
-    <CardHeader
-      title={
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          color={theme.palette.primary.main}
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="space-between"
+      color={theme.palette.primary.main}
+    >
+      <Stack direction="row" alignItems="center" spacing={1}>
+        {props.titleIcon}
+        <Typography
+          fontSize={theme.typography.h4.fontSize}
+          fontWeight="medium"
         >
-          <Stack direction="row" alignItems="center" spacing={1}>
-            {props.titleIcon}
-            <Typography
-              fontSize={theme.typography.h4.fontSize}
-              fontWeight="medium"
-            >
-              {props.title}
-            </Typography>
-          </Stack>
-        </Stack>
-      }
-    />
+          {props.title}
+        </Typography>
+      </Stack>
+    </Stack>
   );
 };
 
@@ -60,12 +58,14 @@ const CustomCard: FC<CustomCardProps> = (props) => {
       {showFront && (
         <Fragment>
           <Fade in timeout={{ enter: 450 }}>
-            <CardActionArea onClick={flipSide}>
-              <CustomCardHeader
-                title={props.frontTitle}
-                titleIcon={props.frontTitleIcon}
-              />
-            </CardActionArea>
+            <CardHeader
+              title={
+                <CustomCardHeader
+                  title={props.frontTitle}
+                  titleIcon={props.frontTitleIcon}
+                />
+              }
+            />
           </Fade>
           <Fade in timeout={{ enter: 1000 }}>
             <CardContent>{props.frontContent}</CardContent>
@@ -75,18 +75,31 @@ const CustomCard: FC<CustomCardProps> = (props) => {
       {!showFront && (
         <Fragment>
           <Fade in timeout={{ enter: 450 }}>
-            <CardActionArea onClick={flipSide}>
-              <CustomCardHeader
-                title={props.backTitle}
-                titleIcon={props.backTitleIcon}
-              />
-            </CardActionArea>
+            <CardHeader
+              title={
+                <CustomCardHeader
+                  title={props.backTitle}
+                  titleIcon={props.backTitleIcon}
+                />
+              }
+            />
           </Fade>
           <Fade in timeout={{ enter: 1000 }}>
             <CardContent>{props.backContent}</CardContent>
           </Fade>
         </Fragment>
       )}
+      <CardActions sx={{ justifyContent: "flex-end" }}>
+        <Button
+          startIcon={
+            showFront ? props.backTitleIcon : props.frontTitleIcon
+          }
+          onClick={flipSide}
+          variant="contained"
+        >
+          flip
+        </Button>
+      </CardActions>
     </Card>
   );
 };
