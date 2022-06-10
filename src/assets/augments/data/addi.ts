@@ -9,7 +9,6 @@ let augments: AugmentData[] = [];
 
 (() => {
   const names = ["mel", "ra", "tech"];
-
   names.forEach((name, index) => {
     const pot = makeStat(OFFENSIVE_POT[index], 1.025);
 
