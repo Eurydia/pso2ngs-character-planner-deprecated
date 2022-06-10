@@ -1,10 +1,5 @@
-import {
-  makeStatWithManyAmounts,
-  makeStat,
-  StatTypes,
-  OFFENSIVE_POT,
-} from "../../stats";
-import { makeAugment, makeManyAugments } from "../makeAugment";
+import { makeStat, StatTypes } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -15,108 +10,199 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // stamina
-augments.push(
-  ...makeManyAugments(`stamina`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [3, 4, 5]),
-    makeStatWithManyAmounts(StatTypes.HP, [5, 10, 15]),
-  ]),
-);
-// stamina s
-augments.push(
-  makeAugment(
-    "stamina",
-    3,
-    AugmentGroups.S,
-    CONFLICT,
-    [makeStat(StatTypes.BP, 5), makeStat(StatTypes.HP, 15)],
-    [],
-    true,
-  ),
-);
+(() => {
+  const stamina_bp = [3, 4, 5];
+  const stamina_hp = [5, 10, 15];
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, stamina_bp[i]),
+      makeStat(StatTypes.HP, stamina_hp[i]),
+    ];
+    // generic
+    augments.push(
+      makeAugmentData("stamina", level, GROUP, CONFLICT, stats),
+    );
+    if (level === 3) {
+      // s type
+      augments.push(
+        makeAugmentData(
+          "stamina",
+          level,
+          AugmentGroups.S,
+          CONFLICT,
+          stats,
+          [],
+          true,
+        ),
+      );
+    }
+  }
+})();
 
 // --------------------------------------
 // spirit
-augments.push(
-  ...makeManyAugments(`spirit`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [2, 3, 4]),
-    makeStatWithManyAmounts(StatTypes.PP, [3, 4, 5]),
-  ]),
-);
-// spirit s
-augments.push(
-  makeAugment(
-    "spirit",
-    3,
-    AugmentGroups.S,
-    CONFLICT,
-    [makeStat(StatTypes.BP, 4), makeStat(StatTypes.PP, 5)],
-    [],
-    true,
-  ),
-);
-
-const names = ["might", "precision", "technique"];
-names.forEach((name, i) => {
-  const stat = OFFENSIVE_POT[i];
-
-  // --------------------------------------
-  // might, precision, technique
+const spirit_bp = [2, 3, 4];
+const spirit_pp = [3, 4, 5];
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, spirit_bp[i]),
+    makeStat(StatTypes.PP, spirit_pp[i]),
+  ];
+  // generic
   augments.push(
-    ...makeManyAugments(name, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [4, 5, 6]),
-      makeStatWithManyAmounts(stat, [1.01, 1.015, 1.02]),
-    ]),
+    makeAugmentData("spirit", level, GROUP, CONFLICT, stats),
   );
-  // might, precision, technique s
+
+  if (level === 3) {
+    // s type
+    augments.push(
+      makeAugmentData(
+        "spirit",
+        level,
+        AugmentGroups.S,
+        CONFLICT,
+        stats,
+        [],
+        true,
+      ),
+    );
+  }
+}
+
+// --------------------------------------
+const offensive_bp = [4, 5, 6];
+const offensive_pot = [1.01, 1.015, 1.02];
+// might
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, offensive_bp[i]),
+    makeStat(StatTypes.MEL_POT, offensive_pot[i]),
+  ];
+  // generic
   augments.push(
-    makeAugment(
-      `${name}`,
-      3,
-      AugmentGroups.S,
-      CONFLICT,
-      [makeStat(StatTypes.BP, 6), makeStat(stat, 1.02)],
-      [],
-      true,
-    ),
+    makeAugmentData("might", level, GROUP, CONFLICT, stats),
   );
-});
+
+  if (level === 3) {
+    // s type
+    augments.push(
+      makeAugmentData(
+        "might",
+        level,
+        AugmentGroups.S,
+        CONFLICT,
+        stats,
+        [],
+        true,
+      ),
+    );
+  }
+}
+// precision
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, offensive_bp[i]),
+    makeStat(StatTypes.RNG_POT, offensive_pot[i]),
+  ];
+  // generic
+  augments.push(
+    makeAugmentData("precision", level, GROUP, CONFLICT, stats),
+  );
+  if (level === 3) {
+    // s type
+    augments.push(
+      makeAugmentData(
+        "precision",
+        level,
+        AugmentGroups.S,
+        CONFLICT,
+        stats,
+        [],
+        true,
+      ),
+    );
+  }
+}
+// technique
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, offensive_bp[i]),
+    makeStat(StatTypes.TEC_POT, offensive_pot[i]),
+  ];
+  // generic
+  augments.push(
+    makeAugmentData("technique", level, GROUP, CONFLICT, stats),
+  );
+
+  if (level === 3) {
+    // s type
+    augments.push(
+      makeAugmentData(
+        "technique",
+        level,
+        AugmentGroups.S,
+        CONFLICT,
+        stats,
+        [],
+        true,
+      ),
+    );
+  }
+}
 
 // --------------------------------------
 // deftness
-augments.push(
-  ...makeManyAugments(`deftness`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [3, 4, 5]),
-    makeStatWithManyAmounts(StatTypes.FLOOR_POT, [1.01, 1.015, 1.02]),
-  ]),
-);
+const deftness_bp = [3, 4, 5];
+const deftness_amount = [1.01, 1.015, 1.02];
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, deftness_bp[i]),
+    makeStat(StatTypes.FLOOR_POT, deftness_amount[i]),
+  ];
+  // generic
+  augments.push(
+    makeAugmentData("deftness", level, GROUP, CONFLICT, stats),
+  );
+}
 
 // --------------------------------------
 // guard
-augments.push(
-  ...makeManyAugments(`guard`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [2, 3, 4]),
-    makeStatWithManyAmounts(StatTypes.DMG_RES, [1.01, 1.015, 1.02]),
-  ]),
-);
+const guard_bp = [2, 3, 4];
+const guard_amount = [1.01, 1.015, 1.02];
+for (let i = 0; i < 3; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, guard_bp[i]),
+    makeStat(StatTypes.DMG_RES, guard_amount[i]),
+  ];
+  augments.push(
+    makeAugmentData("guard", level, GROUP, CONFLICT, stats),
+  );
+}
 
 // --------------------------------------
 // mastery
-augments.push(
-  ...makeManyAugments(`mastery`, 4, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [6, 8, 10, 12]),
-    makeStatWithManyAmounts(
-      StatTypes.POT,
-      [1.01, 1.015, 1.02, 1.025],
-    ),
-    makeStatWithManyAmounts(
-      StatTypes.FLOOR_POT,
-      [1.01, 1.015, 1.02, 1.025],
-    ),
-    makeStatWithManyAmounts(
-      StatTypes.DMG_RES,
-      [1.01, 1.015, 1.02, 1.025],
-    ),
-  ]),
-);
+const mastery_bp = [6, 8, 10, 12];
+const mastery_pot_amount = [1.01, 1.015, 1.02, 1.025];
+const mastery_floor_pot = [1.01, 1.015, 1.02, 1.025];
+const mastery_dmg_res = [1.01, 1.015, 1.02, 1.025];
+for (let i = 0; i < 4; i++) {
+  const level = i + 1;
+  const stats = [
+    makeStat(StatTypes.BP, mastery_bp[i]),
+    makeStat(StatTypes.POT, mastery_pot_amount[i]),
+    makeStat(StatTypes.FLOOR_POT, mastery_floor_pot[i]),
+    makeStat(StatTypes.DMG_RES, mastery_dmg_res[i]),
+  ];
+  augments.push(
+    makeAugmentData("mastery", level, GROUP, CONFLICT, stats),
+  );
+}
 
 export default augments;

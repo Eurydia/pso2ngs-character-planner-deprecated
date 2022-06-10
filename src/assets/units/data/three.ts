@@ -1,5 +1,5 @@
 import { StatTypes, makeStat } from "../../stats";
-import { makeUnit } from "../makeUnit";
+import { makeUnitData } from "../makeUnitData";
 import { UnitData } from "../types";
 
 // -------------------------
@@ -10,7 +10,7 @@ let units: UnitData[] = [];
 // -------------------------
 // theseus
 units.push(
-  makeUnit("theseus armor", RARITY, 5, 10, [
+  makeUnitData("theseus armor", RARITY, 5, 10, [
     makeStat(StatTypes.HP, 10),
     makeStat(StatTypes.PP, 1),
   ]),
@@ -19,7 +19,7 @@ units.push(
 // -------------------------
 // gold primm
 units.push(
-  makeUnit("gold primm armor", RARITY, 5, 10, [
+  makeUnitData("gold primm armor", RARITY, 5, 10, [
     makeStat(StatTypes.HP, 10),
     makeStat(StatTypes.PP, 1),
   ]),

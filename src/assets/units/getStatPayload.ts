@@ -1,7 +1,12 @@
-import { UseButtonParameters } from "@mui/base";
-import { makeStat, Stat, StatPayload, StatTypes } from "../stats";
-import { WeaponSeries } from "../potentials";
-import { WeaponData } from "./types";
+import {
+  makeConditional,
+  makeStat,
+  makeStatPayload,
+  Stat,
+  StatPayload,
+  StatTypes,
+} from "../stats";
+import { UnitData } from "./types";
 
 interface GrowthRate {
   enhancement: number;
@@ -16,57 +21,55 @@ const makeGrowthRate = (
     bonus,
   });
 };
-
 const ONE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
   [
-    makeGrowthRate(10, 22),
-    makeGrowthRate(20, 46),
-    makeGrowthRate(30, 63),
-    makeGrowthRate(40, 82),
-    makeGrowthRate(50, 161),
+    makeGrowthRate(10, 10),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ],
 );
 const TWO_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
   [
-    makeGrowthRate(10, 16),
-    makeGrowthRate(20, 33),
-    makeGrowthRate(30, 50),
-    makeGrowthRate(40, 69),
-    makeGrowthRate(50, 143),
+    makeGrowthRate(10, 10),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ],
 );
 const THREE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
-    makeGrowthRate(20, 21),
-    makeGrowthRate(30, 32),
-    makeGrowthRate(40, 47),
-    makeGrowthRate(50, 115),
+    makeGrowthRate(20, 20),
+    makeGrowthRate(30, 30),
+    makeGrowthRate(40, 40),
+    makeGrowthRate(50, 50),
   ]);
 const FOUR_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
     makeGrowthRate(20, 20),
     makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 108),
+    makeGrowthRate(40, 41),
+    makeGrowthRate(50, 51),
   ]);
 const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
   Object.freeze([
     makeGrowthRate(10, 10),
     makeGrowthRate(20, 20),
     makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 92),
+    makeGrowthRate(40, 41),
+    makeGrowthRate(50, 51),
   ]);
 
-export const getWeaponAtk = (
-  base_atk: number,
-  rarity: number,
+export const getUnitDefense = (
+  unit: UnitData,
   enhancement: number,
 ): Stat => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
-  switch (rarity) {
+  switch (unit.rarity) {
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -100,15 +103,22 @@ export const getWeaponAtk = (
       bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(StatTypes.ATK, base_atk + Math.round(bonus));
+  return makeStat(
+    StatTypes.DEF,
+    unit.base_defense + Math.round(bonus),
+  );
 };
 
-export const getStatsFromWeapon = (
-  base_atk: number,
-  rarity: number,
+export const getUnitStatPayload = (
+  unit: UnitData,
   enhancement: number,
-  pot_series: WeaponSeries,
-  pot_level: number,
 ): StatPayload => {
-  const atk = getWeaponAtk(base_atk, rarity, enhancement);
+  const unit_def = getUnitDefense(unit, enhancement);
+  const unit_payload = unit.payload;
+
+  const stats = [unit_def, ...unit_payload.stats];
+  // this is intentional
+  const conditionals = [...unit_payload.conditionals];
+
+  return makeStatPayload(stats, conditionals);
 };

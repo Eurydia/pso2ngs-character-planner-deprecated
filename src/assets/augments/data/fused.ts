@@ -5,7 +5,7 @@ import {
   StatTypes,
   OFFENSIVE_POT,
 } from "../../stats";
-import { makeAugment } from "../makeAugment";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -34,7 +34,7 @@ p_names.forEach((p_name, i) => {
     const stats = j < 2 ? [s_stat, p_stat] : [p_stat, s_stat]; // order the stats
 
     augments.push(
-      makeAugment(`${s_name} ${p_name}`, 0, GROUP, CONFLICT, [
+      makeAugmentData(`${s_name} ${p_name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         ...stats,
       ]),

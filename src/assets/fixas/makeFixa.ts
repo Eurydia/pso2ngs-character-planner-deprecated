@@ -1,4 +1,4 @@
-import { Stat } from "../stats";
+import { Conditional, makeStatPayload, Stat } from "../stats";
 import { FixaData, FixaTypes } from "./types";
 
 /**
@@ -13,13 +13,15 @@ export const makeFixa = (
   level: number,
   fixa_type: FixaTypes,
   stats: Stat[],
+  conditionals: Conditional[] = [],
 ): FixaData => {
-  return Object.freeze({
+  const payload = makeStatPayload(stats, conditionals);
+  return {
     name,
     level,
-    stats,
     fixa_type,
-  });
+    payload,
+  };
 };
 
 // export const makeManyFixa = (

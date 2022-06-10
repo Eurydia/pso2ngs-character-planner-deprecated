@@ -5,7 +5,7 @@ import { default as four } from "./data/four";
 import { default as five } from "./data/five";
 
 export * from "./types";
-export * from "./getStat";
+export * from "./getStatPayload";
 
 const UNITS = Object.freeze([
   ...one,

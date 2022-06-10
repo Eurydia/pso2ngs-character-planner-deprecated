@@ -46,6 +46,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
 
     const disabled = weapon === null && props.isRealistic;
 
+    const payload = [];
     return (
       <CustomCard
         frontTitle="Weapon"
@@ -99,14 +100,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         backTitleIcon={<AutoAwesome />}
         backContent={
           <Box sx={{ height: 400 }}>
-            <StatsList
-              weapon={weapon}
-              unit={null}
-              fixa={fixa}
-              augments={augments}
-              enhancement={enhancement}
-              potential_level={potLevel}
-            />
+            <StatsList pot_level={potLevel} />
           </Box>
         }
       />

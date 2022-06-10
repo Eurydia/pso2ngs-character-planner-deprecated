@@ -1,5 +1,5 @@
 import { makeStat, StatTypes } from "../../stats";
-import { makeAugment } from "../makeAugment";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -11,7 +11,7 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // fusia
 augments.push(
-  makeAugment("megas fusia", 0, GROUP, CONFLICT, [
+  makeAugmentData("megas fusia", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.POT, 1.01),
   ]),

@@ -64,10 +64,10 @@ export const AILMENT_RES = [
   StatTypes.PHYDOWN_RES,
 ];
 
-export type Stat = {
+export type Stat = Readonly<{
   stat_type: StatTypes;
   amount: number;
-};
+}>;
 
 export type StatWithManyAmounts = {
   stat_type: StatTypes;
@@ -77,15 +77,15 @@ export type StatWithManyAmounts = {
 // TODO: To allow for a more robust conditional system,
 // the condition might have to use `event trigger` enums
 // instead of simple string
-export type Conditional = {
+export type Conditional = Readonly<{
   stats: Stat[];
   condition: string;
-};
+}>;
 
-export type ConditionalWithManyAmounts = Readonly<{
+export type ConditionalWithManyAmounts = {
   stats_with_many_amounts: StatWithManyAmounts[];
   condition: string;
-}>;
+};
 
 export type StatPayload = {
   stats: Stat[];

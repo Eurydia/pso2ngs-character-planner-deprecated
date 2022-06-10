@@ -6,7 +6,7 @@ import { default as five } from "./data/five";
 import { WeaponData } from "./types";
 
 export * from "./types";
-export * from "./getStat";
+export * from "./getStatPayload";
 
 const WEAPONS: ReadonlyArray<WeaponData> = Object.freeze([
   ...one,

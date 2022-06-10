@@ -4,7 +4,7 @@ import {
   StatTypes,
   OFFENSIVE_POT,
 } from "../../stats";
-import { DOUBLE_STATS, makeAugment } from "../makeAugment";
+import { DOUBLE_STATS, makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -19,7 +19,7 @@ const suffixes = ["b", "c", "d"];
 // ael exploration
 // note a
 augments.push(
-  makeAugment("ael note a", 0, GROUP, CONFLICT, [
+  makeAugmentData("ael note a", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 5),
     makeStat(StatTypes.PP, 3),
@@ -30,7 +30,7 @@ suffixes.forEach((suffix, i) => {
   const stats = makeManyStatsWithSameAmount(DOUBLE_STATS[i], 1.01);
 
   augments.push(
-    makeAugment(`ael note ${suffix}`, 0, GROUP, CONFLICT, [
+    makeAugmentData(`ael note ${suffix}`, 0, GROUP, CONFLICT, [
       makeStat(StatTypes.BP, 4),
       ...stats,
     ]),
@@ -45,7 +45,7 @@ ael_combat_names.forEach((name, i) => {
   const stat = makeStat(OFFENSIVE_POT[i], 10.15);
 
   augments.push(
-    makeAugment(`${name} note`, 0, GROUP, CONFLICT, [
+    makeAugmentData(`${name} note`, 0, GROUP, CONFLICT, [
       makeStat(StatTypes.BP, 5),
       stat,
     ]),
@@ -56,7 +56,7 @@ ael_combat_names.forEach((name, i) => {
 // ret exploration
 // note a
 augments.push(
-  makeAugment("ret note a", 0, GROUP, CONFLICT, [
+  makeAugmentData("ret note a", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
   ]),
@@ -66,7 +66,7 @@ suffixes.forEach((suffix, i) => {
   const stats = makeManyStatsWithSameAmount(DOUBLE_STATS[i], 1.0075);
 
   augments.push(
-    makeAugment(`ret note ${suffix}`, 0, GROUP, CONFLICT, [
+    makeAugmentData(`ret note ${suffix}`, 0, GROUP, CONFLICT, [
       makeStat(StatTypes.BP, 4),
       ...stats,
     ]),
@@ -77,7 +77,7 @@ suffixes.forEach((suffix, i) => {
 // ret combat
 // alno
 augments.push(
-  makeAugment(`alno note`, 0, GROUP, CONFLICT, [
+  makeAugmentData(`alno note`, 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
     makeStat(StatTypes.PP, 3),
@@ -86,7 +86,7 @@ augments.push(
 );
 // maqea
 augments.push(
-  makeAugment(`maqea note`, 0, GROUP, CONFLICT, [
+  makeAugmentData(`maqea note`, 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.POT, 1.0125),
   ]),

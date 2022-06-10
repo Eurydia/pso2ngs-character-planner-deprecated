@@ -1,7 +1,35 @@
 import { AugmentData, AugmentDataSignature } from "../augments";
 import { FixaData, FixaDataSignature } from "../fixas";
-import { Conditional, Stat } from "../stats";
-import { WeaponSeries, PotentialData } from "../potentials";
+import { Stat, StatPayload } from "../stats";
+
+export enum PotentialSeries {
+  RECYCLER_UNIT = "RECYCLER_UNIT",
+  INDOMITABLE_UNIT = "INDOMITABLE_UNIT",
+  DEFENSEIVE_FORMATION = "DEFENSEIVE_FORMATION",
+  OFFENSIVE_FORMATION = "OFFENSIVE_FORMATION",
+  VALOROUS_UNIT = "VALOROUS_UNIT",
+  DYNAMO_UNIT = "DYNAMO_UNIT",
+  MUSTERED_MIGHT_UNIT = "MUSTERED_MIGHT_UNIT",
+  BASTION_UNIT = "BASTION_UNIT",
+  MEDITATION_UNIT = "MEDITATION_UNIT",
+  BERSERK_UNIT = "BERSERK_UNIT",
+  SOULSPRING_UNIT = "SOULSPRING_UNIT",
+  FORTRESS_UNIT = "FORTRESS_UNIT",
+  REINVIGORATING_UNIT = "REINVIGORATING_UNIT",
+  FOCUSED_UNIT = "FOCUSED_UNIT",
+  FIGHTING_SPIRIT_UNIT = "FIGHTING_SPIRIT_UNIT",
+  VIGOROUS_UNIT = "VIGOROUS_UNIT",
+  EXPLOSIVE_UNIT = "EXPLOSIVE_UNIT",
+  HARMONIOUS_UNIT = "HARMONIOUS_UNIT",
+  IMBUED_UNIT = "IMBUED_UNIT",
+  VIRTUOSO_UNIT = "VIRTUOSO_UNIT",
+  UNASSAILABLE_UNIT = "UNASSAILABLE_UNIT",
+}
+
+export type PotentialData = {
+  name: string | PotentialSeries;
+  getPayload: (pot_level: number) => StatPayload;
+};
 
 /**
  * If you know the name of a weapon,
@@ -20,11 +48,14 @@ export type WeaponData = Readonly<
     rarity: number;
     level_required: number;
     base_attack: number;
-    stats: Stat[];
+    payload: StatPayload;
     potential: PotentialData;
   }
 >;
-
+/**
+ * What a weapon looks like when fully combined
+ * with other aspects.
+ */
 export type Weapon = {
   weapon: WeaponData | null;
   enhancement: number;

@@ -4,7 +4,7 @@ import {
   makeManyStatsWithSameAmount,
   OFFENSIVE_POT,
 } from "../../stats";
-import { makeUnit, SUFFIXES } from "../makeUnit";
+import { makeUnitData, SUFFIXES } from "../makeUnitData";
 import { UnitData } from "../types";
 
 // -------------------------
@@ -15,7 +15,7 @@ let units: UnitData[] = [];
 // -------------------------
 // vidal
 units.push(
-  makeUnit("vidal armor", RARITY, 24, 22, [
+  makeUnitData("vidal armor", RARITY, 24, 22, [
     makeStat(StatTypes.HP, 45),
     makeStat(StatTypes.DMG_RES, 1.01),
   ]),
@@ -24,7 +24,7 @@ units.push(
 // -------------------------
 // vijf
 units.push(
-  makeUnit("vijf armor", RARITY, 24, 17, [
+  makeUnitData("vijf armor", RARITY, 24, 17, [
     makeStat(StatTypes.HP, 30),
     makeStat(StatTypes.PP, 4),
   ]),
@@ -32,7 +32,7 @@ units.push(
 // vijf arga, belta, sheza
 SUFFIXES.forEach((suffix) =>
   units.push(
-    makeUnit(`vijf armor ${suffix.name}`, RARITY, 31, 18, [
+    makeUnitData(`vijf armor ${suffix.name}`, RARITY, 31, 18, [
       makeStat(StatTypes.HP, 20),
       makeStat(StatTypes.PP, 7),
       ...makeManyStatsWithSameAmount(suffix.stat_types, 1.01),
@@ -43,7 +43,7 @@ SUFFIXES.forEach((suffix) =>
 // -------------------------
 // vios
 units.push(
-  makeUnit("vios armor", RARITY, 24, 15, [
+  makeUnitData("vios armor", RARITY, 24, 15, [
     makeStat(StatTypes.PP, 8),
     makeStat(StatTypes.POT, 1.01),
   ]),
@@ -52,7 +52,7 @@ units.push(
 // -------------------------
 // vindalun
 units.push(
-  makeUnit("vindalun armor", RARITY, 26, 20, [
+  makeUnitData("vindalun armor", RARITY, 26, 20, [
     makeStat(StatTypes.HP, 70),
   ]),
 );
@@ -60,7 +60,7 @@ units.push(
 // -------------------------
 // viosel
 units.push(
-  makeUnit("viosel armor", RARITY, 26, 10, [
+  makeUnitData("viosel armor", RARITY, 26, 10, [
     makeStat(StatTypes.PP, 14),
     makeStat(StatTypes.AILMENT_RES, 1.2),
   ]),
@@ -69,7 +69,7 @@ units.push(
 // -------------------------
 // gres
 units.push(
-  makeUnit("gres armor", RARITY, 31, 21, [
+  makeUnitData("gres armor", RARITY, 31, 21, [
     makeStat(StatTypes.HP, -40),
     makeStat(StatTypes.PP, 13),
     makeStat(StatTypes.POT, 1.02),
@@ -81,7 +81,7 @@ units.push(
 const schwar = ["schwarzest", "schwarzgarde", "schwarzrosso"];
 schwar.forEach((name, i) =>
   units.push(
-    makeUnit(`${name} armor`, RARITY, 31, 20, [
+    makeUnitData(`${name} armor`, RARITY, 31, 20, [
       makeStat(StatTypes.HP, 25),
       makeStat(StatTypes.PP, 3),
       makeStat(OFFENSIVE_POT[i], 1.02),

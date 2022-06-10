@@ -1,4 +1,4 @@
-import { Stat } from "../stats";
+import { Stat, StatPayload } from "../stats";
 
 export enum FixaTypes {
   WEAPON = "WEAPON",
@@ -13,6 +13,6 @@ export type FixaDataSignature = {
 export type FixaData = Readonly<
   FixaDataSignature & {
     fixa_type: FixaTypes;
-    stats: Stat[];
+    payload: StatPayload;
   }
 >;

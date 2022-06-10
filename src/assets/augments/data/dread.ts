@@ -1,5 +1,5 @@
-import { makeStatWithManyAmounts, StatTypes } from "../../stats";
-import { makeManyAugments } from "../makeAugment";
+import { makeStat, StatTypes } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -10,14 +10,26 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // dread keeper
-augments.push(
-  ...makeManyAugments("dread keeper", 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [7, 7.5, 10]),
-    makeStatWithManyAmounts(StatTypes.HP, [10, 15, 30]),
-    makeStatWithManyAmounts(StatTypes.PP, [3, 4, 7]),
-    makeStatWithManyAmounts(StatTypes.FLOOR_POT, [1.01, 1.015, 1.02]),
-    makeStatWithManyAmounts(StatTypes.DMG_RES, [1.01, 1.015, 1.02]),
-  ]),
-);
+(() => {
+  const dk_bp = [7, 7.5, 10];
+  const dk_hp = [10, 15, 30];
+  const dk_pp = [3, 4, 7];
+  const dk_floor_pot = [1.01, 1.015, 1.02];
+  const dk_dmg_res = [1.01, 1.015, 1.02];
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, dk_bp[i]),
+      makeStat(StatTypes.HP, dk_hp[i]),
+      makeStat(StatTypes.PP, dk_pp[i]),
+      makeStat(StatTypes.FLOOR_POT, dk_floor_pot[i]),
+      makeStat(StatTypes.DMG_RES, dk_dmg_res[i]),
+    ];
+    // generic
+    augments.push(
+      makeAugmentData("dread keeper", level, GROUP, CONFLICT, stats),
+    );
+  }
+})();
 
 export default augments;

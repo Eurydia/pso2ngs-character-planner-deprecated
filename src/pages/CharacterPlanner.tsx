@@ -26,7 +26,6 @@ import WEAPONS, {
   WeaponSignature,
 } from "../assets/weapons";
 import AUGMENTS, {
-  AugmentData,
   AugmentDataSignature,
   typeguardAugmentDataSignature,
 } from "../assets/augments";
@@ -75,7 +74,7 @@ const storeWeaponToLocal = ({
   augments,
 }: Weapon) => {
   const weapon_sig: WeaponDataSignature | null = weapon
-    ? { name: weapon.name, series: weapon.series }
+    ? { name: weapon.name }
     : null;
 
   const fixa_sig: FixaDataSignature | null = fixa
@@ -132,10 +131,7 @@ const getWeaponFromLocal = (): Weapon => {
     typeguardWeaponDataSignature(stored.weapon)
   ) {
     for (const weapon_data of WEAPONS) {
-      if (
-        weapon_data.name === stored.weapon.name &&
-        weapon_data.series === stored.weapon.series
-      ) {
+      if (weapon_data.name === stored.weapon.name) {
         res.weapon = weapon_data;
         break;
       }

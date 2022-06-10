@@ -1,4 +1,4 @@
-import { Conditional, Stat } from "../stats";
+import { Conditional, Stat, StatPayload } from "../stats";
 
 export enum AugmentGroups {
   BASIC = "BASIC",
@@ -28,7 +28,6 @@ export type AugmentData = Readonly<
   AugmentDataSignature & {
     group: AugmentGroups;
     conflict: AugmentGroups[];
-    stats: Stat[];
-    conditionals: Conditional[];
+    payload: StatPayload;
   }
 >;

@@ -1,5 +1,5 @@
 import { makeStat, StatTypes } from "../../stats";
-import { makeAugment } from "../makeAugment";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -11,7 +11,7 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // ael
 augments.push(
-  makeAugment("ael domina", 0, GROUP, CONFLICT, [
+  makeAugmentData("ael domina", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 8),
     makeStat(StatTypes.HP, 5),
     makeStat(StatTypes.PP, 3),
@@ -22,7 +22,7 @@ augments.push(
 // --------------------------------------
 // ret
 augments.push(
-  makeAugment("ret domina", 0, GROUP, CONFLICT, [
+  makeAugmentData("ret domina", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 8),
     makeStat(StatTypes.HP, 15),
     makeStat(StatTypes.POT, 1.015),

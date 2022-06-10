@@ -1,5 +1,5 @@
 import { makeConditional, makeStat, StatTypes } from "../../stats";
-import { makeAugment } from "../makeAugment";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -20,7 +20,7 @@ const elements = [
 // exploits
 elements.forEach((element) => {
   augments.push(
-    makeAugment(
+    makeAugmentData(
       `${element} exploit`,
       1,
       GROUP,

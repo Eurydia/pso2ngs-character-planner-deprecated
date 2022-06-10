@@ -60,11 +60,6 @@ export const getCategoryStat = (
   category: FoodCategory,
   number_of_items_used: number,
 ): StatPayload => {
-  const amount = getCategoryStatAmount(
-    category,
-    number_of_items_used,
-  );
-
   let stat_type = StatTypes.POT;
   switch (category) {
     case FoodCategory.VEGETABLE:
@@ -78,5 +73,9 @@ export const getCategoryStat = (
       break;
   }
 
+  const amount = getCategoryStatAmount(
+    category,
+    number_of_items_used,
+  );
   return makeStatPayload([makeStat(stat_type, amount)]);
 };

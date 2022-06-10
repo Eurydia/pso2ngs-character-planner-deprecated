@@ -1,21 +1,18 @@
 import { StatTypes, makeStat } from "../../stats";
-import { makeWeapon } from "../makeWeapon";
+import { makeWeaponData } from "../makeWeaponData";
+import { RECYCLER_UNIT } from "../potential-data";
 import { WeaponData } from "../types";
-import { WeaponSeries } from "../../potentials";
 
 // -----------------------
 const RARITY = 1;
 let weapons: WeaponData[] = [];
 // -----------------------
 
+// -----------------------
 weapons.push(
-  makeWeapon(
-    "primm weapons",
-    WeaponSeries.RECYCLER_UNIT,
-    RARITY,
-    1,
-    177,
-    [makeStat(StatTypes.FLOOR_POT, 1.7)],
-  ),
+  makeWeaponData("primm weapons", RARITY, 1, RECYCLER_UNIT, 177, [
+    makeStat(StatTypes.FLOOR_POT, 1.7),
+  ]),
 );
+
 export default weapons;

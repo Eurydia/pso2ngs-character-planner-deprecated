@@ -1,4 +1,10 @@
-import { FC, HTMLAttributes, memo, SyntheticEvent } from "react";
+import {
+  FC,
+  Fragment,
+  HTMLAttributes,
+  memo,
+  SyntheticEvent,
+} from "react";
 import {
   Autocomplete,
   TextField,
@@ -19,6 +25,10 @@ import WEAPONS, {
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
 
+const OPTIONS = [...WEAPONS].sort(
+  (a, b) => a.level_required - b.level_required,
+);
+
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: WeaponData,
@@ -26,7 +36,8 @@ const renderOption = (
   enhancement: number,
 ) => {
   const bonus_atk =
-    getWeaponAtk(option, enhancement).amount - option.base_attack;
+    getWeaponAtk(option.base_attack, option.rarity, enhancement)
+      .amount - option.base_attack;
 
   return (
     <MenuItem {...props}>
@@ -57,9 +68,11 @@ const renderOption = (
             {`${option.name} +${enhancement}`}
           </Typography>
           <Typography
+            noWrap
             fontSize="small"
             sx={{
               textTransform: "capitalize",
+              width: 1,
             }}
           >
             {`level required ${option.level_required}`}
@@ -119,8 +132,8 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
     return (
       <Autocomplete
         value={props.value}
-        options={WEAPONS}
         // -------
+        options={OPTIONS}
         onChange={handleChange}
         filterOptions={filterOptions}
         renderOption={(p, o, s) =>

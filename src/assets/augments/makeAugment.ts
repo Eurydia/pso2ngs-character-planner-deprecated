@@ -6,10 +6,12 @@ import {
   Conditional,
   ConditionalWithManyAmounts,
   makeConditional,
+  makeStatPayload,
 } from "../stats";
 import { AugmentData, AugmentGroups } from "./types";
 
-export const makeAugment = (
+// TODO: Clean up this file
+export const makeAugmentData = (
   name: string,
   level: number,
   group: AugmentGroups,
@@ -18,15 +20,15 @@ export const makeAugment = (
   conditionals: Conditional[] = [],
   isSType: boolean = false,
 ): AugmentData => {
-  return Object.freeze({
+  const payload = makeStatPayload(stats, conditionals);
+  return {
     name,
     level,
     isSType,
     group,
     conflict,
-    stats,
-    conditionals,
-  });
+    payload,
+  };
 };
 
 const getStatsFromStatsWMAmounts = (
@@ -45,7 +47,7 @@ const getStatsFromStatsWMAmounts = (
  * Make multiple augments all at once,
  * keep in mind that this function
  * doesn't have a param for `isSType`.
- * @param {string} name base name for augments to be built
+ * @param name base name for augments to be built
  * @param level
  * @param group
  * @param conflict
@@ -75,7 +77,14 @@ export const makeManyAugments = (
         ),
     );
     result.push(
-      makeAugment(name, i + 1, group, conflict, stats, conditionals),
+      makeAugmentData(
+        name,
+        i + 1,
+        group,
+        conflict,
+        stats,
+        conditionals,
+      ),
     );
   }
   return result;

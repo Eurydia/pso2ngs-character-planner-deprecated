@@ -1,4 +1,8 @@
-export const typeguardFixaDataSignature = (obj: any): boolean => {
+import { FixaDataSignature } from "./types";
+
+export const typeguardFixaDataSignature = (
+  obj: FixaDataSignature,
+): boolean => {
   if (typeof obj.name !== "string") {
     return false;
   }

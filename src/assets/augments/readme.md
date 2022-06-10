@@ -4,7 +4,7 @@
 
 The data structure of an augment looks like this.
 
-```Javascript
+```Typescript
 {
     name: string;
     level: number;

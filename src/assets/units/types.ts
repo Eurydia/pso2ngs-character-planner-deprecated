@@ -1,5 +1,5 @@
 import { AugmentData } from "../augments";
-import { Stat } from "../stats";
+import { StatPayload } from "../stats";
 import { FixaData } from "../fixas";
 
 export type UnitData = Readonly<{
@@ -7,7 +7,7 @@ export type UnitData = Readonly<{
   rarity: number;
   level_required: number;
   base_defense: number;
-  stats: Stat[];
+  payload: StatPayload;
 }>;
 
 export type Unit = {

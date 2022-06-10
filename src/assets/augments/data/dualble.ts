@@ -7,7 +7,7 @@ import {
 } from "../../stats";
 import {
   DOUBLE_STATS,
-  makeAugment,
+  makeAugmentData,
   makeManyAugments,
 } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
@@ -36,7 +36,7 @@ names.forEach((name, i) => {
   );
   // melra, meltech, ratech s
   augments.push(
-    makeAugment(
+    makeAugmentData(
       `${name} dualble`,
       3,
       AugmentGroups.S,

@@ -1,141 +1,191 @@
-import { StatTypes, makeStat } from "../../stats";
-import { makeWeapon } from "../makeWeapon";
+import { StatTypes, makeStat, makeConditional } from "../../stats";
+import { makeWeaponData } from "../makeWeaponData";
+import {
+  EXPLOSIVE_UNIT,
+  FIGHTING_SPIRIT_UNIT,
+  FOCUSED_UNIT,
+  FORTRESS_UNIT,
+  HARMONIOUS_UNIT,
+  IMBUED_UNIT,
+  REINVIGORATING_UNIT,
+  UNASSAILABLE_UNIT,
+  VALOROUS_UNIT,
+  VIGOROUS_UNIT,
+  VIRTUOSO_UNIT,
+} from "../potential-data";
 import { WeaponData } from "../types";
-import { WeaponSeries } from "../../potentials";
 
 // -----------------------
 const RARITY = 5;
 let weapons: WeaponData[] = [];
 // -----------------------
 
+// -----------------------
 weapons.push(
-  makeWeapon(
-    "quintel weapons",
-    WeaponSeries.FORTRESS_UNIT,
-    RARITY,
-    21,
-    277,
-    [makeStat(StatTypes.FLOOR_POT, 1.75)],
-  ),
+  makeWeaponData("quintel weapons", RARITY, 21, FORTRESS_UNIT, 277, [
+    makeStat(StatTypes.FLOOR_POT, 1.75),
+  ]),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "gothica weapons",
-    WeaponSeries.REINVIGORATING_UNIT,
     RARITY,
     21,
+    REINVIGORATING_UNIT,
     277,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
-    "fivla weapons",
-    WeaponSeries.FOCUSED_UNIT,
-    RARITY,
-    21,
-    277,
-    [makeStat(StatTypes.FLOOR_POT, 1.75)],
-  ),
+  makeWeaponData("fivla weapons", RARITY, 21, FOCUSED_UNIT, 277, [
+    makeStat(StatTypes.FLOOR_POT, 1.75),
+  ]),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "greaga weapons",
-    WeaponSeries.FIGHTING_SPIRIT_UNIT,
     RARITY,
     27,
+    FIGHTING_SPIRIT_UNIT,
     280,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "kukuhroziat  weapons",
-    WeaponSeries.UNASSAILABLE_UNIT,
     RARITY,
     27,
+    UNASSAILABLE_UNIT,
     280,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "relik weapons (vigorous)",
-    WeaponSeries.VIGOROUS_UNIT,
     RARITY,
     31,
+    VIGOROUS_UNIT,
     284,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "relik weapons (explosive)",
-    WeaponSeries.EXPLOSIVE_UNIT,
     RARITY,
     31,
+    EXPLOSIVE_UNIT,
     284,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "relik weapons (harmonious)",
-    WeaponSeries.HARMONIOUS_UNIT,
     RARITY,
     31,
+    HARMONIOUS_UNIT,
     284,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "relik weapons (imbued)",
-    WeaponSeries.IMBUED_UNIT,
     RARITY,
     31,
+    IMBUED_UNIT,
     284,
     [makeStat(StatTypes.FLOOR_POT, 1.75)],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
-    "cinquem weapons",
-    WeaponSeries.VIRTUOSO_UNIT,
-    RARITY,
-    36,
-    293,
-    [makeStat(StatTypes.FLOOR_POT, 1.75)],
-  ),
+  makeWeaponData("cinquem weapons", RARITY, 36, VIRTUOSO_UNIT, 293, [
+    makeStat(StatTypes.FLOOR_POT, 1.75),
+  ]),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "tempesta weapons",
-    WeaponSeries.VALOROUS_UNIT,
     RARITY,
     15,
+    VALOROUS_UNIT,
     263,
-    [makeStat(StatTypes.FLOOR_POT, 1.7)],
+    [
+      makeStat(StatTypes.FLOOR_POT, 1.7),
+      makeStat(StatTypes.DMG_BOOST, 1.1),
+    ],
+    [
+      makeConditional(
+        [makeStat(StatTypes.DMG_BOOST, 1.05)],
+        "is attacking enemy weak to wind",
+      ),
+    ],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "lumiere weapons",
-    WeaponSeries.VALOROUS_UNIT,
     RARITY,
     15,
+    VALOROUS_UNIT,
     263,
-    [makeStat(StatTypes.FLOOR_POT, 1.7)],
+    [
+      makeStat(StatTypes.FLOOR_POT, 1.7),
+      makeStat(StatTypes.DMG_BOOST, 1.1),
+    ],
+    [
+      makeConditional(
+        [makeStat(StatTypes.DMG_BOOST, 1.05)],
+        "is attacking enemy weak to light",
+      ),
+    ],
   ),
 );
+
+// -----------------------
 weapons.push(
-  makeWeapon(
+  makeWeaponData(
     "obscura weapons",
-    WeaponSeries.VALOROUS_UNIT,
     RARITY,
     15,
+    VALOROUS_UNIT,
     263,
-    [makeStat(StatTypes.FLOOR_POT, 1.7)],
+    [
+      makeStat(StatTypes.FLOOR_POT, 1.7),
+      makeStat(StatTypes.DMG_BOOST, 1.1),
+    ],
+    [
+      makeConditional(
+        [makeStat(StatTypes.DMG_BOOST, 1.05)],
+        "is attacking enemy weak to dark",
+      ),
+    ],
   ),
 );
+
 export default weapons;
