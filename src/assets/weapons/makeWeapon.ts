@@ -1,21 +1,21 @@
 import { Stat } from "../stats";
-import { WeaponSeries } from "../weapon-potentials";
+import { PotentialData } from "../potentials";
 import { WeaponData } from "./types";
 
 /**
  * Make a weapon
  * @param name
- * @param series
  * @param rarity
+ * @param potential
  * @param level_required
  * @param base_attack
  * @param stats
- * @returns
+ * @returns {WeaponData}
  */
 export const makeWeapon = (
   name: string,
-  series: WeaponSeries,
   rarity: number,
+  potential: PotentialData,
   level_required: number,
   base_attack: number,
   stats: Stat[],
@@ -24,7 +24,7 @@ export const makeWeapon = (
     name,
     rarity,
     level_required,
-    series,
+    potential,
     base_attack,
     stats,
   });

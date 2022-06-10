@@ -1,11 +1,12 @@
-import { makeStat, Stat, StatTypes } from "../stats";
+import { UseButtonParameters } from "@mui/base";
+import { makeStat, Stat, StatPayload, StatTypes } from "../stats";
+import { WeaponSeries } from "../potentials";
 import { WeaponData } from "./types";
 
 interface GrowthRate {
   enhancement: number;
   bonus: number;
 }
-
 const makeGrowthRate = (
   enhancement: number,
   bonus: number,
@@ -59,12 +60,13 @@ const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
     makeGrowthRate(50, 92),
   ]);
 
-export const getWeaponAttack = (
-  weapon: WeaponData,
+export const getWeaponAtk = (
+  base_atk: number,
+  rarity: number,
   enhancement: number,
 ): Stat => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
-  switch (weapon.rarity) {
+  switch (rarity) {
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -98,8 +100,15 @@ export const getWeaponAttack = (
       bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(
-    StatTypes.ATK,
-    weapon.base_attack + Math.round(bonus),
-  );
+  return makeStat(StatTypes.ATK, base_atk + Math.round(bonus));
+};
+
+export const getStatsFromWeapon = (
+  base_atk: number,
+  rarity: number,
+  enhancement: number,
+  pot_series: WeaponSeries,
+  pot_level: number,
+): StatPayload => {
+  const atk = getWeaponAtk(base_atk, rarity, enhancement);
 };

@@ -3,8 +3,8 @@ import { Divider, Grid, Stack, Typography, Box } from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,
-  getStatAmountFromCategory,
-  getStatAmountFromAttribute,
+  getCategoryStatAmount,
+  getAttributeStatAmount,
 } from "../../../assets/food-items";
 import { parseNumberToDisplay } from "../../../utility";
 import { FoodCategory } from "../../../assets/food-items";
@@ -109,10 +109,10 @@ const getFoodBuffs = (food_items: FoodItem[]): FoodBuff[] => {
     let amount = 0;
     if (Object.keys(FoodCategory).includes(key)) {
       const _key = key as FoodCategory;
-      amount = getStatAmountFromCategory(_key, level);
+      amount = getCategoryStatAmount(_key, level);
     } else {
       const _key = key as FoodAttribute;
-      amount = getStatAmountFromAttribute(_key, level);
+      amount = getAttributeStatAmount(_key, level);
     }
     res.push({
       name: BUFF_NAME[key],

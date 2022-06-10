@@ -1,19 +1,27 @@
 import { AugmentData, AugmentDataSignature } from "../augments";
 import { FixaData, FixaDataSignature } from "../fixas";
-import { Stat } from "../stats";
-import { WeaponSeries } from "../weapon-potentials";
+import { Conditional, Stat } from "../stats";
+import { WeaponSeries, PotentialData } from "../potentials";
 
-export type WeaponDataSignature = {
+/**
+ * If you know the name of a weapon,
+ * you should be able to know about everything else.
+ */
+export interface WeaponDataSignature {
   name: string;
-  series: WeaponSeries;
-};
+}
 
+/**
+ * Store the actual data of each weapon.
+ * Should be immutable.
+ */
 export type WeaponData = Readonly<
   WeaponDataSignature & {
     rarity: number;
     level_required: number;
     base_attack: number;
     stats: Stat[];
+    potential: PotentialData;
   }
 >;
 

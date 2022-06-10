@@ -1,5 +1,10 @@
 import { FoodCategory } from "../types";
-import { Stat, StatTypes, makeStat } from "../../stats";
+import {
+  StatTypes,
+  makeStat,
+  StatPayload,
+  makeStatPayload,
+} from "../../stats";
 
 const MEAT_BUFF_REF = Object.freeze([
   1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
@@ -22,7 +27,7 @@ const FRUIT_BUFF_REF = Object.freeze([
  * @param level 1-10
  * @returns
  */
-export const getStatAmountFromCategory = (
+export const getCategoryStatAmount = (
   category: FoodCategory,
   level: number,
 ): number => {
@@ -51,26 +56,27 @@ export const getStatAmountFromCategory = (
  * @param number_of_items_used Number of items with `category` used
  * @returns
  */
-export const getStatFromCategory = (
+export const getCategoryStat = (
   category: FoodCategory,
   number_of_items_used: number,
-): Stat => {
-  const amount = getStatAmountFromCategory(
+): StatPayload => {
+  const amount = getCategoryStatAmount(
     category,
     number_of_items_used,
   );
 
-  let stat = StatTypes.POT;
+  let stat_type = StatTypes.POT;
   switch (category) {
     case FoodCategory.VEGETABLE:
-      stat = StatTypes.DMG_RES;
+      stat_type = StatTypes.DMG_RES;
       break;
     case FoodCategory.SEAFOOD:
-      stat = StatTypes.HP_BOOST;
+      stat_type = StatTypes.HP_BOOST;
       break;
     case FoodCategory.FRUIT:
-      stat = StatTypes.PP;
+      stat_type = StatTypes.PP;
       break;
   }
-  return makeStat(stat, amount);
+
+  return makeStatPayload([makeStat(stat_type, amount)]);
 };

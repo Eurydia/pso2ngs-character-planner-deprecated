@@ -11,7 +11,7 @@ import { Accessibility } from "@mui/icons-material";
 
 import CHARACTER_CLASSES, {
   CharacterClassData,
-} from "../../assets/chracter-classes";
+} from "../../assets/character-classes";
 import ClassSearch from "./components/ClassSearch";
 import CustomCard from "../../components/CustomCard";
 import {

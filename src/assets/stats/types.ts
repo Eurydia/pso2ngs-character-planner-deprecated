@@ -86,3 +86,8 @@ export type ConditionalWithManyAmounts = Readonly<{
   stats_with_many_amounts: StatWithManyAmounts[];
   condition: string;
 }>;
+
+export type StatPayload = {
+  stats: Stat[];
+  conditionals: Conditional[];
+};

@@ -1,7 +1,7 @@
 import { StatTypes, makeStat } from "../../stats";
 import { makeWeapon } from "../makeWeapon";
 import { WeaponData } from "../types";
-import { WeaponSeries } from "../../weapon-potentials";
+import { WeaponSeries } from "../../potentials";
 
 // -----------------------
 const RARITY = 3;

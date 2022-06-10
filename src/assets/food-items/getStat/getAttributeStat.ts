@@ -5,6 +5,8 @@ import {
   makeStat,
   Conditional,
   makeConditional,
+  StatPayload,
+  makeStatPayload,
 } from "../../stats";
 
 const CRISPY_BUFF_REF = Object.freeze([
@@ -28,7 +30,7 @@ const RICH_BUFF_REF = Object.freeze([
  * @param level 1-7
  * @returns
  */
-export const getStatAmountFromAttribute = (
+export const getAttributeStatAmount = (
   attribute: FoodAttribute,
   level: number,
 ): number => {
@@ -55,30 +57,35 @@ export const getStatAmountFromAttribute = (
  * @param number_of_items_used Number of items with `attribute` used
  * @returns
  */
-export const getStatFromAttribute = (
+export const getAttributeStat = (
   attribute: FoodAttribute,
   number_of_items_used: number,
-): Stat | Conditional => {
-  const amount = getStatAmountFromAttribute(
+): StatPayload => {
+  const amount = getAttributeStatAmount(
     attribute,
     number_of_items_used - 3,
   );
 
-  if (attribute === FoodAttribute.CRISPY) {
-    return makeConditional(
-      [makeStat(StatTypes.DMG_BOOST, amount)],
-      "is attacking weak point.",
-    );
-  }
-
-  let stat = StatTypes.PP_GAIN;
+  let stats: Stat[] = [];
+  let conditionals: Conditional[] = [];
   switch (attribute) {
+    case FoodAttribute.CRISPY:
+      conditionals = [
+        makeConditional(
+          [makeStat(StatTypes.DMG_BOOST, amount)],
+          "is attacking weak point",
+        ),
+      ];
+      break;
+    case FoodAttribute.LIGHT:
+      stats = [makeStat(StatTypes.PP_GAIN, amount)];
+      break;
     case FoodAttribute.ROBUST:
-      stat = StatTypes.HP_RECOVERY_BOOST;
+      stats = [makeStat(StatTypes.HP_RECOVERY_BOOST, amount)];
       break;
     case FoodAttribute.RICH:
-      stat = StatTypes.PP_USAGE;
+      stats = [makeStat(StatTypes.PP_USAGE, amount)];
       break;
   }
-  return makeStat(stat, amount);
+  return makeStatPayload(stats, conditionals);
 };

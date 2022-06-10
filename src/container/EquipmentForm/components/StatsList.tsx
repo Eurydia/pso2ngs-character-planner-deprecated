@@ -5,8 +5,8 @@ import { AugmentData } from "../../../assets/augments";
 import { FixaData } from "../../../assets/fixas";
 import { Stat, StatTypes } from "../../../assets/stats";
 import { getUnitDefense, UnitData } from "../../../assets/units";
-import { getPotentialStats } from "../../../assets/weapon-potentials";
-import { getWeaponAttack, WeaponData } from "../../../assets/weapons";
+import { getPotentialStats } from "../../../assets/potentials";
+import { getWeaponAtk, WeaponData } from "../../../assets/weapons";
 import {
   stackStats,
   parseStatToDisplay,
@@ -45,7 +45,7 @@ const StatsList: FC<StatsListProps> = (props) => {
   let conditionals: string[] = [];
 
   if (props.weapon !== null) {
-    const w_atk = getWeaponAttack(props.weapon, props.enhancement);
+    const w_atk = getWeaponAtk(props.weapon, props.enhancement);
 
     const w_pot = getPotentialStats(
       props.weapon.series,

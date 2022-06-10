@@ -14,7 +14,7 @@ import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
 import WEAPONS, {
-  getWeaponAttack,
+  getWeaponAtk,
   WeaponData,
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
@@ -26,7 +26,7 @@ const renderOption = (
   enhancement: number,
 ) => {
   const bonus_atk =
-    getWeaponAttack(option, enhancement).amount - option.base_attack;
+    getWeaponAtk(option, enhancement).amount - option.base_attack;
 
   return (
     <MenuItem {...props}>

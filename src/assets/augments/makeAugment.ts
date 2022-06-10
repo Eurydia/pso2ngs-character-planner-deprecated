@@ -21,11 +21,11 @@ export const makeAugment = (
   return Object.freeze({
     name,
     level,
-    stats,
+    isSType,
     group,
     conflict,
+    stats,
     conditionals,
-    isSType,
   });
 };
 

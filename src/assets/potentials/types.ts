@@ -1,4 +1,10 @@
-import { Conditional, Stat } from "../stats";
+import {
+  Conditional,
+  ConditionalWithManyAmounts,
+  Stat,
+  StatPayload,
+  StatWithManyAmounts,
+} from "../stats";
 
 export enum WeaponSeries {
   RECYCLER_UNIT = "RECYCLER_UNIT",
@@ -24,7 +30,12 @@ export enum WeaponSeries {
   UNASSAILABLE_UNIT = "UNASSAILABLE_UNIT",
 }
 
-export interface PotentialData {
-  stats: Stat[];
-  conditionals: Conditional[];
-}
+export type PotentialDataSignature = {
+  series_name: string;
+};
+
+export type PotentialData = Readonly<
+  PotentialDataSignature & {
+    [level: number]: StatPayload;
+  }
+>;

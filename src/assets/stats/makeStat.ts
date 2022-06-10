@@ -3,6 +3,7 @@ import {
   Stat,
   Conditional,
   StatWithManyAmounts,
+  StatPayload,
 } from "./types";
 
 export const makeStat = (
@@ -32,6 +33,16 @@ export const makeConditional = (
   return {
     stats,
     condition,
+  };
+};
+
+export const makeStatPayload = (
+  stats: Stat[],
+  conditionals: Conditional[] = [],
+): StatPayload => {
+  return {
+    stats,
+    conditionals,
   };
 };
 
