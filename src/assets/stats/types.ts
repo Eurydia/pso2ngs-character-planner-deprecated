@@ -69,11 +69,6 @@ export type Stat = Readonly<{
   amount: number;
 }>;
 
-export type StatWithManyAmounts = {
-  stat_type: StatTypes;
-  many_amount: number[];
-};
-
 // TODO: To allow for a more robust conditional system,
 // the condition might have to use `event trigger` enums
 // instead of simple string
@@ -81,11 +76,6 @@ export type Conditional = Readonly<{
   stats: Stat[];
   condition: string;
 }>;
-
-export type ConditionalWithManyAmounts = {
-  stats_with_many_amounts: StatWithManyAmounts[];
-  condition: string;
-};
 
 export type StatPayload = {
   stats: Stat[];
