@@ -1,10 +1,5 @@
-import {
-  makeStat,
-  makeManyStatsWithSameAmount,
-  StatTypes,
-  OFFENSIVE_POT,
-} from "../../stats";
-import { DOUBLE_STATS, makeAugmentData } from "../makeAugment";
+import { makeStat, StatTypes, OFFENSIVE_POT } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -13,83 +8,121 @@ const CONFLICT: AugmentGroups[] = [AugmentGroups.NOTE];
 let augments: AugmentData[] = [];
 // --------------------------------------
 
-const suffixes = ["b", "c", "d"];
-
 // --------------------------------------
-// ael exploration
-// note a
-augments.push(
-  makeAugmentData("ael note a", 0, GROUP, CONFLICT, [
-    makeStat(StatTypes.BP, 5),
-    makeStat(StatTypes.HP, 5),
-    makeStat(StatTypes.PP, 3),
-  ]),
-);
-//  note b, c, d
-suffixes.forEach((suffix, i) => {
-  const stats = makeManyStatsWithSameAmount(DOUBLE_STATS[i], 1.01);
-
+// ael
+// exploration
+(() => {
+  // a
   augments.push(
-    makeAugmentData(`ael note ${suffix}`, 0, GROUP, CONFLICT, [
-      makeStat(StatTypes.BP, 4),
-      ...stats,
-    ]),
-  );
-});
-
-// --------------------------------------
-// ael combat
-// magnus, lab, resola
-const ael_combat_names = ["magnus", "lab", "resola"];
-ael_combat_names.forEach((name, i) => {
-  const stat = makeStat(OFFENSIVE_POT[i], 10.15);
-
-  augments.push(
-    makeAugmentData(`${name} note`, 0, GROUP, CONFLICT, [
+    makeAugmentData("ael note a", 0, GROUP, CONFLICT, [
       makeStat(StatTypes.BP, 5),
-      stat,
+      makeStat(StatTypes.HP, 5),
+      makeStat(StatTypes.PP, 3),
     ]),
   );
-});
 
-// --------------------------------------
-// ret exploration
-// note a
-augments.push(
-  makeAugmentData("ret note a", 0, GROUP, CONFLICT, [
-    makeStat(StatTypes.BP, 5),
-    makeStat(StatTypes.HP, 10),
-  ]),
-);
-// note b, c, d
-suffixes.forEach((suffix, i) => {
-  const stats = makeManyStatsWithSameAmount(DOUBLE_STATS[i], 1.0075);
-
+  // b
   augments.push(
-    makeAugmentData(`ret note ${suffix}`, 0, GROUP, CONFLICT, [
+    makeAugmentData("ael note b", 0, GROUP, CONFLICT, [
       makeStat(StatTypes.BP, 4),
-      ...stats,
+      makeStat(StatTypes.MEL_POT, 1.01),
+      makeStat(StatTypes.RNG_POT, 1.01),
     ]),
   );
-});
+
+  // c
+  augments.push(
+    makeAugmentData("ael note c", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.MEL_POT, 1.0075),
+      makeStat(StatTypes.TEC_POT, 1.0075),
+    ]),
+  );
+
+  // d
+  augments.push(
+    makeAugmentData("ael note d", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.RNG_POT, 1.0075),
+      makeStat(StatTypes.TEC_POT, 1.0075),
+    ]),
+  );
+})();
+// combat
+// magnus | lab | resola
+(() => {
+  const names = ["magnus", "lab", "resola"];
+
+  for (let i = 0; i < 3; i++) {
+    const name = names[i];
+    const stats = [
+      makeStat(StatTypes.BP, 5),
+      makeStat(OFFENSIVE_POT[i], 1.015),
+    ];
+    augments.push(
+      makeAugmentData(`${name} note`, 0, GROUP, CONFLICT, stats),
+    );
+  }
+})();
 
 // --------------------------------------
-// ret combat
-// alno
-augments.push(
-  makeAugmentData(`alno note`, 0, GROUP, CONFLICT, [
-    makeStat(StatTypes.BP, 5),
-    makeStat(StatTypes.HP, 10),
-    makeStat(StatTypes.PP, 3),
-    makeStat(StatTypes.FLOOR_POT, 1.02),
-  ]),
-);
-// maqea
-augments.push(
-  makeAugmentData(`maqea note`, 0, GROUP, CONFLICT, [
-    makeStat(StatTypes.BP, 5),
-    makeStat(StatTypes.POT, 1.0125),
-  ]),
-);
+// ret
+// exploration
+(() => {
+  // a
+  augments.push(
+    makeAugmentData("ret note a", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 5),
+      makeStat(StatTypes.HP, 10),
+    ]),
+  );
+
+  // b
+  augments.push(
+    makeAugmentData("ret note b", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.MEL_POT, 1.0075),
+      makeStat(StatTypes.RNG_POT, 1.0075),
+    ]),
+  );
+
+  // c
+  augments.push(
+    makeAugmentData("ret note c", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.MEL_POT, 1.0075),
+      makeStat(StatTypes.TEC_POT, 1.0075),
+    ]),
+  );
+
+  // d
+  augments.push(
+    makeAugmentData("ret note d", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.RNG_POT, 1.0075),
+      makeStat(StatTypes.TEC_POT, 1.0075),
+    ]),
+  );
+})();
+// combat
+(() => {
+  // alno
+  augments.push(
+    makeAugmentData(`alno note`, 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 5),
+      makeStat(StatTypes.HP, 10),
+      makeStat(StatTypes.PP, 3),
+      makeStat(StatTypes.FLOOR_POT, 1.02),
+    ]),
+  );
+
+  // maqea
+  augments.push(
+    makeAugmentData(`maqea note`, 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 5),
+      makeStat(StatTypes.POT, 1.0125),
+    ]),
+  );
+})();
 
 export default augments;

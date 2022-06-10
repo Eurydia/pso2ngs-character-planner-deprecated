@@ -1,9 +1,5 @@
-import {
-  makeStatWithManyAmounts,
-  StatTypes,
-  AILMENT_RES,
-} from "../../stats";
-import { makeManyAugments } from "../makeAugment";
+import { StatTypes, AILMENT_RES, makeStat } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -14,36 +10,62 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // ward
-const names = [
-  "burn",
-  "freeze",
-  "shock",
-  "blind",
-  "panic",
-  "poison",
-  "pain",
-];
-names.forEach((name, i) => {
-  const stat = makeStatWithManyAmounts(
-    AILMENT_RES[i],
-    [1.2, 1.25, 1.3],
-  );
+(() => {
+  const names = [
+    "burn",
+    "freeze",
+    "shock",
+    "blind",
+    "panic",
+    "poison",
+    "pain",
+  ];
 
-  augments.push(
-    ...makeManyAugments(`${name} ward`, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [4, 5, 6]),
-      stat,
-    ]),
-  );
-});
+  const bp = [4, 5, 6];
+  const ailment_res = [1.2, 1.25, 1.3];
+
+  names.forEach((name, i) => {
+    for (let i = 0; i < 3; i++) {
+      const level = i + 1;
+      const stats = [
+        makeStat(StatTypes.BP, bp[i]),
+        makeStat(AILMENT_RES[i], ailment_res[i]),
+      ];
+      augments.push(
+        makeAugmentData(
+          `${name} ward`,
+          level,
+          GROUP,
+          CONFLICT,
+          stats,
+        ),
+      );
+    }
+  });
+})();
 
 // --------------------------------------
 // sovereign ward
-augments.push(
-  ...makeManyAugments("sovereign ward", 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [4, 5, 6]),
-    makeStatWithManyAmounts(StatTypes.AILMENT_RES, [1.2, 1.25, 1.3]),
-  ]),
-);
+(() => {
+  const bp = [6, 8, 10];
+  const ailemnt_res = [1.2, 1.25, 1.3];
+
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.AILMENT_RES, ailemnt_res[i]),
+    ];
+    augments.push(
+      makeAugmentData(
+        "sovereign ward",
+        level,
+        GROUP,
+        CONFLICT,
+        stats,
+      ),
+    );
+  }
+})();
 
 export default augments;

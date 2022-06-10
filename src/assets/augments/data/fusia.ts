@@ -10,11 +10,13 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // fusia
-augments.push(
-  makeAugmentData("megas fusia", 0, GROUP, CONFLICT, [
-    makeStat(StatTypes.BP, 4),
-    makeStat(StatTypes.POT, 1.01),
-  ]),
-);
+(() => {
+  augments.push(
+    makeAugmentData("megas fusia", 0, GROUP, CONFLICT, [
+      makeStat(StatTypes.BP, 4),
+      makeStat(StatTypes.POT, 1.01),
+    ]),
+  );
+})();
 
 export default augments;

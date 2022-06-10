@@ -1,9 +1,5 @@
-import {
-  makeStatWithManyAmounts,
-  StatTypes,
-  OFFENSIVE_POT,
-} from "../../stats";
-import { makeManyAugments } from "../makeAugment";
+import { StatTypes, OFFENSIVE_POT, makeStat } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -13,19 +9,25 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 
 // --------------------------------------
-// gigas might, prec, tech
-const names = ["might", "precision", "technique"];
-names.forEach((name, i) => {
-  const stat = makeStatWithManyAmounts(
-    OFFENSIVE_POT[i],
-    [1.015, 1.02, 1.025],
-  );
-  augments.push(
-    ...makeManyAugments(`gigas ${name}`, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [6, 8, 10]),
-      makeStatWithManyAmounts(StatTypes.HP, [5, 10, 15]),
-      stat,
-    ]),
-  );
-});
+// might | precicion | technique
+(() => {
+  const bp = [6, 8, 10];
+  const hp = [5, 10, 15];
+  const pot = [1.015, 1.02, 1.025];
+
+  const names = ["might", "precision", "technique"];
+  names.forEach((name, i) => {
+    const level = i + 1;
+
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.HP, hp[i]),
+      makeStat(OFFENSIVE_POT[i], pot[i]),
+    ];
+    augments.push(
+      makeAugmentData(`gigas ${name}`, level, GROUP, CONFLICT, stats),
+    );
+  });
+})();
+
 export default augments;

@@ -1,9 +1,5 @@
-import {
-  makeStatWithManyAmounts,
-  StatTypes,
-  OFFENSIVE_POT,
-} from "../../stats";
-import { makeManyAugments } from "../makeAugment";
+import { StatTypes, OFFENSIVE_POT, makeStat } from "../../stats";
+import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -14,77 +10,128 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // alt soul
-augments.push(
-  ...makeManyAugments(`alts soul`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [5, 7, 9]),
-    makeStatWithManyAmounts(StatTypes.HP, [5, 10, 15]),
-    makeStatWithManyAmounts(StatTypes.DMG_RES, [1.01, 1.02, 1.025]),
-  ]),
-);
+(() => {
+  const bp = [5, 7, 9];
+  const hp = [5, 10, 15];
+  const dmg_res = [1.01, 1.02, 1.025];
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.HP, hp[i]),
+      makeStat(StatTypes.DMG_RES, dmg_res[i]),
+    ];
+
+    augments.push(
+      makeAugmentData("alts soul", level, GROUP, CONFLICT, stats),
+    );
+  }
+})();
 
 // --------------------------------------
 // dolz soul
-augments.push(
-  ...makeManyAugments(`dolz soul`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [5, 6, 7]),
-    makeStatWithManyAmounts(StatTypes.PP, [5, 5, 5]),
-    makeStatWithManyAmounts(StatTypes.FLOOR_POT, [1.01, 1.02, 1.025]),
-  ]),
-);
+(() => {
+  const bp = [5, 6, 7];
+  const pp = [5, 5, 5];
+  const floor_pot = [1.01, 1.02, 1.025];
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.PP, pp[i]),
+      makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
+    ];
+    augments.push(
+      makeAugmentData("dolz soul", level, GROUP, CONFLICT, stats),
+    );
+  }
+})();
 
 // --------------------------------------
-// form, form machini, form sand soul
-const form_names = ["forms", "forms machini", "forms sand"];
-form_names.forEach((name, i) => {
-  const stat = OFFENSIVE_POT[i];
+// form | form machini | form sand soul
+(() => {
+  const bp = [6, 8, 9];
+  const pot = [1.02, 1.02, 1.02];
+  const dmg_res = [1, 1.02, 1.025];
 
-  augments.push(
-    ...makeManyAugments(`${name} soul`, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [6, 8, 9]),
-      makeStatWithManyAmounts(stat, [1.02, 1.02, 1.02]),
-      makeStatWithManyAmounts(StatTypes.DMG_RES, [1, 1.02, 1.025]),
-    ]),
-  );
-});
+  const names = ["forms", "forms machini", "forms sand"];
+  names.forEach((name, i) => {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(OFFENSIVE_POT[i], pot[i]),
+      makeStat(StatTypes.DMG_RES, dmg_res[i]),
+    ];
 
-// --------------------------------------
-// daityl, pettas, next soul
-const boss_one_names = ["daityl", "pettas", "nex"];
-boss_one_names.forEach((name, i) => {
-  const stat = OFFENSIVE_POT[i];
-
-  augments.push(
-    ...makeManyAugments(`${name} soul`, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [7, 8, 10]),
-      makeStatWithManyAmounts(StatTypes.PP, [5, 5, 5]),
-      makeStatWithManyAmounts(stat, [1.01, 1.02, 1.025]),
-    ]),
-  );
-});
+    augments.push(
+      makeAugmentData(`${name} soul`, level, GROUP, CONFLICT, stats),
+    );
+  });
+})();
 
 // --------------------------------------
-// dust, ragras, renus soul
-const boss_two_names = ["dust", "ragras", "renus"];
-boss_two_names.forEach((name, i) => {
-  const stat = OFFENSIVE_POT[i];
+// daityl | pettas | nex soul
+(() => {
+  const bp = [7, 8, 10];
+  const pp = [5, 5, 5];
+  const pot = [1.01, 1.02, 1.025];
 
-  augments.push(
-    ...makeManyAugments(`${name} soul`, 3, GROUP, CONFLICT, [
-      makeStatWithManyAmounts(StatTypes.BP, [7, 8, 10]),
-      makeStatWithManyAmounts(StatTypes.HP, [15, 15, 15]),
-      makeStatWithManyAmounts(stat, [1.01, 1.02, 1.025]),
-    ]),
-  );
-});
+  const names = ["daityl", "pettas", "nex"];
+  names.forEach((name, i) => {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.PP, pp[i]),
+      makeStat(OFFENSIVE_POT[i], pot[i]),
+    ];
+
+    augments.push(
+      makeAugmentData(`${name} soul`, level, GROUP, CONFLICT, stats),
+    );
+  });
+})();
+
+// --------------------------------------
+// dust | ragras | renus soul
+(() => {
+  const bp = [7, 8, 10];
+  const hp = [15, 15, 15];
+  const pot = [1.01, 1.02, 1.025];
+
+  const names = ["dust", "ragras", "renus"];
+  names.forEach((name, i) => {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.HP, hp[i]),
+      makeStat(OFFENSIVE_POT[i], pot[i]),
+    ];
+
+    augments.push(
+      makeAugmentData(`${name} soul`, level, GROUP, CONFLICT, stats),
+    );
+  });
+})();
 
 // --------------------------------------
 // eradi soul
-augments.push(
-  ...makeManyAugments(`eradi soul`, 3, GROUP, CONFLICT, [
-    makeStatWithManyAmounts(StatTypes.BP, [7, 8, 10]),
-    makeStatWithManyAmounts(StatTypes.HP, [10, 10, 10]),
-    makeStatWithManyAmounts(StatTypes.PP, [4, 4, 4]),
-    makeStatWithManyAmounts(StatTypes.POT, [1.01, 1.015, 1.02]),
-  ]),
-);
+(() => {
+  const bp = [7, 8, 10];
+  const hp = [10, 10, 10];
+  const pp = [4, 4, 4];
+  const pot = [1.01, 1.015, 1.02];
+  for (let i = 0; i < 3; i++) {
+    const level = i + 1;
+    const stats = [
+      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.HP, hp[i]),
+      makeStat(StatTypes.PP, pp[i]),
+      makeStat(StatTypes.POT, pot[i]),
+    ];
+    augments.push(
+      makeAugmentData("eradi soul", level, GROUP, CONFLICT, stats),
+    );
+  }
+})();
+
 export default augments;

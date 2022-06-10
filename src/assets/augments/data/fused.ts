@@ -1,10 +1,4 @@
-import {
-  makeStat,
-  makeManyStatsWithSameAmount,
-  Stat,
-  StatTypes,
-  OFFENSIVE_POT,
-} from "../../stats";
+import { makeStat, StatTypes, OFFENSIVE_POT } from "../../stats";
 import { makeAugmentData } from "../makeAugment";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -14,32 +8,47 @@ const CONFLICT = [AugmentGroups.FUSED, AugmentGroups.BASIC];
 let augments: AugmentData[] = [];
 // --------------------------------------
 
-const p_names = ["might", "precision", "technique"];
-const p_stats = makeManyStatsWithSameAmount(OFFENSIVE_POT, 1.02);
+(() => {
+  const names = ["might", "precision", "technique"];
+  names.forEach((name, i) => {
+    const pot = makeStat(OFFENSIVE_POT[i], 1.02);
 
-const s_names = ["sta", "spi", "deft", "gua"];
-const s_stats: Stat[] = [
-  makeStat(StatTypes.HP, 15),
-  makeStat(StatTypes.PP, 5),
-  makeStat(StatTypes.FLOOR_POT, 1.02),
-  makeStat(StatTypes.DMG_RES, 1.02),
-];
-p_names.forEach((p_name, i) => {
-  const p_stat = p_stats[i];
-
-  // --------------------------------------
-  // sta, spi, deft, gua
-  s_names.forEach((s_name, j) => {
-    const s_stat = s_stats[j];
-    const stats = j < 2 ? [s_stat, p_stat] : [p_stat, s_stat]; // order the stats
-
+    // sta
     augments.push(
-      makeAugmentData(`${s_name} ${p_name}`, 0, GROUP, CONFLICT, [
+      makeAugmentData(`sta ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
-        ...stats,
+        makeStat(StatTypes.HP, 15),
+        pot,
+      ]),
+    );
+
+    // spi
+    augments.push(
+      makeAugmentData(`spi ${name}`, 0, GROUP, CONFLICT, [
+        makeStat(StatTypes.BP, 8),
+        makeStat(StatTypes.PP, 5),
+        pot,
+      ]),
+    );
+
+    // deft
+    augments.push(
+      makeAugmentData(`deft ${name}`, 0, GROUP, CONFLICT, [
+        makeStat(StatTypes.BP, 8),
+        pot,
+        makeStat(StatTypes.FLOOR_POT, 1.02),
+      ]),
+    );
+
+    // gua
+    augments.push(
+      makeAugmentData(`gua ${name}`, 0, GROUP, CONFLICT, [
+        makeStat(StatTypes.BP, 8),
+        pot,
+        makeStat(StatTypes.DMG_RES, 1.02),
       ]),
     );
   });
-});
+})();
 
 export default augments;
