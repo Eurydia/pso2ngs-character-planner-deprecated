@@ -6,33 +6,26 @@ import {
   FilterOptionsState,
   Tooltip,
   MenuItem,
-  AutocompleteRenderOptionState,
   Paper,
   Box,
 } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
-import { makeStat, StatTypes, Stat } from "../../../assets/stats";
-import UNITS, {
-  getUnitDefense,
-  UnitData,
-} from "../../../assets/units";
-
-const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
-  return stats.map((stat) => (
-    <Typography key={stat.stat_type}>
-      {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
-    </Typography>
-  ));
-};
+import UNITS, { getUnitDEF, UnitData } from "../../../assets/units";
+import { StatTypes } from "../../../assets/stats";
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: UnitData,
-  state: AutocompleteRenderOptionState,
   enhancement: number,
 ) => {
+  const def = getUnitDEF(
+    option.base_defense,
+    option.rarity,
+    enhancement,
+  ).amount;
+
   return (
     <MenuItem {...props}>
       <Tooltip
@@ -43,28 +36,23 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            {getStatsAsTooltip([
-              getUnitDefense(option, enhancement),
-              ...option.stats,
-            ])}
+            <Typography>{`+${def} ${StatTypes.DEF}`}</Typography>
+            {option.payload.stats.map((stat) => (
+              <Typography key={stat.stat_type}>
+                {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
+              </Typography>
+            ))}
           </Box>
         }
         placement="right"
       >
-        <Box>
-          <Typography
-            sx={{
-              textTransform: "capitalize",
-            }}
-          >
-            {option.name}
-          </Typography>
-          <Typography
-            fontSize="small"
-            sx={{
-              textTransform: "capitalize",
-            }}
-          >
+        <Box
+          sx={{
+            textTransform: "capitalize",
+          }}
+        >
+          <Typography>{option.name}</Typography>
+          <Typography fontSize="small">
             {`level required ${option.level_required}`}
           </Typography>
         </Box>
@@ -79,7 +67,7 @@ const filterOptions = (
 ): UnitData[] => {
   const input_value = state.inputValue.normalize();
   if (!input_value) {
-    return options;
+    return options.slice(0, 16);
   }
 
   const terms = input_value
@@ -87,7 +75,7 @@ const filterOptions = (
     .map((term) => term.trim())
     .filter((term) => Boolean(term));
   if (terms.length === 0) {
-    return options;
+    return options.slice(0, 16);
   }
 
   const result = terms
@@ -98,6 +86,7 @@ const filterOptions = (
         }),
       options,
     )
+    .slice(0, 16)
     .sort((a, b) => a.rarity - b.rarity);
   return result;
 };
@@ -126,9 +115,7 @@ const UnitSearch: FC<UnitSearchProps> = memo(
         options={UNITS}
         onChange={handleChange}
         filterOptions={filterOptions}
-        renderOption={(p, o, s) =>
-          renderOption(p, o, s, props.enhancement)
-        }
+        renderOption={(p, o) => renderOption(p, o, props.enhancement)}
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }

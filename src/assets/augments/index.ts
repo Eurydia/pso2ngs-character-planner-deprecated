@@ -12,12 +12,11 @@ import { default as secreata } from "./data/secreta";
 import { default as soul } from "./data/soul";
 import { default as tria } from "./data/tria";
 import { default as ward } from "./data/ward";
-import { AugmentData } from "./types";
 
 export * from "./types";
 export * from "./typeguard";
 
-const AUGMENTS: AugmentData[] = [
+const AUGMENTS = Object.freeze([
   ...addi,
   ...basic,
   ...domina,
@@ -32,5 +31,5 @@ const AUGMENTS: AugmentData[] = [
   ...soul,
   ...tria,
   ...ward,
-];
+]);
 export default AUGMENTS;

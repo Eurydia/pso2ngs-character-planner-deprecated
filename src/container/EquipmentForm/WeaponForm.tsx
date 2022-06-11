@@ -2,7 +2,7 @@ import { FC, memo, useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
 import { ENHANCEMENT_MAX } from "../../stores";
-import { Weapon } from "../../assets/weapons";
+import { getWeaponStatPayload, Weapon } from "../../assets/weapons";
 import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
 import WeaponSearch from "./components/WeaponSearch";
@@ -11,6 +11,7 @@ import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
 import StatsList from "./components/StatsList";
+import { StatPayload } from "../../assets/stats";
 
 interface WeaponFormProps {
   isRealistic: boolean;
@@ -46,7 +47,23 @@ const WeaponForm: FC<WeaponFormProps> = memo(
 
     const disabled = weapon === null && props.isRealistic;
 
-    const payload = [];
+    let payload: StatPayload[] = [];
+    if (weapon !== null) {
+      payload.push(
+        getWeaponStatPayload(weapon, enhancement, potLevel),
+      );
+    }
+    if (fixa !== null) {
+      payload.push(fixa.payload);
+    }
+    augments.forEach((augment) => {
+      if (augment !== null) {
+        payload.push(augment.payload);
+      }
+    });
+
+    console.log(payload);
+
     return (
       <CustomCard
         frontTitle="Weapon"
@@ -100,7 +117,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         backTitleIcon={<AutoAwesome />}
         backContent={
           <Box sx={{ height: 400 }}>
-            <StatsList pot_level={potLevel} />
+            <StatsList payloads={payload} />
           </Box>
         }
       />

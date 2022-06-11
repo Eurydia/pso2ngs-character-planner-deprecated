@@ -9,16 +9,18 @@ import { FoodItemData, FoodAttribute, FoodCategory } from "./types";
  * @param name_override
  * @returns
  */
-export const makeFoodItem = (
+export const makeFoodItemData = (
   category: FoodCategory,
   attribute: FoodAttribute,
   name_override: string = "",
 ): FoodItemData => {
-  const name = name_override
+  let name = name_override
     ? name_override
     : `${attribute} ${category}`;
+  name = name.toLowerCase();
+
   return Object.freeze({
-    name: name.toLowerCase(),
+    name,
     category,
     attribute,
   });

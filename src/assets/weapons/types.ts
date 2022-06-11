@@ -1,6 +1,6 @@
 import { AugmentData, AugmentDataSignature } from "../augments";
 import { FixaData, FixaDataSignature } from "../fixas";
-import { Stat, StatPayload } from "../stats";
+import { StatPayload } from "../stats";
 
 export enum PotentialSeries {
   RECYCLER_UNIT = "RECYCLER_UNIT",

@@ -1,5 +1,5 @@
 import { makeStat, StatTypes } from "../../stats";
-import { makeAugmentData } from "../makeAugment";
+import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -11,13 +11,13 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // melra
 (() => {
-  const bp = [4, 5, 6];
+  const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  for (let i = 0; i < 3; i++) {
+  bps.forEach((bp, i) => {
     const level = i + 1;
     const stats = [
-      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.MEL_POT, pot[i]),
       makeStat(StatTypes.RNG_POT, pot[i]),
     ];
@@ -39,19 +39,19 @@ let augments: AugmentData[] = [];
         ),
       );
     }
-  }
+  });
 })();
 
 // --------------------------------------
 // meltech
 (() => {
-  const bp = [4, 5, 6];
+  const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  for (let i = 0; i < 3; i++) {
+  bps.forEach((bp, i) => {
     const level = i + 1;
     const stats = [
-      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.MEL_POT, pot[i]),
       makeStat(StatTypes.TEC_POT, pot[i]),
     ];
@@ -79,19 +79,19 @@ let augments: AugmentData[] = [];
         ),
       );
     }
-  }
+  });
 })();
 
 // --------------------------------------
 // ratech
 (() => {
-  const bp = [4, 5, 6];
+  const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  for (let i = 0; i < 3; i++) {
+  bps.forEach((bp, i) => {
     const level = i + 1;
     const stats = [
-      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.RNG_POT, pot[i]),
       makeStat(StatTypes.TEC_POT, pot[i]),
     ];
@@ -119,7 +119,7 @@ let augments: AugmentData[] = [];
         ),
       );
     }
-  }
+  });
 })();
 
 export default augments;

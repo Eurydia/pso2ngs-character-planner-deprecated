@@ -10,8 +10,7 @@ The data structure of an augment looks like this.
     level: number;
     group: AugmentGroup;
     conflict: AugmentGroup[];
-    stats: Stat[];
-    conditionals: Conditional[];
+    payload: StatPayload;
     isSType: boolean;
 }
 ```
@@ -19,9 +18,9 @@ The data structure of an augment looks like this.
 Where:
 
 * `name` and `level` properties carry the augment's signature, 
-* `group` and `conflict` properties carry information which help validate whether augments are allowed to be used together or not, 
-* `stats` and `conditionals` properties carry the information that will be use to calculate stats, and
 * `isSType` property tell the renderer whether to suffix the name with "S" or not.
+* `group` and `conflict` properties carry information which help validate whether augments are allowed to be used together or not, 
+* `payload` properties carry the information that will be use to calculate stats, and
 
 ## Missing
 

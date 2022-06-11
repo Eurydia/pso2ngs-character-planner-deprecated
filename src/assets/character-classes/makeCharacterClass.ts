@@ -10,7 +10,7 @@ import { CharacterClassData } from "./types";
 //   };
 // };
 
-export const makeCharacterClass = (
+export const makeCharacterClassData = (
   name: string,
   base_attack: number,
   base_defense: number,

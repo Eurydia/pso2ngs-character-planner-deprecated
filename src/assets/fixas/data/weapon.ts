@@ -1,5 +1,5 @@
 import { StatTypes, makeStat } from "../../stats";
-import { makeFixa } from "../makeFixa";
+import { makeFixaData } from "../makeFixaData";
 import { FixaData, FixaTypes } from "../types";
 
 // ---------------------
@@ -8,36 +8,42 @@ let fixa: FixaData[] = [];
 // ---------------------
 
 // ---------------------
-// fixa attack
-const ATTACK_AMOUNTS = Object.freeze([1.02, 1.03, 1.04, 1.045, 1.05]);
-ATTACK_AMOUNTS.forEach((amount, index) =>
-  fixa.push(
-    makeFixa("attack", index + 1, FIXA_TYPE, [
-      makeStat(StatTypes.DMG_BOOST, amount),
-    ]),
-  ),
-);
+// attack
+(() => {
+  const dmg_boost = [1.02, 1.03, 1.04, 1.045, 1.05];
+
+  dmg_boost.forEach((amount, i) => {
+    const level = i + 1;
+    const stats = [makeStat(StatTypes.DMG_BOOST, amount)];
+
+    fixa.push(makeFixaData("attack", level, FIXA_TYPE, stats));
+  });
+})();
 
 // ---------------------
 // fixa fatale
-const FATALE_AMOUNTS = Object.freeze([1.05, 1.08, 1.1, 1.12, 1.13]);
-FATALE_AMOUNTS.forEach((amount, index) =>
-  fixa.push(
-    makeFixa("fatale", index + 1, FIXA_TYPE, [
-      makeStat(StatTypes.CRIT_CHANCE, amount),
-    ]),
-  ),
-);
+(() => {
+  const crit_chance = [1.05, 1.08, 1.1, 1.12, 1.13];
+
+  crit_chance.forEach((amount, i) => {
+    const level = i + 1;
+    const stats = [makeStat(StatTypes.CRIT_CHANCE, amount)];
+
+    fixa.push(makeFixaData("fatale", level, FIXA_TYPE, stats));
+  });
+})();
 
 // ---------------------
 // fixa termina
-const TERMINA_AMOUNTS = Object.freeze([1.05, 1.09, 1.12, 1.14, 1.15]);
-TERMINA_AMOUNTS.forEach((amount, index) =>
-  fixa.push(
-    makeFixa("termina", index + 1, FIXA_TYPE, [
-      makeStat(StatTypes.CRIT_DMG, amount),
-    ]),
-  ),
-);
+(() => {
+  const crit_dmg = [1.05, 1.09, 1.12, 1.14, 1.15];
+
+  crit_dmg.forEach((amount, i) => {
+    const level = i + 1;
+    const stats = [makeStat(StatTypes.CRIT_DMG, amount)];
+
+    fixa.push(makeFixaData("termina", level, FIXA_TYPE, stats));
+  });
+})();
 
 export default fixa;

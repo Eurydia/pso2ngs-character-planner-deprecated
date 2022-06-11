@@ -1,6 +1,6 @@
 import { BPGateData, ContentTypes } from "./types";
 
-export const makeBPGate = (
+export const makeBPGateData = (
   name: string,
   content_type: ContentTypes,
   bp: number,

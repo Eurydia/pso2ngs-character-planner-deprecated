@@ -2,68 +2,36 @@ import {
   StatTypes,
   Stat,
   Conditional,
-  StatWithManyAmounts,
   StatPayload,
+  StatShorthands,
 } from "./types";
 
 export const makeStat = (
-  stat_type: StatTypes,
+  stat_type: StatTypes | StatShorthands,
   amount: number,
 ): Stat => {
-  return {
+  return Object.freeze({
     stat_type,
     amount,
-  };
-};
-
-export const makeStatWithManyAmounts = (
-  stat_type: StatTypes,
-  many_amount: number[],
-): StatWithManyAmounts => {
-  return {
-    stat_type,
-    many_amount,
-  };
+  });
 };
 
 export const makeConditional = (
   stats: Stat[],
   condition: string,
 ): Conditional => {
-  return {
+  return Object.freeze({
     stats,
     condition,
-  };
+  });
 };
 
 export const makeStatPayload = (
   stats: Stat[],
   conditionals: Conditional[] = [],
 ): StatPayload => {
-  return {
+  return Object.freeze({
     stats,
     conditionals,
-  };
-};
-
-export const makeManyStatsWithSameAmount = (
-  stat_types: StatTypes[],
-  amount: number,
-): Stat[] => {
-  let result: Stat[] = [];
-  for (const stat_type of stat_types) {
-    result.push(makeStat(stat_type, amount));
-  }
-  return result;
-};
-
-export const makeManyStatsWithSameManyAmounts = (
-  stat_types: StatTypes[],
-  many_amount: number[],
-): StatWithManyAmounts[] => {
-  let result: StatWithManyAmounts[] = [];
-  for (const stat_type of stat_types) {
-    result.push(makeStatWithManyAmounts(stat_type, many_amount));
-  }
-  return result;
+  });
 };

@@ -1,10 +1,4 @@
-import {
-  FC,
-  Fragment,
-  HTMLAttributes,
-  memo,
-  SyntheticEvent,
-} from "react";
+import { FC, HTMLAttributes, memo, SyntheticEvent } from "react";
 import {
   Autocomplete,
   TextField,
@@ -12,7 +6,6 @@ import {
   FilterOptionsState,
   Tooltip,
   MenuItem,
-  AutocompleteRenderOptionState,
   Paper,
   Box,
 } from "@mui/material";
@@ -32,12 +25,13 @@ const OPTIONS = [...WEAPONS].sort(
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: WeaponData,
-  state: AutocompleteRenderOptionState,
   enhancement: number,
 ) => {
-  const bonus_atk =
-    getWeaponAtk(option.base_attack, option.rarity, enhancement)
-      .amount - option.base_attack;
+  const atk = getWeaponAtk(
+    option.base_attack,
+    option.rarity,
+    enhancement,
+  ).amount;
 
   return (
     <MenuItem {...props}>
@@ -49,8 +43,8 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            <Typography>{`+(${option.base_attack} + ${bonus_atk}) ${StatTypes.ATK}`}</Typography>
-            {option.stats.map((stat) => (
+            <Typography>{`+${atk} ${StatTypes.ATK}`}</Typography>
+            {option.payload.stats.map((stat) => (
               <Typography key={stat.stat_type}>
                 {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
               </Typography>
@@ -59,22 +53,9 @@ const renderOption = (
         }
         placement="right"
       >
-        <Box>
-          <Typography
-            sx={{
-              textTransform: "capitalize",
-            }}
-          >
-            {`${option.name} +${enhancement}`}
-          </Typography>
-          <Typography
-            noWrap
-            fontSize="small"
-            sx={{
-              textTransform: "capitalize",
-              width: 1,
-            }}
-          >
+        <Box sx={{ textTransform: "capitalize" }}>
+          <Typography>{option.name}</Typography>
+          <Typography noWrap fontSize="small">
             {`level required ${option.level_required}`}
           </Typography>
         </Box>
@@ -89,7 +70,7 @@ const filterOptions = (
 ): WeaponData[] => {
   const input_value = state.inputValue.normalize();
   if (!input_value) {
-    return options;
+    return options.slice(0, 16);
   }
 
   const terms = input_value
@@ -97,7 +78,7 @@ const filterOptions = (
     .map((term) => term.trim())
     .filter((term) => Boolean(term));
   if (terms.length === 0) {
-    return options;
+    return options.slice(0, 16);
   }
 
   const result = terms
@@ -108,6 +89,7 @@ const filterOptions = (
         }),
       options,
     )
+    .slice(0, 16)
     .sort((a, b) => a.rarity - b.rarity);
   return result;
 };
@@ -137,7 +119,7 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
         onChange={handleChange}
         filterOptions={filterOptions}
         renderOption={(p, o, s) =>
-          renderOption(p, o, s, props.enhancement)
+          renderOption(p, o, props.enhancement)
         }
         isOptionEqualToValue={(o, v) => o.name === v.name}
         getOptionDisabled={(option) =>

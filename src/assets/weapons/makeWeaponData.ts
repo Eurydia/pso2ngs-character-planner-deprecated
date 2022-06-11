@@ -10,7 +10,7 @@ export const makePotentialData = (
   name: string,
   getPayload: (pot_level: number) => StatPayload,
 ): PotentialData => {
-  return { name, getPayload };
+  return Object.freeze({ name, getPayload });
 };
 
 /**
@@ -34,12 +34,12 @@ export const makeWeaponData = (
   conditionals: Conditional[] = [],
 ): WeaponData => {
   const payload = makeStatPayload(stats, conditionals);
-  return {
+  return Object.freeze({
     name,
     rarity,
     level_required,
     potential,
     base_attack,
     payload,
-  };
+  });
 };

@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, memo } from "react";
+import { FC, HTMLAttributes, memo, SyntheticEvent } from "react";
 import {
   Autocomplete,
   Stack,
@@ -7,7 +7,6 @@ import {
   Typography,
   Grid,
   FilterOptionsState,
-  AutocompleteRenderOptionState,
   MenuItem,
   Tooltip,
   Paper,
@@ -18,15 +17,16 @@ import AUGMENTS, {
   AugmentData,
   AugmentGroups,
 } from "../../../assets/augments";
-import { Conditional, Stat } from "../../../assets/stats";
 
-const sortAugment = (a: AugmentData, b: AugmentData): number => {
+const sortByAlphabet = (a: AugmentData, b: AugmentData): number => {
   if (a.group < b.group) return -1;
   if (a.group > b.group) return 1;
   return 0;
 };
 
-const OPTIONS = [...AUGMENTS].sort();
+const getOptions = () => {
+  return [...AUGMENTS].sort(sortByAlphabet);
+};
 
 const getLabel = (augment: AugmentData): string => {
   const name = augment.isSType ? `${augment.name} s` : augment.name;
@@ -34,35 +34,9 @@ const getLabel = (augment: AugmentData): string => {
   return `${name} ${convertToRoman(augment.level)}`.trim();
 };
 
-const getStatsAsTooltip = (stats: Stat[]): JSX.Element[] => {
-  return stats.map((stat) => (
-    <Typography key={stat.stat_type}>
-      {`${parseStatToDisplay(stat)} ${stat.stat_type} `}
-    </Typography>
-  ));
-};
-
-const getContidtionalAsTooltip = (
-  conditionals: Conditional[],
-): JSX.Element[] => {
-  return conditionals.map((conditional) => (
-    <Stack key={conditional.condition}>
-      <Typography>{conditional.condition}</Typography>
-      <Stack paddingX={2}>
-        {conditional.stats.map((stat) => (
-          <Typography key={stat.stat_type}>
-            {`${parseStatToDisplay(stat)} ${stat.stat_type} `}
-          </Typography>
-        ))}
-      </Stack>
-    </Stack>
-  ));
-};
-
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: AugmentData,
-  state: AutocompleteRenderOptionState,
 ) => {
   return (
     <MenuItem {...props}>
@@ -74,8 +48,25 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            {getStatsAsTooltip(option.stats)}
-            {getContidtionalAsTooltip(option.conditionals)}
+            {option.payload.stats.map((stat) => (
+              <Typography key={stat.stat_type}>
+                {`${parseStatToDisplay(stat)} ${stat.stat_type} `}
+              </Typography>
+            ))}
+            {option.payload.conditionals.map((conditional) => (
+              <Stack key={conditional.condition}>
+                <Typography>{conditional.condition}</Typography>
+                <Stack paddingX={2}>
+                  {conditional.stats.map((stat) => (
+                    <Typography key={stat.stat_type}>
+                      {`${parseStatToDisplay(stat)} ${
+                        stat.stat_type
+                      } `}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Stack>
+            ))}
           </Stack>
         }
         placement="right"
@@ -118,7 +109,7 @@ const filterOptions = (
       options,
     )
     .slice(0, 16)
-    .sort(sortAugment);
+    .sort(sortByAlphabet);
   return result;
 };
 
@@ -130,13 +121,19 @@ interface AugmentSearchProps {
 }
 const AugmentSearch: FC<AugmentSearchProps> = memo(
   (props) => {
+    const handleChange = (
+      e: SyntheticEvent<Element, Event>,
+      value: AugmentData | null,
+    ) => {
+      props.onChange(value);
+    };
     return (
       <Autocomplete
         disabled={props.isDisabled}
         value={props.value}
-        onChange={(_, value) => props.onChange(value)}
         // -------------
-        options={OPTIONS}
+        options={getOptions()}
+        onChange={handleChange}
         getOptionLabel={getLabel}
         renderOption={renderOption}
         filterOptions={filterOptions}
@@ -241,7 +238,9 @@ const AugmentGroup: FC<AugmentGroupProps> = memo(
     ) => {
       props.onChange(constrainAugments(augment, index, props.values));
     };
+
     const active_slots = getActiveSlots(props.enhancement);
+
     return (
       <Box>
         <Grid container columns={2} spacing={2}>

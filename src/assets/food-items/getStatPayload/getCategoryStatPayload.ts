@@ -4,20 +4,9 @@ import {
   makeStat,
   StatPayload,
   makeStatPayload,
+  Stat,
+  Conditional,
 } from "../../stats";
-
-const MEAT_BUFF_REF = Object.freeze([
-  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
-]);
-const VEGETABLE_BUFF_REF = Object.freeze([
-  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
-]);
-const SEAFOOD_BUFF_REF = Object.freeze([
-  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
-]);
-const FRUIT_BUFF_REF = Object.freeze([
-  10, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-]);
 
 /**
  * Getter for stat amount.
@@ -35,17 +24,24 @@ export const getCategoryStatAmount = (
     return category === FoodCategory.FRUIT ? 0 : 1;
   }
   const _level = level > 10 ? 9 : level - 1;
-  let ref = MEAT_BUFF_REF;
+
+  let ref: null | number[] = null;
   switch (category) {
     case FoodCategory.VEGETABLE:
-      ref = VEGETABLE_BUFF_REF;
-      break;
     case FoodCategory.SEAFOOD:
-      ref = SEAFOOD_BUFF_REF;
+    case FoodCategory.MEAT:
+      ref = [
+        1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098,
+        1.1,
+      ];
       break;
     case FoodCategory.FRUIT:
-      ref = FRUIT_BUFF_REF;
+      ref = [10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
       break;
+  }
+
+  if (ref === null) {
+    return 0;
   }
   return ref[_level];
 };
@@ -56,26 +52,31 @@ export const getCategoryStatAmount = (
  * @param number_of_items_used Number of items with `category` used
  * @returns
  */
-export const getCategoryStat = (
+export const getCategoryStatPayload = (
   category: FoodCategory,
   number_of_items_used: number,
 ): StatPayload => {
-  let stat_type = StatTypes.POT;
-  switch (category) {
-    case FoodCategory.VEGETABLE:
-      stat_type = StatTypes.DMG_RES;
-      break;
-    case FoodCategory.SEAFOOD:
-      stat_type = StatTypes.HP_BOOST;
-      break;
-    case FoodCategory.FRUIT:
-      stat_type = StatTypes.PP;
-      break;
-  }
-
   const amount = getCategoryStatAmount(
     category,
     number_of_items_used,
   );
-  return makeStatPayload([makeStat(stat_type, amount)]);
+
+  let stats: Stat[] = [];
+  let conditionals: Conditional[] = [];
+  switch (category) {
+    case FoodCategory.MEAT:
+      stats = [makeStat(StatTypes.POT, amount)];
+      break;
+    case FoodCategory.VEGETABLE:
+      stats = [makeStat(StatTypes.DMG_RES, amount)];
+      break;
+    case FoodCategory.SEAFOOD:
+      stats = [makeStat(StatTypes.HP_BOOST, amount)];
+      break;
+    case FoodCategory.FRUIT:
+      stats = [makeStat(StatTypes.PP, amount)];
+      break;
+  }
+
+  return makeStatPayload(stats, conditionals);
 };

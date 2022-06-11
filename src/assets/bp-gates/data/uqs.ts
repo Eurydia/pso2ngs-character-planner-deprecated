@@ -1,5 +1,5 @@
 import { BPGateData, ContentTypes } from "../types";
-import { makeBPGate } from "../makeBPGate";
+import { makeBPGateData } from "../makeBPGateData";
 
 // ---------------------------
 const content_type = ContentTypes.UQ;
@@ -10,7 +10,7 @@ let bp_gates: BPGateData[] = [];
 // aelio
 // pettas vera
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "pettas vera suppression (rank 1)",
     content_type,
     1184,
@@ -18,7 +18,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "pettas vera suppression (rank 2)",
     content_type,
     1898,
@@ -27,14 +27,24 @@ bp_gates.push(
 );
 // nex vera
 bp_gates.push(
-  makeBPGate("nex vera suppression (rank 2)", content_type, 1898, 40),
+  makeBPGateData(
+    "nex vera suppression (rank 2)",
+    content_type,
+    1898,
+    40,
+  ),
 );
 bp_gates.push(
-  makeBPGate("nex vera suppression (rank 2)", content_type, 1898, 40),
+  makeBPGateData(
+    "nex vera suppression (rank 2)",
+    content_type,
+    1898,
+    40,
+  ),
 );
 // mining rig
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "mining rig defense: aelio (rank 1)",
     content_type,
     1243,
@@ -42,7 +52,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "mining rig defense: aelio (rank 2)",
     content_type,
     1898,
@@ -51,11 +61,11 @@ bp_gates.push(
 );
 // df
 bp_gates.push(
-  makeBPGate("dark falz interception", content_type, 1898, 40),
+  makeBPGateData("dark falz interception", content_type, 1898, 40),
 );
 // spring seasonal uq
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "flurry of flowers clean up (rank 1)",
     content_type,
     1184,
@@ -63,7 +73,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "flurry of flowers clean up (rank 2)",
     content_type,
     1898,
@@ -75,7 +85,7 @@ bp_gates.push(
 // retem
 // dustyl
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "dustyl vera suppression (rank 1)",
     content_type,
     1682,
@@ -83,7 +93,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "dustyl vera suppression (rank 2)",
     content_type,
     2049,
@@ -92,7 +102,7 @@ bp_gates.push(
 );
 // renus
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "renus vera suppression (rank 1)",
     content_type,
     1682,
@@ -100,7 +110,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "renus vera suppression (rank 2)",
     content_type,
     2049,
@@ -109,7 +119,7 @@ bp_gates.push(
 );
 // mining rig
 bp_gates.push(
-  makeBPGate("mining rig defense: retem", content_type, 2049, 45),
+  makeBPGateData("mining rig defense: retem", content_type, 2049, 45),
 );
 
 export default bp_gates;

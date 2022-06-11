@@ -8,7 +8,7 @@ import { default as braver } from "./data/braver";
 import { default as bouncer } from "./data/bouncer";
 
 export * from "./types";
-export * from "./getStat";
+export * from "./getStatPayload";
 
 const CHARACTER_CLASSES = Object.freeze([
   hunter,

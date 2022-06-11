@@ -1,5 +1,5 @@
 import { makeStat, StatTypes } from "../../stats";
-import { makeAugmentData } from "../makeAugment";
+import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -11,16 +11,16 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // alt
 (() => {
-  const bp = [3, 4, 5];
+  const bps = [3, 4, 5];
   const hp = [-10, -10, -10];
   const pot = [1.01, 1.015, 1.02];
   const floor_pot = [1.01, 1.015, 1.02];
   const dmg_res = [0.985, 0.985, 0.985];
 
-  for (let i = 0; i < 3; i++) {
+  bps.forEach((bp, i) => {
     const level = i + 1;
     const stats = [
-      makeStat(StatTypes.BP, bp[i]),
+      makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.HP, hp[i]),
       makeStat(StatTypes.POT, pot[i]),
       makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
@@ -30,7 +30,7 @@ let augments: AugmentData[] = [];
     augments.push(
       makeAugmentData("alts secreata", level, GROUP, CONFLICT, stats),
     );
-  }
+  });
 })();
 
 export default augments;

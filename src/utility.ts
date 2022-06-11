@@ -1,12 +1,12 @@
 import {
-  Conditional,
-  STAT_SHORTHANDS,
   Stat,
   StatTypes,
-  makeManyStatsWithSameAmount,
   OFFENSIVE_POT,
   PP_RECOVERY,
   AILMENT_RES,
+  MUL_DISPLAY_AS_ADD,
+  ADD_STAT_TYPES,
+  makeStat,
 } from "./assets/stats";
 
 export const STACK_BY_ADDING = [
@@ -26,21 +26,6 @@ export const DISPLAY_AS_ADD = [
   StatTypes.DEF,
 ];
 
-const roman_keys: { [key: string]: number } = {
-  M: 1000,
-  CM: 900,
-  D: 500,
-  CD: 400,
-  C: 100,
-  XC: 90,
-  L: 50,
-  XL: 40,
-  X: 10,
-  IX: 9,
-  V: 5,
-  IV: 4,
-  I: 1,
-};
 /**
  * Convert a number to roman string
  * @param num
@@ -50,6 +35,23 @@ export const convertToRoman = (num: number): string => {
   if (num === 0) {
     return "";
   }
+
+  const roman_keys: { [key: string]: number } = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+
   let temp = num;
   let roman = "";
   for (const key of Object.keys(roman_keys)) {
@@ -89,54 +91,88 @@ export const parseStatToDisplay = (stat: Stat): string => {
   return parseNumberToDisplay(stat.amount, display_as_add);
 };
 
-export const stackStats = (base: Stat[], extra: Stat[]): Stat[] => {
-  let seen: StatTypes[] = base.map((stat) => stat.stat_type);
-  let stats: Stat[] = base.map((stat) => ({ ...stat }));
+// export const stackStats = (base: Stat[], extra: Stat[]): Stat[] => {
+//   let seen: StatTypes[] = base.map((stat) => stat.stat_type);
+//   let stats: Stat[] = base.map((stat) => ({ ...stat }));
 
-  for (const stat of extra) {
-    const target = seen.findIndex((s) => s === stat.stat_type);
-    if (target !== -1) {
-      if (STACK_BY_ADDING.includes(stat.stat_type)) {
-        stats[target].amount += stat.amount;
-        // Crit chance is displayed as percentage
-        // This entures that value doesn't exceed 2
-        if (stat.stat_type === StatTypes.CRIT_CHANCE) {
-          stats[target].amount -= 1;
-        } else {
-          stats[target].amount *= stat.amount;
-        }
-      }
-    } else {
-      stats.push(stat);
-      seen.push(stat.stat_type);
-    }
-  }
-  return stats;
-};
+//   for (const stat of extra) {
+//     const target = seen.findIndex((s) => s === stat.stat_type);
+//     if (target !== -1) {
+//       if (STACK_BY_ADDING.includes(stat.stat_type)) {
+//         stats[target].amount += stat.amount;
+//         // Crit chance is displayed as percentage
+//         // This entures that value doesn't exceed 2
+//         if (stat.stat_type === StatTypes.CRIT_CHANCE) {
+//           stats[target].amount -= 1;
+//         } else {
+//           stats[target].amount *= stat.amount;
+//         }
+//       }
+//     } else {
+//       stats.push(stat);
+//       seen.push(stat.stat_type);
+//     }
+//   }
+//   return stats;
+// };
 
 export const tallyStats = (stats: Stat[]): Stat[] => {
-  let tallied: Stat[] = [];
+  let template: { [key in StatTypes]: number } = {
+    "BP": 0,
+    "HP": 0,
+    "PP": 0,
+    "ATK": 0,
+    "DEF": 0,
 
+    "HP boost": 1,
+    "HP recovery boost": 1,
+    "active PP recovery": 1,
+    "natural PP recovery": 1,
+    "PP cost": 1,
+    "PB gauge charge rate": 1,
+
+    "DMG": 1,
+    "MEL pot": 1,
+    "RNG pot": 1,
+    "TEC pot": 1,
+    "floor pot": 1,
+    "crit chance": 1,
+    "crit DMG": 1,
+
+    "DMG resist": 1,
+    "burn resist": 1,
+    "freeze resist": 1,
+    "shock resist": 1,
+    "blind resist": 1,
+    "panic resist": 1,
+    "poison resist": 1,
+    "physical down resist": 1,
+    "ailment duration": 1,
+  };
   for (const stat of stats) {
-    let to_stack = [stat];
-    if (stat.stat_type === StatTypes.POT) {
-      to_stack = makeManyStatsWithSameAmount(
-        OFFENSIVE_POT,
-        stat.amount,
-      );
-    } else if (stat.stat_type === StatTypes.PP_GAIN) {
-      to_stack = makeManyStatsWithSameAmount(
-        PP_RECOVERY,
-        stat.amount,
-      );
-    } else if (stat.stat_type === StatTypes.AILMENT_RES) {
-      to_stack = makeManyStatsWithSameAmount(
-        AILMENT_RES,
-        stat.amount,
-      );
+    const { stat_type, amount } = stat;
+
+    if (MUL_DISPLAY_AS_ADD.includes(stat_type)) {
+      template[stat_type]! += amount - 1;
+    } else if (ADD_STAT_TYPES.includes(stat_type)) {
+      template[stat_type]! += amount;
+    } else {
+      template[stat_type]! *= amount;
     }
-    tallied = stackStats(tallied, to_stack);
-    console.log(tallied);
   }
+
+  let tallied: Stat[] = [];
+  for (const key of Object.keys(template)) {
+    const _key = key as StatTypes;
+    const amount = template[_key]!;
+    if (
+      (DISPLAY_AS_ADD.includes(_key) && amount === 0) ||
+      amount === 1
+    ) {
+      continue;
+    }
+    tallied.push(makeStat(_key, amount));
+  }
+
   return tallied;
 };

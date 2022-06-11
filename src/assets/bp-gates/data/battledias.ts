@@ -1,5 +1,5 @@
 import { BPGateData, ContentTypes } from "../types";
-import { makeBPGate } from "../makeBPGate";
+import { makeBPGateData } from "../makeBPGateData";
 
 // ---------------------------
 const content_type = ContentTypes.BATTLEDIA;
@@ -10,7 +10,7 @@ let bp_gates: BPGateData[] = [];
 // assumed to be all region
 // spring 2022 trigger
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "flurry of flowers clean up (rank 1)",
     content_type,
     1184,
@@ -18,7 +18,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "flurry of flowers clean up (rank 2)",
     content_type,
     1898,
@@ -27,7 +27,7 @@ bp_gates.push(
 );
 // 1st anniversary sq
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "dazzling chaos suppression (rank 1)",
     content_type,
     1474,
@@ -35,7 +35,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "dazzling chaos suppression (rank 2)",
     content_type,
     1682,
@@ -43,7 +43,7 @@ bp_gates.push(
   ),
 );
 bp_gates.push(
-  makeBPGate(
+  makeBPGateData(
     "dazzling chaos suppression (rank 3)",
     content_type,
     1957,
@@ -53,22 +53,22 @@ bp_gates.push(
 
 // ---------------------------
 // aelio
-bp_gates.push(makeBPGate("aelio yellow", content_type, 1081, 16));
+bp_gates.push(makeBPGateData("aelio yellow", content_type, 1081, 16));
 bp_gates.push(
-  makeBPGate("aelio purple (rank 1)", content_type, 1363, 24),
+  makeBPGateData("aelio purple (rank 1)", content_type, 1363, 24),
 );
 bp_gates.push(
-  makeBPGate("aelio purple (rank 2)", content_type, 1957, 44),
+  makeBPGateData("aelio purple (rank 2)", content_type, 1957, 44),
 );
 
 // ---------------------------
 // retem
-bp_gates.push(makeBPGate("retem yellow", content_type, 1474, 25));
+bp_gates.push(makeBPGateData("retem yellow", content_type, 1474, 25));
 bp_gates.push(
-  makeBPGate("retem purple (rank 1)", content_type, 1813, 39),
+  makeBPGateData("retem purple (rank 1)", content_type, 1813, 39),
 );
 bp_gates.push(
-  makeBPGate("retem purple (rank 2)", content_type, 2114, 49),
+  makeBPGateData("retem purple (rank 2)", content_type, 2114, 49),
 );
 
 export default bp_gates;

@@ -1,5 +1,5 @@
 import { makeStat, StatTypes, OFFENSIVE_POT } from "../../stats";
-import { makeAugmentData } from "../makeAugment";
+import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------

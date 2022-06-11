@@ -11,12 +11,12 @@ export const makeAugmentData = (
   isSType: boolean = false,
 ): AugmentData => {
   const payload = makeStatPayload(stats, conditionals);
-  return {
+  return Object.freeze({
     name,
     level,
     isSType,
     group,
     conflict,
     payload,
-  };
+  });
 };

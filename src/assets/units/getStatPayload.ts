@@ -1,5 +1,4 @@
 import {
-  makeConditional,
   makeStat,
   makeStatPayload,
   Stat,
@@ -64,12 +63,13 @@ const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
     makeGrowthRate(50, 51),
   ]);
 
-export const getUnitDefense = (
-  unit: UnitData,
+export const getUnitDEF = (
+  base_def: number,
+  rarity: number,
   enhancement: number,
 ): Stat => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
-  switch (unit.rarity) {
+  switch (rarity) {
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -103,17 +103,18 @@ export const getUnitDefense = (
       bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(
-    StatTypes.DEF,
-    unit.base_defense + Math.round(bonus),
-  );
+  return makeStat(StatTypes.DEF, base_def + Math.round(bonus));
 };
 
 export const getUnitStatPayload = (
   unit: UnitData,
   enhancement: number,
 ): StatPayload => {
-  const unit_def = getUnitDefense(unit, enhancement);
+  const unit_def = getUnitDEF(
+    unit.base_defense,
+    unit.rarity,
+    enhancement,
+  );
   const unit_payload = unit.payload;
 
   const stats = [unit_def, ...unit_payload.stats];

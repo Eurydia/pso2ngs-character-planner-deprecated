@@ -1,10 +1,5 @@
-import {
-  StatTypes,
-  makeStat,
-  makeManyStatsWithSameAmount,
-  OFFENSIVE_POT,
-} from "../../stats";
-import { makeUnitData, SUFFIXES } from "../makeUnitData";
+import { StatTypes, makeStat, OFFENSIVE_POT } from "../../stats";
+import { makeUnitData } from "../makeUnitData";
 import { UnitData } from "../types";
 
 // -------------------------
@@ -29,15 +24,32 @@ units.push(
     makeStat(StatTypes.PP, 4),
   ]),
 );
-// vijf arga, belta, sheza
-SUFFIXES.forEach((suffix) =>
-  units.push(
-    makeUnitData(`vijf armor ${suffix.name}`, RARITY, 31, 18, [
-      makeStat(StatTypes.HP, 20),
-      makeStat(StatTypes.PP, 7),
-      ...makeManyStatsWithSameAmount(suffix.stat_types, 1.01),
-    ]),
-  ),
+// arga
+units.push(
+  makeUnitData("vijf armor arga", RARITY, 31, 18, [
+    makeStat(StatTypes.HP, 20),
+    makeStat(StatTypes.PP, 7),
+    makeStat(StatTypes.MEL_POT, 1.01),
+    makeStat(StatTypes.RNG_POT, 1.01),
+  ]),
+);
+// belta
+units.push(
+  makeUnitData("vijf armor belta", RARITY, 31, 18, [
+    makeStat(StatTypes.HP, 20),
+    makeStat(StatTypes.PP, 7),
+    makeStat(StatTypes.MEL_POT, 1.01),
+    makeStat(StatTypes.TEC_POT, 1.01),
+  ]),
+);
+// sheza
+units.push(
+  makeUnitData("vijf armor sheza", RARITY, 31, 18, [
+    makeStat(StatTypes.HP, 20),
+    makeStat(StatTypes.PP, 7),
+    makeStat(StatTypes.MEL_POT, 1.01),
+    makeStat(StatTypes.TEC_POT, 1.01),
+  ]),
 );
 
 // -------------------------
@@ -76,18 +88,21 @@ units.push(
     makeStat(StatTypes.AILMENT_RES, 0.5),
   ]),
 );
+
 // -------------------------
 // schwarz
-const schwar = ["schwarzest", "schwarzgarde", "schwarzrosso"];
-schwar.forEach((name, i) =>
-  units.push(
-    makeUnitData(`${name} armor`, RARITY, 31, 20, [
-      makeStat(StatTypes.HP, 25),
-      makeStat(StatTypes.PP, 3),
-      makeStat(OFFENSIVE_POT[i], 1.02),
-      makeStat(StatTypes.DMG_RES, 1.01),
-    ]),
-  ),
-);
+(() => {
+  const names = ["schwarzest", "schwarzgarde", "schwarzrosso"];
+  names.forEach((name, i) =>
+    units.push(
+      makeUnitData(`${name} armor`, RARITY, 31, 20, [
+        makeStat(StatTypes.HP, 25),
+        makeStat(StatTypes.PP, 3),
+        makeStat(OFFENSIVE_POT[i], 1.02),
+        makeStat(StatTypes.DMG_RES, 1.01),
+      ]),
+    ),
+  );
+})();
 
 export default units;

@@ -1,9 +1,5 @@
-import {
-  StatTypes,
-  makeStat,
-  makeManyStatsWithSameAmount,
-} from "../../stats";
-import { makeUnitData, SUFFIXES } from "../makeUnitData";
+import { StatTypes, makeStat } from "../../stats";
+import { makeUnitData } from "../makeUnitData";
 import { UnitData } from "../types";
 
 // -------------------------
@@ -18,14 +14,29 @@ units.push(
     makeStat(StatTypes.PP, 6),
   ]),
 );
-// qual da arga, belta, sheza
-SUFFIXES.forEach((suffix) =>
-  units.push(
-    makeUnitData(`qual de armor ${suffix.name}`, RARITY, 12, 13, [
-      makeStat(StatTypes.PP, 4),
-      ...makeManyStatsWithSameAmount(suffix.stat_types, 1.01),
-    ]),
-  ),
+// arga
+units.push(
+  makeUnitData("qual de armor arga", RARITY, 12, 13, [
+    makeStat(StatTypes.PP, 4),
+    makeStat(StatTypes.MEL_POT, 1.01),
+    makeStat(StatTypes.RNG_POT, 1.01),
+  ]),
+);
+// belta
+units.push(
+  makeUnitData("qual de armor belta", RARITY, 12, 13, [
+    makeStat(StatTypes.PP, 4),
+    makeStat(StatTypes.RNG_POT, 1.01),
+    makeStat(StatTypes.TEC_POT, 1.01),
+  ]),
+);
+// sheza
+units.push(
+  makeUnitData("qual de armor sheza", RARITY, 12, 13, [
+    makeStat(StatTypes.PP, 4),
+    makeStat(StatTypes.MEL_POT, 1.01),
+    makeStat(StatTypes.TEC_POT, 1.01),
+  ]),
 );
 
 // -------------------------
@@ -45,15 +56,32 @@ units.push(
     makeStat(StatTypes.DMG_RES, 1.01),
   ]),
 );
-// vialto arga, belta, sheza
-SUFFIXES.forEach((suffix) =>
-  units.push(
-    makeUnitData(`vialto armor ${suffix.name}`, RARITY, 12, 16, [
-      makeStat(StatTypes.HP, 25),
-      ...makeManyStatsWithSameAmount(suffix.stat_types, 1.005),
-      makeStat(StatTypes.DMG_RES, 1.01),
-    ]),
-  ),
+// arga
+units.push(
+  makeUnitData("vialto armor arga", RARITY, 12, 16, [
+    makeStat(StatTypes.HP, 25),
+    makeStat(StatTypes.MEL_POT, 1.005),
+    makeStat(StatTypes.RNG_POT, 1.005),
+    makeStat(StatTypes.DMG_RES, 1.01),
+  ]),
+);
+// belta
+units.push(
+  makeUnitData("vialto armor belta", RARITY, 12, 16, [
+    makeStat(StatTypes.HP, 25),
+    makeStat(StatTypes.RNG_POT, 1.005),
+    makeStat(StatTypes.TEC_POT, 1.005),
+    makeStat(StatTypes.DMG_RES, 1.01),
+  ]),
+);
+// sheza
+units.push(
+  makeUnitData("vialto armor sheza", RARITY, 12, 16, [
+    makeStat(StatTypes.HP, 25),
+    makeStat(StatTypes.MEL_POT, 1.005),
+    makeStat(StatTypes.TEC_POT, 1.005),
+    makeStat(StatTypes.DMG_RES, 1.01),
+  ]),
 );
 
 // -------------------------

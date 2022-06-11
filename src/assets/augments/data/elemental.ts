@@ -1,5 +1,5 @@
 import { makeConditional, makeStat, StatTypes } from "../../stats";
-import { makeAugmentData } from "../makeAugment";
+import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------
@@ -19,6 +19,7 @@ let augments: AugmentData[] = [];
     "wind",
     "dark",
   ];
+
   elements.forEach((element) => {
     augments.push(
       makeAugmentData(

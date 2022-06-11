@@ -31,23 +31,23 @@ export enum StatTypes {
   PANIC_RES = "panic resist",
   POISON_RES = "poison resist",
   PHYDOWN_RES = "physical down resist",
-  AILMENT_DURATION = "ailment duraion",
+  AILMENT_DURATION = "ailment duration",
 
   // Stat shorthands,these stats get expanded into other stats
+}
+
+export const enum StatShorthands {
   POT = "potency",
   AILMENT_RES = "all ailment resist",
   PP_GAIN = "PP recovery",
 }
 
-export const STAT_SHORTHANDS = [
-  StatTypes.POT,
-  StatTypes.PP_GAIN,
-  StatTypes.AILMENT_RES,
-];
+// TODO: Turn these into functions, maybe?
 export const PP_RECOVERY = [
   StatTypes.ACTIVE_PP_GAIN,
   StatTypes.PASSIVE_PP_GAIN,
 ];
+
 export const OFFENSIVE_POT = [
   StatTypes.MEL_POT,
   StatTypes.RNG_POT,
@@ -64,8 +64,26 @@ export const AILMENT_RES = [
   StatTypes.PHYDOWN_RES,
 ];
 
+export const ADD_STAT_TYPES = [
+  StatTypes.BP,
+  StatTypes.HP,
+  StatTypes.PP,
+  StatTypes.ATK,
+  StatTypes.DEF,
+];
+
+export const DISPLAY_AS_ADD = [
+  StatTypes.BP,
+  StatTypes.HP,
+  StatTypes.PP,
+  StatTypes.ATK,
+  StatTypes.DEF,
+];
+
+export const MUL_DISPLAY_AS_ADD = [StatTypes.CRIT_CHANCE];
+
 export type Stat = Readonly<{
-  stat_type: StatTypes;
+  stat_type: StatTypes | StatShorthands;
   amount: number;
 }>;
 
@@ -77,7 +95,7 @@ export type Conditional = Readonly<{
   condition: string;
 }>;
 
-export type StatPayload = {
+export type StatPayload = Readonly<{
   stats: Stat[];
   conditionals: Conditional[];
-};
+}>;
