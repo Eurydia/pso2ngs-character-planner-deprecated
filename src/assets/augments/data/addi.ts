@@ -1,4 +1,9 @@
-import { makeStat, StatTypes, OFFENSIVE_POT } from "../../stats";
+import {
+  makeStat,
+  StatTypes,
+  expandPotShorthand,
+  StatShorthands,
+} from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 // --------------------------------------
@@ -8,9 +13,10 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 
 (() => {
+  const pot_type = expandPotShorthand();
   const names = ["mel", "ra", "tech"];
   names.forEach((name, index) => {
-    const pot = makeStat(OFFENSIVE_POT[index], 1.025);
+    const pot = makeStat(pot_type[index], 1.025);
 
     // sta
     augments.push(
@@ -63,7 +69,7 @@ let augments: AugmentData[] = [];
       makeAugmentData(`addi ward${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         pot,
-        makeStat(StatTypes.AILMENT_RES, 1.2),
+        makeStat(StatShorthands.AILMENT_RES, 1.2),
       ]),
     );
   });

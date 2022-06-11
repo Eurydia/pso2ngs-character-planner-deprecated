@@ -6,6 +6,7 @@ import {
   makeStatPayload,
   Stat,
   Conditional,
+  StatShorthands,
 } from "../../stats";
 
 /**
@@ -65,7 +66,7 @@ export const getCategoryStatPayload = (
   let conditionals: Conditional[] = [];
   switch (category) {
     case FoodCategory.MEAT:
-      stats = [makeStat(StatTypes.POT, amount)];
+      stats = [makeStat(StatShorthands.POT, amount)];
       break;
     case FoodCategory.VEGETABLE:
       stats = [makeStat(StatTypes.DMG_RES, amount)];

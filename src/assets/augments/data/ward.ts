@@ -1,4 +1,9 @@
-import { StatTypes, AILMENT_RES, makeStat } from "../../stats";
+import {
+  StatTypes,
+  expandAilmentResShorthand,
+  makeStat,
+  StatShorthands,
+} from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -22,6 +27,7 @@ let augments: AugmentData[] = [];
   ];
 
   const bp = [4, 5, 6];
+  const ailement_type = expandAilmentResShorthand();
   const ailment_res = [1.2, 1.25, 1.3];
 
   names.forEach((name, i) => {
@@ -29,7 +35,7 @@ let augments: AugmentData[] = [];
       const level = i + 1;
       const stats = [
         makeStat(StatTypes.BP, bp[i]),
-        makeStat(AILMENT_RES[i], ailment_res[i]),
+        makeStat(ailement_type[i], ailment_res[i]),
       ];
 
       augments.push(
@@ -55,8 +61,9 @@ let augments: AugmentData[] = [];
     const level = i + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.AILMENT_RES, ailemnt_res[i]),
+      makeStat(StatShorthands.AILMENT_RES, ailemnt_res[i]),
     ];
+
     augments.push(
       makeAugmentData(
         "sovereign ward",

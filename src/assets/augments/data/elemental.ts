@@ -1,4 +1,8 @@
-import { makeConditional, makeStat, StatTypes } from "../../stats";
+import {
+  makeConditional,
+  makeStat,
+  StatShorthands,
+} from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -30,7 +34,7 @@ let augments: AugmentData[] = [];
         [],
         [
           makeConditional(
-            [makeStat(StatTypes.POT, 1.025)],
+            [makeStat(StatShorthands.POT, 1.025)],
             `is attacking enemy weak to ${element}`,
           ),
         ],

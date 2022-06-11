@@ -1,4 +1,4 @@
-import { makeStat, StatTypes } from "../../stats";
+import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -13,7 +13,7 @@ let augments: AugmentData[] = [];
 augments.push(
   makeAugmentData("megas fusia", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
-    makeStat(StatTypes.POT, 1.01),
+    makeStat(StatShorthands.POT, 1.01),
   ]),
 );
 

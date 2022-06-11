@@ -1,4 +1,9 @@
-import { makeStat, OFFENSIVE_POT, StatTypes } from "../../stats";
+import {
+  makeStat,
+  expandPotShorthand,
+  StatTypes,
+  StatShorthands,
+} from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -78,6 +83,7 @@ let augments: AugmentData[] = [];
 // might | precision | techinque
 (() => {
   const bps = [4, 5, 6];
+  const pot_type = expandPotShorthand();
   const pot = [1.01, 1.015, 1.02];
 
   const names = ["might", "precision", "technique"];
@@ -86,7 +92,7 @@ let augments: AugmentData[] = [];
       const level = j + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(OFFENSIVE_POT[i], pot[j]),
+        makeStat(pot_type[i], pot[j]),
       ];
       // generic
       augments.push(
@@ -159,7 +165,7 @@ let augments: AugmentData[] = [];
     const level = i + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.POT, pot[i]),
+      makeStat(StatShorthands.POT, pot[i]),
       makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
       makeStat(StatTypes.DMG_RES, dmg_res[i]),
     ];

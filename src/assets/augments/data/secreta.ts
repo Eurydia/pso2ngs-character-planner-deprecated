@@ -1,4 +1,4 @@
-import { makeStat, StatTypes } from "../../stats";
+import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -22,7 +22,7 @@ let augments: AugmentData[] = [];
     const stats = [
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.HP, hp[i]),
-      makeStat(StatTypes.POT, pot[i]),
+      makeStat(StatShorthands.POT, pot[i]),
       makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
       makeStat(StatTypes.DMG_RES, dmg_res[i]),
     ];

@@ -1,4 +1,9 @@
-import { StatTypes, OFFENSIVE_POT, makeStat } from "../../stats";
+import {
+  StatTypes,
+  expandPotShorthand,
+  makeStat,
+  StatShorthands,
+} from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -53,6 +58,7 @@ let augments: AugmentData[] = [];
 // form | form machini | form sand soul
 (() => {
   const bps = [6, 8, 9];
+  const pot_type = expandPotShorthand();
   const pot = [1.02, 1.02, 1.02];
   const dmg_res = [1, 1.02, 1.025];
 
@@ -62,7 +68,7 @@ let augments: AugmentData[] = [];
       const level = j + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(OFFENSIVE_POT[i], pot[j]),
+        makeStat(pot_type[i], pot[j]),
         makeStat(StatTypes.DMG_RES, dmg_res[j]),
       ];
 
@@ -84,6 +90,7 @@ let augments: AugmentData[] = [];
 (() => {
   const bps = [7, 8, 10];
   const pp = [5, 5, 5];
+  const pot_type = expandPotShorthand();
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["daityl", "pettas", "nex"];
@@ -93,7 +100,7 @@ let augments: AugmentData[] = [];
       const stats = [
         makeStat(StatTypes.BP, bp),
         makeStat(StatTypes.PP, pp[j]),
-        makeStat(OFFENSIVE_POT[i], pot[j]),
+        makeStat(pot_type[i], pot[j]),
       ];
 
       augments.push(
@@ -114,6 +121,7 @@ let augments: AugmentData[] = [];
 (() => {
   const bps = [7, 8, 10];
   const hp = [15, 15, 15];
+  const pot_type = expandPotShorthand();
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["dust", "ragras", "renus"];
@@ -123,7 +131,7 @@ let augments: AugmentData[] = [];
       const stats = [
         makeStat(StatTypes.BP, bp),
         makeStat(StatTypes.HP, hp[j]),
-        makeStat(OFFENSIVE_POT[i], pot[j]),
+        makeStat(pot_type[i], pot[j]),
       ];
 
       augments.push(
@@ -153,7 +161,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.HP, hp[i]),
       makeStat(StatTypes.PP, pp[i]),
-      makeStat(StatTypes.POT, pot[i]),
+      makeStat(StatShorthands.POT, pot[i]),
     ];
     augments.push(
       makeAugmentData("eradi soul", level, GROUP, CONFLICT, stats),

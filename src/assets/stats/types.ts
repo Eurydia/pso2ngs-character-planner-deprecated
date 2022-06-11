@@ -36,51 +36,59 @@ export enum StatTypes {
   // Stat shorthands,these stats get expanded into other stats
 }
 
-export const enum StatShorthands {
+export enum StatShorthands {
   POT = "potency",
   AILMENT_RES = "all ailment resist",
   PP_GAIN = "PP recovery",
 }
+/**
+ * Expand `StatShorthands.PP_GAIN`
+ * @returns
+ */
+export const expandPPGainShorthand = (): StatTypes[] => {
+  return [StatTypes.ACTIVE_PP_GAIN, StatTypes.PASSIVE_PP_GAIN];
+};
+/**
+ * Expand `StatShorthands.POT`
+ * @returns
+ */
+export const expandPotShorthand = (): StatTypes[] => {
+  return [StatTypes.MEL_POT, StatTypes.RNG_POT, StatTypes.TEC_POT];
+};
+/**
+ * Expand `StatShorthands.AILMENT_RES`
+ * @returns
+ */
+export const expandAilmentResShorthand = (): StatTypes[] => {
+  return [
+    StatTypes.BURN_RES,
+    StatTypes.FREEZE_RES,
+    StatTypes.SHOCK_RES,
+    StatTypes.BLIND_RES,
+    StatTypes.PANIC_RES,
+    StatTypes.POISON_RES,
+    StatTypes.PHYDOWN_RES,
+  ];
+};
 
-// TODO: Turn these into functions, maybe?
-export const PP_RECOVERY = [
-  StatTypes.ACTIVE_PP_GAIN,
-  StatTypes.PASSIVE_PP_GAIN,
-];
-
-export const OFFENSIVE_POT = [
-  StatTypes.MEL_POT,
-  StatTypes.RNG_POT,
-  StatTypes.TEC_POT,
-];
-
-export const AILMENT_RES = [
-  StatTypes.BURN_RES,
-  StatTypes.FREEZE_RES,
-  StatTypes.SHOCK_RES,
-  StatTypes.BLIND_RES,
-  StatTypes.PANIC_RES,
-  StatTypes.POISON_RES,
-  StatTypes.PHYDOWN_RES,
-];
-
-export const ADD_STAT_TYPES = [
-  StatTypes.BP,
-  StatTypes.HP,
-  StatTypes.PP,
-  StatTypes.ATK,
-  StatTypes.DEF,
-];
-
-export const DISPLAY_AS_ADD = [
-  StatTypes.BP,
-  StatTypes.HP,
-  StatTypes.PP,
-  StatTypes.ATK,
-  StatTypes.DEF,
-];
-
-export const MUL_DISPLAY_AS_ADD = [StatTypes.CRIT_CHANCE];
+/**
+ * @returns Stats stack via addition
+ */
+export const getAdditiveStats = (): StatTypes[] => {
+  return [
+    StatTypes.BP,
+    StatTypes.HP,
+    StatTypes.PP,
+    StatTypes.ATK,
+    StatTypes.DEF,
+  ];
+};
+/**
+ * @returns Stats stack via addition, but displayed as percentage
+ */
+export const getMulStatsDisplayAsAdd = (): StatTypes[] => {
+  return [StatTypes.CRIT_CHANCE];
+};
 
 export type Stat = Readonly<{
   stat_type: StatTypes | StatShorthands;

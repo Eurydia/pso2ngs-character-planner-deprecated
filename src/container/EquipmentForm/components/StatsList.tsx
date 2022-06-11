@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Box, Grid, Stack, Tooltip, Typography } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import {
-  ADD_STAT_TYPES,
-  AILMENT_RES,
+  getAdditiveStats,
+  expandAilmentResShorthand,
   makeStat,
-  MUL_DISPLAY_AS_ADD,
-  OFFENSIVE_POT,
-  PP_RECOVERY,
+  getMulStatsDisplayAsAdd,
+  expandPotShorthand,
+  expandPPGainShorthand,
   Stat,
   StatPayload,
   StatTypes,
@@ -15,18 +15,17 @@ import {
 import { parseStatToDisplay, tallyStats } from "../../../utility";
 
 interface StatsListItemProps {
-  stat_type: StatTypes;
-  amount: string;
+  stat: Stat;
 }
 const StatsListItem: FC<StatsListItemProps> = (props) => {
   return (
     <Box>
       <Grid container>
         <Grid item md={6}>
-          <Typography>{props.stat_type}</Typography>
+          <Typography>{props.stat.stat_type}</Typography>
         </Grid>
         <Grid item md={6}>
-          <Typography>{props.amount} </Typography>
+          <Typography>{props.stat.amount} </Typography>
         </Grid>
       </Grid>
     </Box>
@@ -49,15 +48,15 @@ const StatsList: FC<StatsListProps> = (props) => {
         // TODO: use lookup table to reduce
         //  if-else clutter
         if (stat_type === StatTypes.POT) {
-          OFFENSIVE_POT.forEach((off_type) => {
+          expandPotShorthand.forEach((off_type) => {
             template[off_type] = amount;
           });
         } else if (stat_type === StatTypes.PP_GAIN) {
-          PP_RECOVERY.forEach((rec_type) => {
+          expandPPGainShorthand.forEach((rec_type) => {
             template[rec_type] = amount;
           });
         } else if (stat_type === StatTypes.AILMENT_RES) {
-          AILMENT_RES.forEach((res_type) => {
+          expandAilmentResShorthand.forEach((res_type) => {
             template[res_type] = amount;
           });
         } else {
@@ -65,21 +64,21 @@ const StatsList: FC<StatsListProps> = (props) => {
         }
       } else {
         if (stat_type === StatTypes.POT) {
-          OFFENSIVE_POT.forEach((off_type) => {
+          expandPotShorthand.forEach((off_type) => {
             template[off_type]! *= amount;
           });
         } else if (stat_type === StatTypes.PP_GAIN) {
-          PP_RECOVERY.forEach((rec_type) => {
+          expandPPGainShorthand.forEach((rec_type) => {
             template[rec_type]! *= amount;
           });
         } else if (stat_type === StatTypes.AILMENT_RES) {
-          AILMENT_RES.forEach((res_type) => {
+          expandAilmentResShorthand.forEach((res_type) => {
             template[res_type]! *= amount;
           });
         } else {
-          if (MUL_DISPLAY_AS_ADD.includes(stat_type)) {
+          if (getMulStatsDisplayAsAdd.includes(stat_type)) {
             template[stat_type]! += amount - 1;
-          } else if (ADD_STAT_TYPES.includes(stat_type)) {
+          } else if (getAdditiveStats.includes(stat_type)) {
             template[stat_type]! += amount;
           } else {
             template[stat_type]! *= amount;
@@ -94,15 +93,15 @@ const StatsList: FC<StatsListProps> = (props) => {
         const { stat_type, amount } = stat;
         if (template[stat_type] === undefined) {
           if (stat_type === StatTypes.POT) {
-            OFFENSIVE_POT.forEach((off_type) => {
+            expandPotShorthand.forEach((off_type) => {
               template[off_type] = amount;
             });
           } else if (stat_type === StatTypes.PP_GAIN) {
-            PP_RECOVERY.forEach((rec_type) => {
+            expandPPGainShorthand.forEach((rec_type) => {
               template[rec_type] = amount;
             });
           } else if (stat_type === StatTypes.AILMENT_RES) {
-            AILMENT_RES.forEach((res_type) => {
+            expandAilmentResShorthand.forEach((res_type) => {
               template[res_type] = amount;
             });
           } else {
@@ -110,19 +109,19 @@ const StatsList: FC<StatsListProps> = (props) => {
           }
         } else {
           if (stat_type === StatTypes.POT) {
-            OFFENSIVE_POT.forEach((off_type) => {
+            expandPotShorthand.forEach((off_type) => {
               template[off_type]! += amount;
             });
           } else if (stat_type === StatTypes.PP_GAIN) {
-            PP_RECOVERY.forEach((rec_type) => {
+            expandPPGainShorthand.forEach((rec_type) => {
               template[rec_type]! += amount;
             });
           } else if (stat_type === StatTypes.AILMENT_RES) {
-            AILMENT_RES.forEach((res_type) => {
+            expandAilmentResShorthand.forEach((res_type) => {
               template[res_type]! += amount;
             });
           } else {
-            if (MUL_DISPLAY_AS_ADD.includes(stat_type)) {
+            if (getMulStatsDisplayAsAdd.includes(stat_type)) {
               template[stat_type]! += amount - 1;
             } else {
               template[stat_type]! += amount;

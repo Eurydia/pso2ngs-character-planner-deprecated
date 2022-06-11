@@ -1,4 +1,4 @@
-import { StatTypes, makeStat } from "../../stats";
+import { StatTypes, makeStat, StatShorthands } from "../../stats";
 import { makeUnitData } from "../makeUnitData";
 import { UnitData } from "../types";
 
@@ -90,8 +90,8 @@ units.push(
   makeUnitData("geant armor", RARITY, 15, 15, [
     makeStat(StatTypes.HP, -20),
     makeStat(StatTypes.PP, 10),
-    makeStat(StatTypes.POT, 1.02),
-    makeStat(StatTypes.AILMENT_RES, 0.5),
+    makeStat(StatShorthands.POT, 1.02),
+    makeStat(StatShorthands.AILMENT_RES, 0.5),
   ]),
 );
 

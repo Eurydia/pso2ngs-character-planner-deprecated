@@ -7,6 +7,7 @@ import {
   makeConditional,
   StatPayload,
   makeStatPayload,
+  StatShorthands,
 } from "../../stats";
 
 /**
@@ -73,7 +74,7 @@ export const getAttributeStatPayload = (
       ];
       break;
     case FoodAttribute.LIGHT:
-      stats = [makeStat(StatTypes.PP_GAIN, amount)];
+      stats = [makeStat(StatShorthands.PP_GAIN, amount)];
       break;
     case FoodAttribute.ROBUST:
       stats = [makeStat(StatTypes.HP_RECOVERY_BOOST, amount)];

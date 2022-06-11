@@ -1,30 +1,14 @@
 import {
   Stat,
   StatTypes,
-  OFFENSIVE_POT,
-  PP_RECOVERY,
-  AILMENT_RES,
-  MUL_DISPLAY_AS_ADD,
-  ADD_STAT_TYPES,
+  expandPotShorthand,
+  expandPPGainShorthand,
+  expandAilmentResShorthand,
+  getMulStatsDisplayAsAdd,
+  getAdditiveStats,
   makeStat,
+  StatShorthands,
 } from "./assets/stats";
-
-export const STACK_BY_ADDING = [
-  StatTypes.BP,
-  StatTypes.HP,
-  StatTypes.PP,
-  StatTypes.ATK,
-  StatTypes.DEF,
-  StatTypes.CRIT_CHANCE,
-];
-
-export const DISPLAY_AS_ADD = [
-  StatTypes.BP,
-  StatTypes.HP,
-  StatTypes.PP,
-  StatTypes.ATK,
-  StatTypes.DEF,
-];
 
 /**
  * Convert a number to roman string
@@ -87,36 +71,16 @@ export const parseNumberToDisplay = (
  * @returns
  */
 export const parseStatToDisplay = (stat: Stat): string => {
-  const display_as_add = DISPLAY_AS_ADD.includes(stat.stat_type);
+  const is_shorthand = Object.keys(StatShorthands).includes(
+    stat.stat_type,
+  );
+
+  const display_as_add = getAdditiveStats().includes(stat.stat_type);
   return parseNumberToDisplay(stat.amount, display_as_add);
 };
 
-// export const stackStats = (base: Stat[], extra: Stat[]): Stat[] => {
-//   let seen: StatTypes[] = base.map((stat) => stat.stat_type);
-//   let stats: Stat[] = base.map((stat) => ({ ...stat }));
-
-//   for (const stat of extra) {
-//     const target = seen.findIndex((s) => s === stat.stat_type);
-//     if (target !== -1) {
-//       if (STACK_BY_ADDING.includes(stat.stat_type)) {
-//         stats[target].amount += stat.amount;
-//         // Crit chance is displayed as percentage
-//         // This entures that value doesn't exceed 2
-//         if (stat.stat_type === StatTypes.CRIT_CHANCE) {
-//           stats[target].amount -= 1;
-//         } else {
-//           stats[target].amount *= stat.amount;
-//         }
-//       }
-//     } else {
-//       stats.push(stat);
-//       seen.push(stat.stat_type);
-//     }
-//   }
-//   return stats;
-// };
-
 export const tallyStats = (stats: Stat[]): Stat[] => {
+  // TODO: expand shorthands in here, instead
   let template: { [key in StatTypes]: number } = {
     "BP": 0,
     "HP": 0,
@@ -152,9 +116,9 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
   for (const stat of stats) {
     const { stat_type, amount } = stat;
 
-    if (MUL_DISPLAY_AS_ADD.includes(stat_type)) {
+    if (getMulStatsDisplayAsAdd.includes(stat_type)) {
       template[stat_type]! += amount - 1;
-    } else if (ADD_STAT_TYPES.includes(stat_type)) {
+    } else if (getAdditiveStats.includes(stat_type)) {
       template[stat_type]! += amount;
     } else {
       template[stat_type]! *= amount;

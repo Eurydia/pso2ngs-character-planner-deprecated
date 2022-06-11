@@ -1,4 +1,4 @@
-import { makeStat, StatTypes, OFFENSIVE_POT } from "../../stats";
+import { makeStat, StatTypes, expandPotShorthand } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -10,10 +10,11 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 (() => {
-  const names = ["mel", "ra", "tech"];
+  const pot_type = expandPotShorthand();
 
+  const names = ["mel", "ra", "tech"];
   names.forEach((name, i) => {
-    const pot = makeStat(OFFENSIVE_POT[i], 1.0225);
+    const pot = makeStat(pot_type[i], 1.0225);
 
     // sta
     augments.push(

@@ -5,6 +5,7 @@ import {
   makeStatPayload,
   StatPayload,
   StatTypes,
+  StatShorthands,
 } from "../../stats";
 import { makePotentialData } from "../makeWeaponData";
 import { PotentialSeries } from "../types";
@@ -31,7 +32,7 @@ export const RECYCLER_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.18, 1.2, 1.23, 1.24];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -44,8 +45,8 @@ export const INDOMITABLE_UNIT = makePotentialData(
       const POTENCY = [1.18, 1.2, 1.23, 1.24];
       const ailment_res = index < 3 ? 1.1 : 1.2;
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
-        makeStat(StatTypes.AILMENT_RES, ailment_res),
+        makeStat(StatShorthands.POT, POTENCY[index]),
+        makeStat(StatShorthands.AILMENT_RES, ailment_res),
       ]);
     }),
 );
@@ -57,7 +58,7 @@ export const DEFENSIVE_FORMATION = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.17, 1.19, 1.22, 1.22];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -69,7 +70,7 @@ export const OFFENSIVE_FORMATION = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.17, 1.19, 1.22, 1.22];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -81,7 +82,7 @@ export const VALOROUS_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.08, 1.1, 1.13, 1.14];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
         makeStat(StatTypes.DMG_BOOST, 1.1),
       ]);
     }),
@@ -95,7 +96,7 @@ export const DYNAMO_UNIT = makePotentialData(
       const POTENCY = [1.16, 1.18, 1.21, 1.21];
       const crit_change = index < 3 ? 1.15 : 1.8;
       return makeStatPayload(
-        [makeStat(StatTypes.POT, POTENCY[index])],
+        [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
             [makeStat(StatTypes.CRIT_CHANCE, crit_change)],
@@ -113,7 +114,7 @@ export const MUSTERED_MIGHT_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.15, 1.17, 1.2, 1.21];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -126,7 +127,7 @@ export const BASTION_UNIT = makePotentialData(
       const POTENCY = [1.18, 1.2, 1.23, 1.24];
       const dmg_res = index < 3 ? 1.4 : 1.5;
       return makeStatPayload(
-        [makeStat(StatTypes.POT, POTENCY[index])],
+        [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
             [makeStat(StatTypes.DMG_RES, dmg_res)],
@@ -145,8 +146,8 @@ export const MEDITATION_UNIT = makePotentialData(
       const POTENCY = [1.18, 1.2, 1.23, 1.24];
       const pp_gain = index < 3 ? 1.1 : 1.15;
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
-        makeStat(StatTypes.PP_GAIN, pp_gain),
+        makeStat(StatShorthands.POT, POTENCY[index]),
+        makeStat(StatShorthands.PP_GAIN, pp_gain),
       ]);
     }),
 );
@@ -159,8 +160,8 @@ export const BERSERK_UNIT = makePotentialData(
       const POTENCY = [1.21, 1.23, 1.26, 1.27];
       const dmg_res = index < 3 ? 0.9 : 0.92;
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
-        makeStat(StatTypes.PP_GAIN, dmg_res),
+        makeStat(StatShorthands.POT, POTENCY[index]),
+        makeStat(StatShorthands.PP_GAIN, dmg_res),
       ]);
     }),
 );
@@ -172,7 +173,7 @@ export const SOULSPRING_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.2, 1.22, 1.25, 1.26];
       return makeStatPayload(
-        [makeStat(StatTypes.POT, POTENCY[index])],
+        [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
             [makeStat(StatTypes.PB_GAUGE_GAIN, 1.2)],
@@ -190,7 +191,7 @@ export const FORTRESS_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.17, 1.19, 1.22, 1.23];
       return makeStatPayload(
-        [makeStat(StatTypes.POT, POTENCY[index])],
+        [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
             [makeStat(StatTypes.DMG_RES, 1.5)],
@@ -208,7 +209,7 @@ export const REINVIGORATING_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.17, 1.19, 1.22, 1.23];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -220,7 +221,7 @@ export const FOCUSED_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.15, 1.17, 1.2, 1.21];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -232,10 +233,10 @@ export const FIGHTING_SPIRIT_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.14, 1.16, 1.19, 1.2];
       return makeStatPayload(
-        [makeStat(StatTypes.POT, POTENCY[index])],
+        [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
-            [makeStat(StatTypes.POT, 1.04)],
+            [makeStat(StatShorthands.POT, 1.04)],
             "is attacking boss enemy",
           ),
         ],
@@ -250,7 +251,7 @@ export const VIGOROUS_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.21, 1.23, 1.26, 1.27];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
         makeStat(StatTypes.DMG_RES, 1.1),
         makeStat(StatTypes.HP_RECOVERY_BOOST, 1.2),
       ]);
@@ -264,7 +265,7 @@ export const EXPLOSIVE_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.15, 1.17, 1.2, 1.21];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -277,7 +278,7 @@ export const HARMONIOUS_UNIT = makePotentialData(
       const POTENCY = [1.12, 1.14, 1.17, 1.18];
       return makeStatPayload(
         [
-          makeStat(StatTypes.POT, POTENCY[index]),
+          makeStat(StatShorthands.POT, POTENCY[index]),
           makeStat(StatTypes.CRIT_CHANCE, 1.15),
         ],
         [
@@ -298,12 +299,12 @@ export const IMBUED_UNIT = makePotentialData(
       const POTENCY = [1.17, 1.23, 1.26, 1.27];
       return makeStatPayload(
         [
-          makeStat(StatTypes.POT, POTENCY[index]),
+          makeStat(StatShorthands.POT, POTENCY[index]),
           makeStat(StatTypes.PP_USAGE, 0.9),
         ],
         [
           makeConditional(
-            [makeStat(StatTypes.PP_GAIN, 1.2)],
+            [makeStat(StatShorthands.PP_GAIN, 1.2)],
             "is attacking",
           ),
         ],
@@ -318,7 +319,7 @@ export const VIRTUOSO_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.15, 1.18, 1.22, 1.26];
       return makeStatPayload([
-        makeStat(StatTypes.POT, POTENCY[index]),
+        makeStat(StatShorthands.POT, POTENCY[index]),
       ]);
     }),
 );
@@ -331,13 +332,13 @@ export const UNASSAILABLE_UNIT = makePotentialData(
       const POTENCY = [1.15, 1.18, 1.21, 1.22];
       return makeStatPayload(
         [
-          makeStat(StatTypes.POT, POTENCY[index]),
+          makeStat(StatShorthands.POT, POTENCY[index]),
           makeStat(StatTypes.DMG_RES, 1.05),
         ],
         [
           makeConditional(
             [
-              makeStat(StatTypes.POT, 1.05),
+              makeStat(StatShorthands.POT, 1.05),
               makeStat(StatTypes.DMG_RES, 1.5),
             ],
             "is in Geometric Labyrinth",

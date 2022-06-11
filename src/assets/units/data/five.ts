@@ -1,4 +1,9 @@
-import { StatTypes, makeStat, OFFENSIVE_POT } from "../../stats";
+import {
+  StatTypes,
+  makeStat,
+  expandPotShorthand,
+  StatShorthands,
+} from "../../stats";
 import { makeUnitData } from "../makeUnitData";
 import { UnitData } from "../types";
 
@@ -57,7 +62,7 @@ units.push(
 units.push(
   makeUnitData("vios armor", RARITY, 24, 15, [
     makeStat(StatTypes.PP, 8),
-    makeStat(StatTypes.POT, 1.01),
+    makeStat(StatShorthands.POT, 1.01),
   ]),
 );
 
@@ -74,7 +79,7 @@ units.push(
 units.push(
   makeUnitData("viosel armor", RARITY, 26, 10, [
     makeStat(StatTypes.PP, 14),
-    makeStat(StatTypes.AILMENT_RES, 1.2),
+    makeStat(StatShorthands.AILMENT_RES, 1.2),
   ]),
 );
 
@@ -84,21 +89,23 @@ units.push(
   makeUnitData("gres armor", RARITY, 31, 21, [
     makeStat(StatTypes.HP, -40),
     makeStat(StatTypes.PP, 13),
-    makeStat(StatTypes.POT, 1.02),
-    makeStat(StatTypes.AILMENT_RES, 0.5),
+    makeStat(StatShorthands.POT, 1.02),
+    makeStat(StatShorthands.AILMENT_RES, 0.5),
   ]),
 );
 
 // -------------------------
 // schwarz
 (() => {
+  const pot_type = expandPotShorthand();
+
   const names = ["schwarzest", "schwarzgarde", "schwarzrosso"];
   names.forEach((name, i) =>
     units.push(
       makeUnitData(`${name} armor`, RARITY, 31, 20, [
         makeStat(StatTypes.HP, 25),
         makeStat(StatTypes.PP, 3),
-        makeStat(OFFENSIVE_POT[i], 1.02),
+        makeStat(pot_type[i], 1.02),
         makeStat(StatTypes.DMG_RES, 1.01),
       ]),
     ),
