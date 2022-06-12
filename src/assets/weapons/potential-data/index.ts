@@ -130,7 +130,7 @@ export const BASTION_UNIT = makePotentialData(
         [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
-            [makeStat(StatTypes.DMG_RES, dmg_res)],
+            [makeStat(StatTypes.DMG_RESIST, dmg_res)],
             "is at max HP",
           ),
         ],
@@ -147,7 +147,7 @@ export const MEDITATION_UNIT = makePotentialData(
       const pp_gain = index < 3 ? 1.1 : 1.15;
       return makeStatPayload([
         makeStat(StatShorthands.POT, POTENCY[index]),
-        makeStat(StatShorthands.PP_GAIN, pp_gain),
+        makeStat(StatShorthands.PP_RECOVERY, pp_gain),
       ]);
     }),
 );
@@ -161,7 +161,7 @@ export const BERSERK_UNIT = makePotentialData(
       const dmg_res = index < 3 ? 0.9 : 0.92;
       return makeStatPayload([
         makeStat(StatShorthands.POT, POTENCY[index]),
-        makeStat(StatShorthands.PP_GAIN, dmg_res),
+        makeStat(StatShorthands.PP_RECOVERY, dmg_res),
       ]);
     }),
 );
@@ -176,7 +176,7 @@ export const SOULSPRING_UNIT = makePotentialData(
         [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
-            [makeStat(StatTypes.PB_GAUGE_GAIN, 1.2)],
+            [makeStat(StatTypes.PB_GAUGE_CHARGE_RATE, 1.2)],
             "is attacking",
           ),
         ],
@@ -194,7 +194,7 @@ export const FORTRESS_UNIT = makePotentialData(
         [makeStat(StatShorthands.POT, POTENCY[index])],
         [
           makeConditional(
-            [makeStat(StatTypes.DMG_RES, 1.5)],
+            [makeStat(StatTypes.DMG_RESIST, 1.5)],
             "has barrier active",
           ),
         ],
@@ -252,7 +252,7 @@ export const VIGOROUS_UNIT = makePotentialData(
       const POTENCY = [1.21, 1.23, 1.26, 1.27];
       return makeStatPayload([
         makeStat(StatShorthands.POT, POTENCY[index]),
-        makeStat(StatTypes.DMG_RES, 1.1),
+        makeStat(StatTypes.DMG_RESIST, 1.1),
         makeStat(StatTypes.HP_RECOVERY_BOOST, 1.2),
       ]);
     }),
@@ -304,7 +304,7 @@ export const IMBUED_UNIT = makePotentialData(
         ],
         [
           makeConditional(
-            [makeStat(StatShorthands.PP_GAIN, 1.2)],
+            [makeStat(StatShorthands.PP_RECOVERY, 1.2)],
             "is attacking",
           ),
         ],
@@ -333,13 +333,13 @@ export const UNASSAILABLE_UNIT = makePotentialData(
       return makeStatPayload(
         [
           makeStat(StatShorthands.POT, POTENCY[index]),
-          makeStat(StatTypes.DMG_RES, 1.05),
+          makeStat(StatTypes.DMG_RESIST, 1.05),
         ],
         [
           makeConditional(
             [
               makeStat(StatShorthands.POT, 1.05),
-              makeStat(StatTypes.DMG_RES, 1.5),
+              makeStat(StatTypes.DMG_RESIST, 1.5),
             ],
             "is in Geometric Labyrinth",
           ),

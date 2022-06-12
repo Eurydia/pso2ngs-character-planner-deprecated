@@ -1,5 +1,5 @@
 import { FC, memo, useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
 import { ENHANCEMENT_MAX } from "../../stores";
 import { getWeaponStatPayload, Weapon } from "../../assets/weapons";
@@ -61,8 +61,6 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         payload.push(augment.payload);
       }
     });
-
-    console.log(payload);
 
     return (
       <CustomCard

@@ -9,13 +9,13 @@ export enum StatTypes {
 
   HP_RECOVERY_BOOST = "HP recovery boost",
 
-  ACTIVE_PP_GAIN = "active PP recovery",
-  PASSIVE_PP_GAIN = "natural PP recovery",
+  ACTIVE_PP_RECOVERY = "active PP recovery",
+  NATURAL_PP_RECOVERY = "natural PP recovery",
   PP_USAGE = "PP cost",
 
-  PB_GAUGE_GAIN = "PB gauge charge rate",
+  PB_GAUGE_CHARGE_RATE = "PB gauge charge rate",
 
-  DMG_BOOST = "DMG",
+  DMG_BOOST = "DMG boost",
   MEL_POT = "MEL pot",
   RNG_POT = "RNG pot",
   TEC_POT = "TEC pot",
@@ -23,14 +23,14 @@ export enum StatTypes {
   CRIT_CHANCE = "crit chance",
   CRIT_DMG = "crit DMG",
 
-  DMG_RES = "DMG resist",
-  BURN_RES = "burn resist",
-  FREEZE_RES = "freeze resist",
-  SHOCK_RES = "shock resist",
-  BLIND_RES = "blind resist",
-  PANIC_RES = "panic resist",
-  POISON_RES = "poison resist",
-  PHYDOWN_RES = "physical down resist",
+  DMG_RESIST = "DMG resist",
+  BURN_RESIST = "burn resist",
+  FREEZE_RESIST = "freeze resist",
+  SHOCK_RESIST = "shock resist",
+  BLIND_RESIST = "blind resist",
+  PANIC_RESIST = "panic resist",
+  POISON_RESIST = "poison resist",
+  PHYDOWN_RESIST = "physical down resist",
   AILMENT_DURATION = "ailment duration",
 }
 
@@ -38,9 +38,9 @@ export enum StatTypes {
  * Stat shorthands, these stats get expanded into other stats
  * */
 export enum StatShorthands {
-  POT = "potency",
-  AILMENT_RES = "all ailment resist",
-  PP_GAIN = "PP recovery",
+  POT = "pot",
+  AILMENT_RES = "ailment resist",
+  PP_RECOVERY = "PP recovery",
 }
 
 export type Stat = Readonly<{
@@ -60,3 +60,7 @@ export type StatPayload = Readonly<{
   stats: Stat[];
   conditionals: Conditional[];
 }>;
+
+export type StatTemplate = {
+  [key in StatTypes]: number;
+};

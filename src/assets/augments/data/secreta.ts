@@ -24,7 +24,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.HP, hp[i]),
       makeStat(StatShorthands.POT, pot[i]),
       makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
-      makeStat(StatTypes.DMG_RES, dmg_res[i]),
+      makeStat(StatTypes.DMG_RESIST, dmg_res[i]),
     ];
 
     augments.push(

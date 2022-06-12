@@ -25,7 +25,7 @@ let augments: AugmentData[] = [];
     const stats = [
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.HP, hp[i]),
-      makeStat(StatTypes.DMG_RES, dmg_res[i]),
+      makeStat(StatTypes.DMG_RESIST, dmg_res[i]),
     ];
 
     augments.push(
@@ -69,7 +69,7 @@ let augments: AugmentData[] = [];
       const stats = [
         makeStat(StatTypes.BP, bp),
         makeStat(pot_type[i], pot[j]),
-        makeStat(StatTypes.DMG_RES, dmg_res[j]),
+        makeStat(StatTypes.DMG_RESIST, dmg_res[j]),
       ];
 
       augments.push(

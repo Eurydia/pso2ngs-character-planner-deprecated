@@ -17,7 +17,7 @@ let units: UnitData[] = [];
 units.push(
   makeUnitData("vidal armor", RARITY, 24, 22, [
     makeStat(StatTypes.HP, 45),
-    makeStat(StatTypes.DMG_RES, 1.01),
+    makeStat(StatTypes.DMG_RESIST, 1.01),
   ]),
 );
 
@@ -106,7 +106,7 @@ units.push(
         makeStat(StatTypes.HP, 25),
         makeStat(StatTypes.PP, 3),
         makeStat(pot_type[i], 1.02),
-        makeStat(StatTypes.DMG_RES, 1.01),
+        makeStat(StatTypes.DMG_RESIST, 1.01),
       ]),
     ),
   );

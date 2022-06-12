@@ -53,7 +53,7 @@ units.push(
 units.push(
   makeUnitData("vialto armor", RARITY, 10, 14, [
     makeStat(StatTypes.HP, 30),
-    makeStat(StatTypes.DMG_RES, 1.01),
+    makeStat(StatTypes.DMG_RESIST, 1.01),
   ]),
 );
 // arga
@@ -62,7 +62,7 @@ units.push(
     makeStat(StatTypes.HP, 25),
     makeStat(StatTypes.MEL_POT, 1.005),
     makeStat(StatTypes.RNG_POT, 1.005),
-    makeStat(StatTypes.DMG_RES, 1.01),
+    makeStat(StatTypes.DMG_RESIST, 1.01),
   ]),
 );
 // belta
@@ -71,7 +71,7 @@ units.push(
     makeStat(StatTypes.HP, 25),
     makeStat(StatTypes.RNG_POT, 1.005),
     makeStat(StatTypes.TEC_POT, 1.005),
-    makeStat(StatTypes.DMG_RES, 1.01),
+    makeStat(StatTypes.DMG_RESIST, 1.01),
   ]),
 );
 // sheza
@@ -80,7 +80,7 @@ units.push(
     makeStat(StatTypes.HP, 25),
     makeStat(StatTypes.MEL_POT, 1.005),
     makeStat(StatTypes.TEC_POT, 1.005),
-    makeStat(StatTypes.DMG_RES, 1.01),
+    makeStat(StatTypes.DMG_RESIST, 1.01),
   ]),
 );
 

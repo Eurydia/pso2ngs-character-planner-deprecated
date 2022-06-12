@@ -48,7 +48,7 @@ let augments: AugmentData[] = [];
       makeAugmentData(`tria guaro${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 6),
         pot,
-        makeStat(StatTypes.DMG_RES, 0.99),
+        makeStat(StatTypes.DMG_RESIST, 0.99),
       ]),
     );
   });

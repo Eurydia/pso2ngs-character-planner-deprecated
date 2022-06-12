@@ -102,7 +102,16 @@ const filterOptions = (
         }),
       options,
     )
-    .slice(0, 16);
+    .slice(0, 16)
+    .sort((a, b) => {
+      if (a.group > b.group) {
+        return 1;
+      }
+      if (a.group < b.group) {
+        return -1;
+      }
+      return 0;
+    });
   return result;
 };
 
@@ -187,27 +196,29 @@ const augmentsDoConflict = (
 
 const constrainAugments = (
   new_augment: AugmentData | null,
-  index: number,
+  target_index: number,
   prev_augments: (AugmentData | null)[],
 ): (AugmentData | null)[] => {
   let next = [...prev_augments];
-  next[index] = new_augment;
+  next[target_index] = new_augment;
   if (new_augment === null) {
     return next;
   }
 
-  next.forEach((prev_augment, i) => {
-    if (i === index) {
-      return;
+  for (let i = 0; i < prev_augments.length; i++) {
+    if (i === target_index) {
+      continue;
     }
 
+    const prev_augment = prev_augments[i];
     if (
       prev_augment &&
       augmentsDoConflict(new_augment, prev_augment)
     ) {
       next[i] = null;
     }
-  });
+  }
+
   return next;
 };
 
@@ -252,17 +263,17 @@ const AugmentGroup: FC<AugmentGroupProps> = memo(
     );
   },
   (prev, next) => {
-    // check `disabled`
+    // ----------------
     if (prev.disabled !== next.disabled) {
       return false;
     }
 
-    // check `activeSlot`
+    // ----------------
     if (prev.enhancement !== next.enhancement) {
       return false;
     }
 
-    // check `values`
+    // ----------------
     if (prev.values.length !== next.values.length) {
       return false;
     }

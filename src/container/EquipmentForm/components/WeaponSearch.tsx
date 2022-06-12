@@ -18,7 +18,9 @@ import WEAPONS, {
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
 
-const OPTIONS = WEAPONS;
+const getOptions = () => {
+  return WEAPONS;
+};
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
@@ -87,7 +89,8 @@ const filterOptions = (
         }),
       options,
     )
-    .slice(0, 16);
+    .slice(0, 16)
+    .sort((a, b) => a.rarity - b.rarity);
   return result;
 };
 
@@ -112,7 +115,7 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
       <Autocomplete
         value={props.value}
         // -------
-        options={OPTIONS}
+        options={getOptions()}
         onChange={handleChange}
         filterOptions={filterOptions}
         renderOption={(p, o, s) =>

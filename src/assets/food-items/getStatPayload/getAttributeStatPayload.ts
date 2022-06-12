@@ -74,7 +74,7 @@ export const getAttributeStatPayload = (
       ];
       break;
     case FoodAttribute.LIGHT:
-      stats = [makeStat(StatShorthands.PP_GAIN, amount)];
+      stats = [makeStat(StatShorthands.PP_RECOVERY, amount)];
       break;
     case FoodAttribute.ROBUST:
       stats = [makeStat(StatTypes.HP_RECOVERY_BOOST, amount)];

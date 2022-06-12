@@ -7,6 +7,7 @@ import {
   getAddStatTypes,
   getAddPercentageStatTypes,
   getExpandedShorthand,
+  StatTemplate,
 } from "./assets/stats";
 
 /**
@@ -71,49 +72,73 @@ export const parseNumberToDisplay = (
  */
 export const parseStatToDisplay = (stat: Stat): string => {
   let stat_type = stat.stat_type;
+
+  // better to be implicit, I guess?
   if (stat_type === StatShorthands.POT) {
     stat_type = StatTypes.MEL_POT;
   } else if (stat_type === StatShorthands.AILMENT_RES) {
-    stat_type = StatTypes.BURN_RES;
-  } else if (stat_type === StatShorthands.PP_GAIN) {
-    stat_type = StatTypes.PASSIVE_PP_GAIN;
+    stat_type = StatTypes.BURN_RESIST;
+  } else if (stat_type === StatShorthands.PP_RECOVERY) {
+    stat_type = StatTypes.NATURAL_PP_RECOVERY;
   }
+
   const display_stat_as_add = getAddStatTypes().includes(stat_type);
-  console.log(display_stat_as_add, stat_type);
 
   return parseNumberToDisplay(stat.amount, display_stat_as_add);
 };
 
+export const addStatToTemplate = (
+  stat: Stat,
+  template: StatTemplate,
+): StatTemplate => {
+  let _template = { ...template };
+
+  // if `stat_type` is a shorthand,
+  // expand them and add them to the template
+  if (
+    Object.values(StatShorthands).includes(
+      stat.stat_type as StatShorthands,
+    )
+  ) {
+    getExpandedShorthand(stat.stat_type as StatShorthands).forEach(
+      (_s) => {
+        if (getAddPercentageStatTypes().includes(_s)) {
+          _template[_s] += stat.amount - 1;
+        } else if (getAddStatTypes().includes(_s)) {
+          _template[_s] += stat.amount;
+        } else {
+          _template[_s] *= stat.amount;
+        }
+      },
+    );
+  } else {
+    const _s = stat.stat_type as StatTypes;
+    if (getAddPercentageStatTypes().includes(_s)) {
+      _template[_s] += stat.amount - 1;
+    } else if (getAddStatTypes().includes(_s)) {
+      _template[_s] += stat.amount;
+    } else {
+      _template[_s] *= stat.amount;
+    }
+  }
+  return _template;
+};
+
 export const tallyStats = (stats: Stat[]): Stat[] => {
   const add_stat_types = getAddStatTypes();
-  const add_percentage_stat_types = getAddPercentageStatTypes();
-  const shorthands = Object.keys(StatShorthands);
 
-  let template: { [key in StatTypes]: number } = getStatTemplate();
+  let template = getStatTemplate();
   for (const stat of stats) {
-    if (shorthands.includes(stat.stat_type)) {
-      const expanded_stat_types = getExpandedShorthand(
-        stat.stat_type as StatShorthands,
-      );
-      expanded_stat_types.forEach(
-        (_s) => (template[_s] *= stat.amount),
-      );
-    } else {
-      const _s = stat.stat_type as StatTypes;
-      if (add_percentage_stat_types.includes(_s)) {
-        template[_s] += stat.amount - 1;
-      } else if (add_stat_types.includes(_s)) {
-        template[_s] += stat.amount;
-      } else {
-        template[_s] *= stat.amount;
-      }
-    }
+    template = addStatToTemplate(stat, template);
   }
 
   let tallied: Stat[] = [];
   for (const key of Object.keys(template)) {
     const _key = key as StatTypes;
-    const amount = template[_key]!;
+    const amount = template[_key];
+
+    // If the amount is the same as `default` value
+    // then don't include it in the result
     if (
       (add_stat_types.includes(_key) && amount === 0) ||
       amount === 1

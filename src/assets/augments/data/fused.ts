@@ -47,7 +47,7 @@ let augments: AugmentData[] = [];
       makeAugmentData(`gua ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         pot,
-        makeStat(StatTypes.DMG_RES, 1.02),
+        makeStat(StatTypes.DMG_RESIST, 1.02),
       ]),
     );
   });

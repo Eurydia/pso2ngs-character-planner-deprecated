@@ -50,7 +50,7 @@ let augments: AugmentData[] = [];
       makeAugmentData(`addi guard${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         pot,
-        makeStat(StatTypes.DMG_RES, 1.025),
+        makeStat(StatTypes.DMG_RESIST, 1.025),
       ]),
     );
 

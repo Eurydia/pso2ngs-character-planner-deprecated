@@ -1,11 +1,14 @@
-import { StatShorthands, StatTypes } from "./types";
+import { StatShorthands, StatTemplate, StatTypes } from "./types";
 
 /**
  * Expand `StatShorthands.PP_GAIN`
  * @returns
  */
 export const getExpandedPPGain = (): StatTypes[] => {
-  return [StatTypes.ACTIVE_PP_GAIN, StatTypes.PASSIVE_PP_GAIN];
+  return [
+    StatTypes.ACTIVE_PP_RECOVERY,
+    StatTypes.NATURAL_PP_RECOVERY,
+  ];
 };
 /**
  * Expand `StatShorthands.POT`
@@ -20,13 +23,13 @@ export const getExpandedPot = (): StatTypes[] => {
  */
 export const getExpandedAilmentRes = (): StatTypes[] => {
   return [
-    StatTypes.BURN_RES,
-    StatTypes.FREEZE_RES,
-    StatTypes.SHOCK_RES,
-    StatTypes.BLIND_RES,
-    StatTypes.PANIC_RES,
-    StatTypes.POISON_RES,
-    StatTypes.PHYDOWN_RES,
+    StatTypes.BURN_RESIST,
+    StatTypes.FREEZE_RESIST,
+    StatTypes.SHOCK_RESIST,
+    StatTypes.BLIND_RESIST,
+    StatTypes.PANIC_RESIST,
+    StatTypes.POISON_RESIST,
+    StatTypes.PHYDOWN_RESIST,
   ];
 };
 
@@ -34,8 +37,8 @@ export const getExpandedShorthand = (
   shorthand: StatShorthands,
 ): StatTypes[] => {
   const lookup: { [key in StatShorthands]: () => StatTypes[] } = {
-    "potency": getExpandedPot,
-    "all ailment resist": getExpandedAilmentRes,
+    "pot": getExpandedPot,
+    "ailment resist": getExpandedAilmentRes,
     "PP recovery": getExpandedPPGain,
   };
 
@@ -61,7 +64,7 @@ export const getAddPercentageStatTypes = (): StatTypes[] => {
   return [StatTypes.CRIT_CHANCE];
 };
 
-export const getStatTemplate = (): { [key in StatTypes]: number } => {
+export const getStatTemplate = (): StatTemplate => {
   return {
     "BP": 0,
     "HP": 0,
@@ -76,7 +79,7 @@ export const getStatTemplate = (): { [key in StatTypes]: number } => {
     "PP cost": 1,
     "PB gauge charge rate": 1,
 
-    "DMG": 1,
+    "DMG boost": 1,
     "MEL pot": 1,
     "RNG pot": 1,
     "TEC pot": 1,
