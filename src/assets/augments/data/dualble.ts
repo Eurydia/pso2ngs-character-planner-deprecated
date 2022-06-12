@@ -25,20 +25,20 @@ let augments: AugmentData[] = [];
     augments.push(
       makeAugmentData("melra dualble", level, GROUP, CONFLICT, stats),
     );
-    // s type
-    if (level === 3) {
-      augments.push(
-        makeAugmentData(
-          "melra dualble",
-          level,
-          GROUP,
-          CONFLICT,
-          stats,
-          [],
-          true,
-        ),
-      );
-    }
+    // // s type
+    // if (level === 3) {
+    //   augments.push(
+    //     makeAugmentData(
+    //       "melra dualble",
+    //       level,
+    //       AugmentGroups.S,
+    //       [AugmentGroups.S],
+    //       stats,
+    //       [],
+    //       true,
+    //     ),
+    //   );
+    // }
   });
 })();
 
@@ -65,20 +65,20 @@ let augments: AugmentData[] = [];
         stats,
       ),
     );
-    // s type
-    if (level === 3) {
-      augments.push(
-        makeAugmentData(
-          "meltech dualble",
-          level,
-          GROUP,
-          CONFLICT,
-          stats,
-          [],
-          true,
-        ),
-      );
-    }
+    // // s type
+    // if (level === 3) {
+    //   augments.push(
+    //     makeAugmentData(
+    //       "meltech dualble",
+    //       level,
+    //       AugmentGroups.S,
+    //       [AugmentGroups.S],
+    //       stats,
+    //       [],
+    //       true,
+    //     ),
+    //   );
+    // }
   });
 })();
 
@@ -105,20 +105,20 @@ let augments: AugmentData[] = [];
         stats,
       ),
     );
-    // s type
-    if (level === 3) {
-      augments.push(
-        makeAugmentData(
-          "ratech dualble",
-          level,
-          GROUP,
-          CONFLICT,
-          stats,
-          [],
-          true,
-        ),
-      );
-    }
+    // // s type
+    // if (level === 3) {
+    //   augments.push(
+    //     makeAugmentData(
+    //       "ratech dualble",
+    //       level,
+    //       AugmentGroups.S,
+    //       [AugmentGroups.S],
+    //       stats,
+    //       [],
+    //       true,
+    //     ),
+    //   );
+    // }
   });
 })();
 

@@ -1,6 +1,6 @@
 import {
   makeStat,
-  expandPotShorthand,
+  getExpandedPot,
   StatTypes,
   StatShorthands,
 } from "../../stats";
@@ -29,20 +29,20 @@ let augments: AugmentData[] = [];
     augments.push(
       makeAugmentData("stamina", level, GROUP, CONFLICT, stats),
     );
-    // s type
-    if (level === 3) {
-      augments.push(
-        makeAugmentData(
-          "stamina",
-          level,
-          AugmentGroups.S,
-          CONFLICT,
-          stats,
-          [],
-          true,
-        ),
-      );
-    }
+    // // s type
+    // if (level === 3) {
+    //   augments.push(
+    //     makeAugmentData(
+    //       "stamina",
+    //       level,
+    //       AugmentGroups.S,
+    //       CONFLICT,
+    //       stats,
+    //       [],
+    //       true,
+    //     ),
+    //   );
+    // }
   });
 })();
 
@@ -62,20 +62,20 @@ let augments: AugmentData[] = [];
     augments.push(
       makeAugmentData("spirit", level, GROUP, CONFLICT, stats),
     );
-    // s type
-    if (level === 3) {
-      augments.push(
-        makeAugmentData(
-          "spirit",
-          level,
-          AugmentGroups.S,
-          CONFLICT,
-          stats,
-          [],
-          true,
-        ),
-      );
-    }
+    // // s type
+    // if (level === 3) {
+    //   augments.push(
+    //     makeAugmentData(
+    //       "spirit",
+    //       level,
+    //       AugmentGroups.S,
+    //       CONFLICT,
+    //       stats,
+    //       [],
+    //       true,
+    //     ),
+    //   );
+    // }
   });
 })();
 
@@ -83,7 +83,7 @@ let augments: AugmentData[] = [];
 // might | precision | techinque
 (() => {
   const bps = [4, 5, 6];
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   const pot = [1.01, 1.015, 1.02];
 
   const names = ["might", "precision", "technique"];
@@ -98,20 +98,20 @@ let augments: AugmentData[] = [];
       augments.push(
         makeAugmentData(name, level, GROUP, CONFLICT, stats),
       );
-      // s type
-      if (level === 3) {
-        augments.push(
-          makeAugmentData(
-            name,
-            level,
-            AugmentGroups.S,
-            CONFLICT,
-            stats,
-            [],
-            true,
-          ),
-        );
-      }
+      // // s type
+      // if (level === 3) {
+      //   augments.push(
+      //     makeAugmentData(
+      //       name,
+      //       level,
+      //       AugmentGroups.S,
+      //       CONFLICT,
+      //       stats,
+      //       [],
+      //       true,
+      //     ),
+      //   );
+      // }
     });
   });
 })();

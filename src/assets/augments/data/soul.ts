@@ -1,6 +1,6 @@
 import {
   StatTypes,
-  expandPotShorthand,
+  getExpandedPot,
   makeStat,
   StatShorthands,
 } from "../../stats";
@@ -58,7 +58,7 @@ let augments: AugmentData[] = [];
 // form | form machini | form sand soul
 (() => {
   const bps = [6, 8, 9];
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   const pot = [1.02, 1.02, 1.02];
   const dmg_res = [1, 1.02, 1.025];
 
@@ -90,7 +90,7 @@ let augments: AugmentData[] = [];
 (() => {
   const bps = [7, 8, 10];
   const pp = [5, 5, 5];
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["daityl", "pettas", "nex"];
@@ -121,7 +121,7 @@ let augments: AugmentData[] = [];
 (() => {
   const bps = [7, 8, 10];
   const hp = [15, 15, 15];
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["dust", "ragras", "renus"];

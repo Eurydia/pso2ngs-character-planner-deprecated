@@ -18,9 +18,7 @@ import WEAPONS, {
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
 
-const OPTIONS = [...WEAPONS].sort(
-  (a, b) => a.level_required - b.level_required,
-);
+const OPTIONS = WEAPONS;
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
@@ -89,8 +87,7 @@ const filterOptions = (
         }),
       options,
     )
-    .slice(0, 16)
-    .sort((a, b) => a.rarity - b.rarity);
+    .slice(0, 16);
   return result;
 };
 

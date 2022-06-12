@@ -18,14 +18,8 @@ import AUGMENTS, {
   AugmentGroups,
 } from "../../../assets/augments";
 
-const sortByAlphabet = (a: AugmentData, b: AugmentData): number => {
-  if (a.group < b.group) return -1;
-  if (a.group > b.group) return 1;
-  return 0;
-};
-
 const getOptions = () => {
-  return [...AUGMENTS].sort(sortByAlphabet);
+  return [...AUGMENTS];
 };
 
 const getLabel = (augment: AugmentData): string => {
@@ -108,8 +102,7 @@ const filterOptions = (
         }),
       options,
     )
-    .slice(0, 16)
-    .sort(sortByAlphabet);
+    .slice(0, 16);
   return result;
 };
 

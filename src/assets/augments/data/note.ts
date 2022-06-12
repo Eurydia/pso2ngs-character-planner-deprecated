@@ -1,7 +1,7 @@
 import {
   makeStat,
   StatTypes,
-  expandPotShorthand,
+  getExpandedPot,
   StatShorthands,
 } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
@@ -55,7 +55,7 @@ augments.push(
 (() => {
   const names = ["magnus", "lab", "resola"];
 
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   names.forEach((name, i) => {
     const stats = [
       makeStat(StatTypes.BP, 5),

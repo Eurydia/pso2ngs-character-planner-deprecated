@@ -1,7 +1,7 @@
 import {
   makeStat,
   StatTypes,
-  expandPotShorthand,
+  getExpandedPot,
   StatShorthands,
 } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
@@ -13,7 +13,7 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 
 (() => {
-  const pot_type = expandPotShorthand();
+  const pot_type = getExpandedPot();
   const names = ["mel", "ra", "tech"];
   names.forEach((name, index) => {
     const pot = makeStat(pot_type[index], 1.025);

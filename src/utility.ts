@@ -1,13 +1,12 @@
 import {
   Stat,
   StatTypes,
-  expandPotShorthand,
-  expandPPGainShorthand,
-  expandAilmentResShorthand,
-  getMulStatsDisplayAsAdd,
-  getAdditiveStats,
   makeStat,
   StatShorthands,
+  getStatTemplate,
+  getAddStatTypes,
+  getAddPercentageStatTypes,
+  getExpandedShorthand,
 } from "./assets/stats";
 
 /**
@@ -71,57 +70,43 @@ export const parseNumberToDisplay = (
  * @returns
  */
 export const parseStatToDisplay = (stat: Stat): string => {
-  const is_shorthand = Object.keys(StatShorthands).includes(
-    stat.stat_type,
-  );
+  let stat_type = stat.stat_type;
+  if (stat_type === StatShorthands.POT) {
+    stat_type = StatTypes.MEL_POT;
+  } else if (stat_type === StatShorthands.AILMENT_RES) {
+    stat_type = StatTypes.BURN_RES;
+  } else if (stat_type === StatShorthands.PP_GAIN) {
+    stat_type = StatTypes.PASSIVE_PP_GAIN;
+  }
+  const display_stat_as_add = getAddStatTypes().includes(stat_type);
+  console.log(display_stat_as_add, stat_type);
 
-  const display_as_add = getAdditiveStats().includes(stat.stat_type);
-  return parseNumberToDisplay(stat.amount, display_as_add);
+  return parseNumberToDisplay(stat.amount, display_stat_as_add);
 };
 
 export const tallyStats = (stats: Stat[]): Stat[] => {
-  // TODO: expand shorthands in here, instead
-  let template: { [key in StatTypes]: number } = {
-    "BP": 0,
-    "HP": 0,
-    "PP": 0,
-    "ATK": 0,
-    "DEF": 0,
+  const add_stat_types = getAddStatTypes();
+  const add_percentage_stat_types = getAddPercentageStatTypes();
+  const shorthands = Object.keys(StatShorthands);
 
-    "HP boost": 1,
-    "HP recovery boost": 1,
-    "active PP recovery": 1,
-    "natural PP recovery": 1,
-    "PP cost": 1,
-    "PB gauge charge rate": 1,
-
-    "DMG": 1,
-    "MEL pot": 1,
-    "RNG pot": 1,
-    "TEC pot": 1,
-    "floor pot": 1,
-    "crit chance": 1,
-    "crit DMG": 1,
-
-    "DMG resist": 1,
-    "burn resist": 1,
-    "freeze resist": 1,
-    "shock resist": 1,
-    "blind resist": 1,
-    "panic resist": 1,
-    "poison resist": 1,
-    "physical down resist": 1,
-    "ailment duration": 1,
-  };
+  let template: { [key in StatTypes]: number } = getStatTemplate();
   for (const stat of stats) {
-    const { stat_type, amount } = stat;
-
-    if (getMulStatsDisplayAsAdd.includes(stat_type)) {
-      template[stat_type]! += amount - 1;
-    } else if (getAdditiveStats.includes(stat_type)) {
-      template[stat_type]! += amount;
+    if (shorthands.includes(stat.stat_type)) {
+      const expanded_stat_types = getExpandedShorthand(
+        stat.stat_type as StatShorthands,
+      );
+      expanded_stat_types.forEach(
+        (_s) => (template[_s] *= stat.amount),
+      );
     } else {
-      template[stat_type]! *= amount;
+      const _s = stat.stat_type as StatTypes;
+      if (add_percentage_stat_types.includes(_s)) {
+        template[_s] += stat.amount - 1;
+      } else if (add_stat_types.includes(_s)) {
+        template[_s] += stat.amount;
+      } else {
+        template[_s] *= stat.amount;
+      }
     }
   }
 
@@ -130,7 +115,7 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
     const _key = key as StatTypes;
     const amount = template[_key]!;
     if (
-      (DISPLAY_AS_ADD.includes(_key) && amount === 0) ||
+      (add_stat_types.includes(_key) && amount === 0) ||
       amount === 1
     ) {
       continue;
