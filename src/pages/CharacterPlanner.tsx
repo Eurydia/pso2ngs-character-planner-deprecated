@@ -9,59 +9,24 @@ import FoodForm from "../container/FoodForm/FoodForm";
 import ClassForm from "../container/ClassForm/ClassForm";
 import WeaponForm from "../container/EquipmentForm/WeaponForm";
 import { CHARACTER_MAX } from "../stores";
-import FOOD_ITEMS, {
-  FoodItem,
-  FoodItemSignature,
-  typeguardFoodItemSignature,
-} from "../assets/food-items";
 import {
-  getWeaponTemplate,
+  FoodItem,
+  getFoodItemsFromLocal,
+  storeFoodItemToLocal,
+} from "../assets/food";
+import {
   Weapon,
-  storeWeaponToLocal,
+  getWeaponTemplate,
+  saveWeaponToLocal,
   getWeaponFromLocal,
 } from "../assets/weapons";
 import UnitForm from "../container/EquipmentForm/UnitForm";
-import { Unit } from "../assets/units";
-
-const storeFoodItemToLocal = (items: FoodItem[]) => {
-  let res: FoodItemSignature[] = [];
-  items.forEach(({ name, amount }) => {
-    res.push({ name, amount });
-  });
-  localStorage.setItem("food", JSON.stringify(res));
-};
-
-const getFoodItemsFromLocal = () => {
-  const stored_string = localStorage.getItem("food");
-  const stored: FoodItemSignature[] = stored_string
-    ? JSON.parse(stored_string).filter(typeguardFoodItemSignature)
-    : [];
-
-  const seen = stored.map((item) => item.name);
-
-  let res: FoodItem[] = [];
-  FOOD_ITEMS.forEach((item) => {
-    let amount = 0;
-    if (seen.includes(item.name)) {
-      for (const stored_item of stored) {
-        if (stored_item.name === item.name) {
-          amount = stored_item.amount;
-        }
-      }
-    }
-    res.push({ ...item, amount });
-  });
-  return res;
-};
-
-const getEmptyUnit = (): Unit => {
-  return {
-    unit: null,
-    fixa: null,
-    enhancement: 0,
-    augments: [null, null, null, null, null],
-  };
-};
+import {
+  Unit,
+  getUnitFromLocal,
+  getUnitTemplate,
+  saveUnitToLocal,
+} from "../assets/units";
 
 const CharacterPlanner = () => {
   const [isRealistic, setRealistic] = useState(true);
@@ -74,13 +39,24 @@ const CharacterPlanner = () => {
 
   const [weapon, setWeapon] = useState<Weapon>(getWeaponTemplate);
   useEffect(() => {
-    storeWeaponToLocal(weapon);
+    saveWeaponToLocal(weapon);
   }, [weapon]);
 
-  const [unitA, setUnitA] = useState<Unit>(getEmptyUnit);
-  // const [unitA, setUnitA] = useState(getInitEquipment);
-  // const [unitB, setUnitB] = useState(getInitEquipment);
-  // const [unitC, setUnitC] = useState(getInitEquipment);
+  const [unitA, setUnitA] = useState<Unit>(getUnitTemplate);
+  useEffect(() => {
+    saveUnitToLocal(unitA, "unita");
+  }, [unitA]);
+
+  const [unitB, setUnitB] = useState<Unit>(getUnitTemplate);
+  useEffect(() => {
+    saveUnitToLocal(unitB, "unitb");
+  }, [unitB]);
+
+  const [unitC, setUnitC] = useState<Unit>(getUnitTemplate);
+  useEffect(() => {
+    saveUnitToLocal(unitC, "unitc");
+  }, [unitC]);
+
   return (
     <Container maxWidth="lg">
       <FormControlLabel
@@ -118,27 +94,26 @@ const CharacterPlanner = () => {
           <UnitForm
             isRealistic={isRealistic}
             charLevel={charLevel}
-            getInitValue={() => unitA}
+            getInitValue={() => getUnitFromLocal("unita")}
             onChange={setUnitA}
           />
         </Grid>
-        {/* 
         <Grid item md={6}>
-          <EquipmentForm
-            mode="unit"
+          <UnitForm
             isRealistic={isRealistic}
             charLevel={charLevel}
+            getInitValue={() => getUnitFromLocal("unitb")}
             onChange={setUnitB}
           />
         </Grid>
         <Grid item md={6}>
-          <EquipmentForm
-            mode="unit"
+          <UnitForm
             isRealistic={isRealistic}
             charLevel={charLevel}
+            getInitValue={() => getUnitFromLocal("unitc")}
             onChange={setUnitC}
           />
-        </Grid> */}
+        </Grid>
       </Grid>
     </Container>
   );

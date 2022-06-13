@@ -5,9 +5,9 @@ import {
   FoodAttribute,
   getCategoryStatAmount,
   getAttributeStatAmount,
-} from "../../../assets/food-items";
+} from "../../../assets/food";
 import { parseNumberToDisplay } from "../../../utility";
-import { FoodCategory } from "../../../assets/food-items";
+import { FoodCategory } from "../../../assets/food";
 
 interface BuffItemProps {
   name: string;
@@ -62,19 +62,6 @@ const BuffItem: FC<BuffItemProps> = memo(
   },
 );
 
-const BUFF_NAME: {
-  [key: string]: string;
-} = {
-  MEAT: "potency",
-  FRUIT: "PP",
-  VEGETABLE: "DMG resist",
-  SEAFOOD: "HP",
-  CRISPY: "weak point DMG",
-  LIGHT: "PP recovery",
-  ROBUST: "HP recovery",
-  RICH: "PP cost",
-};
-
 interface FoodBuff {
   name: string;
   level: number;
@@ -82,6 +69,18 @@ interface FoodBuff {
   parsed_amount: string;
 }
 const getFoodBuffs = (food_items: FoodItem[]): FoodBuff[] => {
+  const BUFF_NAME: {
+    [key: string]: string;
+  } = {
+    MEAT: "potency",
+    FRUIT: "PP",
+    VEGETABLE: "DMG resist",
+    SEAFOOD: "HP",
+    CRISPY: "weak point DMG",
+    LIGHT: "PP recovery",
+    ROBUST: "HP recovery",
+    RICH: "PP cost",
+  };
   let template: { [key in FoodCategory | FoodAttribute]: number } = {
     // category
     MEAT: 0,
@@ -153,9 +152,7 @@ const BuffList: FC<BuffListProps> = memo(
               />
             ))
           ) : (
-            <Typography fontSize="large">
-              ...nothing to see here🐬...
-            </Typography>
+            <Typography>No active food buff...</Typography>
           )}
         </Stack>
       </Box>

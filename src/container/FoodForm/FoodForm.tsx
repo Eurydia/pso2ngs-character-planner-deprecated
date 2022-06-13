@@ -6,7 +6,7 @@ import {
   FilterAlt,
 } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
-import { FoodItem } from "../../assets/food-items";
+import { FoodItem } from "../../assets/food";
 import { FOOD_ITEM_MAX } from "../../stores";
 import CustomCard from "../../components/CustomCard";
 import FoodList from "./components/FoodList";

@@ -6,6 +6,7 @@ import { default as five } from "./data/five";
 
 export * from "./types";
 export * from "./getStatPayload";
+export * from "./utility";
 
 const UNITS = Object.freeze([
   ...one,

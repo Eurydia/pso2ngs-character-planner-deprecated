@@ -11,7 +11,7 @@ export const fixaDataToSignature = (
   return { name: fixa.name, level: fixa.level };
 };
 
-export const fixaDataSignatureToData = (
+export const fixaDataFromSignature = (
   signature: FixaDataSignature | null,
 ): FixaData | null => {
   if (

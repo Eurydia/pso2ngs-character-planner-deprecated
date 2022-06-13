@@ -7,14 +7,11 @@ import {
 } from "../../stores";
 import {
   AugmentDataSignature,
-  augmentDataSignatureToData,
+  augmentDataFromSignature,
   augmentDataToSignature,
   getAugmentTemplate,
 } from "../augments";
-import {
-  fixaDataSignatureToData,
-  fixaDataToSignature,
-} from "../fixas";
+import { fixaDataFromSignature, fixaDataToSignature } from "../fixas";
 import { typeguardWeaponDataSignature } from "./typeguard";
 import {
   Weapon,
@@ -43,7 +40,7 @@ export const weaponDataToSignature = (
   return { name: weapon.name };
 };
 
-export const weaponDataSignatureToData = (
+export const weaponDataFromSignature = (
   signature: WeaponDataSignature | null,
 ): WeaponData | null => {
   if (
@@ -62,7 +59,7 @@ export const weaponDataSignatureToData = (
   return null;
 };
 
-export const storeWeaponToLocal = ({
+export const saveWeaponToLocal = ({
   weapon,
   fixa,
   potential_level,
@@ -97,14 +94,14 @@ export const getWeaponFromLocal = (): Weapon => {
 
   const stored: WeaponSignature = JSON.parse(as_string);
   let res: Weapon = getWeaponTemplate();
-  res.weapon = weaponDataSignatureToData(stored.weapon);
-  res.fixa = fixaDataSignatureToData(stored.fixa);
+  res.weapon = weaponDataFromSignature(stored.weapon);
+  res.fixa = fixaDataFromSignature(stored.fixa);
 
   if (Array.isArray(stored.augments)) {
     let _temp = getAugmentTemplate();
     for (let i = 0; i < stored.augments.length; i++) {
       const aug_sig = stored.augments[i];
-      _temp[i] = augmentDataSignatureToData(aug_sig);
+      _temp[i] = augmentDataFromSignature(aug_sig);
     }
   }
 

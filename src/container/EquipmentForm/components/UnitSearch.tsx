@@ -124,13 +124,13 @@ const UnitSearch: FC<UnitSearchProps> = memo(
               required
               {...params}
               fullWidth
-              label="Weapon"
+              label="Unit"
               InputProps={{
                 ...params.InputProps,
                 endAdornment: showInfoIcon ? (
                   <Tooltip
                     arrow
-                    title="Select a weapon to unlock other fields."
+                    title="Select a unit to unlock other fields."
                     placement="top"
                   >
                     <Info color="info" />

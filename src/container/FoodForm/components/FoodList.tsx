@@ -15,7 +15,7 @@ import {
   FoodItem,
   FoodAttribute,
   FoodCategory,
-} from "../../../assets/food-items";
+} from "../../../assets/food";
 
 const CATEGORY_EFFECT: { [key: string]: string } = Object.freeze({
   MEAT: "+ potency [meat]",

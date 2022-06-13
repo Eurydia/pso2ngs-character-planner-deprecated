@@ -27,7 +27,7 @@ export const augmentDataToSignature = (
   };
 };
 
-export const augmentDataSignatureToData = (
+export const augmentDataFromSignature = (
   signature: AugmentDataSignature | null,
 ): AugmentData | null => {
   if (

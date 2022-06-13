@@ -114,9 +114,13 @@ const StatsList: FC<StatsListProps> = (props) => {
         divider={<Divider flexItem />}
         sx={{ height: 380, overflowY: "auto" }}
       >
-        {tallied.map((stat) => (
-          <StatsListItem key={stat.stat_type} stat={stat} />
-        ))}
+        {tallied.length > 0 ? (
+          tallied.map((stat) => (
+            <StatsListItem key={stat.stat_type} stat={stat} />
+          ))
+        ) : (
+          <Typography>No stat to display...</Typography>
+        )}
       </Stack>
     </Box>
   );

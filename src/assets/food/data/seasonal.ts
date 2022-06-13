@@ -1,7 +1,7 @@
-import { FoodItemData } from "../types";
+import { FoodData } from "../types";
 
 // ---------------------------
-let food: FoodItemData[] = [];
+let food: FoodData[] = [];
 // ---------------------------
 
 // ---------------------------

@@ -12,17 +12,14 @@ export enum FoodAttribute {
   RICH = "RICH",
 }
 
-export type FoodItemData = Readonly<{
+export type FoodData = Readonly<{
   name: string;
   category: FoodCategory;
   attribute: FoodAttribute;
 }>;
 
-export type FoodItem = FoodItemData & {
+export type FoodItem = FoodData & {
   amount: number;
 };
 
-export type FoodItemSignature = {
-  name: string;
-  amount: number;
-};
+export type FoodItemSignature = Pick<FoodItem, "name" | "amount">;
