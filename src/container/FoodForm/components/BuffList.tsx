@@ -1,5 +1,12 @@
 import { FC, memo } from "react";
-import { Divider, Grid, Stack, Typography, Box } from "@mui/material";
+import {
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+  Box,
+  Paper,
+} from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,
@@ -23,8 +30,8 @@ const BuffItem: FC<BuffItemProps> = memo(
           container
           columns={10}
           columnSpacing={1}
+          padding={2}
           sx={{
-            padding: 2,
             alignItems: "center",
             textTransform: "capitalize",
           }}
@@ -82,37 +89,43 @@ interface FoodBuff {
   parsed_amount: string;
 }
 const getFoodBuffs = (food_items: FoodItem[]): FoodBuff[] => {
-  let active_buffs: { [key: string]: number } = {};
+  let template: { [key in FoodCategory | FoodAttribute]: number } = {
+    // category
+    MEAT: 0,
+    FRUIT: 0,
+    VEGETABLE: 0,
+    SEAFOOD: 0,
+    // attribute
+    CRISPY: -3,
+    LIGHT: -3,
+    ROBUST: -3,
+    RICH: -3,
+  };
 
   for (const food_item of food_items) {
     const { attribute, category, amount } = food_item;
 
-    if (active_buffs[attribute] === undefined) {
-      active_buffs[attribute] = amount - 3;
-    } else {
-      active_buffs[attribute]! += amount;
-    }
-
-    if (active_buffs[category] === undefined) {
-      active_buffs[category] = amount;
-    } else {
-      active_buffs[category]! += amount;
-    }
+    template[attribute] += amount;
+    template[category] += amount;
   }
 
+  const categories = Object.keys(FoodCategory);
+
   let res: FoodBuff[] = [];
-  for (const key of Object.keys(active_buffs)) {
-    const level = active_buffs[key];
+  for (const key of Object.keys(template)) {
+    let level = template[key as FoodAttribute | FoodCategory];
     if (level < 1) {
       continue;
     }
+
     let amount = 0;
-    if (Object.keys(FoodCategory).includes(key)) {
+    if (categories.includes(key as FoodCategory)) {
       const _key = key as FoodCategory;
       amount = getCategoryStatAmount(_key, level);
     } else {
       const _key = key as FoodAttribute;
       amount = getAttributeStatAmount(_key, level);
+      level += 3;
     }
     res.push({
       name: BUFF_NAME[key],

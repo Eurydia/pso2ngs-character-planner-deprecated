@@ -18,10 +18,6 @@ import WEAPONS, {
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
 
-const getOptions = () => {
-  return WEAPONS;
-};
-
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: WeaponData,
@@ -115,7 +111,7 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
       <Autocomplete
         value={props.value}
         // -------
-        options={getOptions()}
+        options={WEAPONS}
         onChange={handleChange}
         filterOptions={filterOptions}
         renderOption={(p, o, s) =>

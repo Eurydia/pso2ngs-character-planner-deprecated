@@ -66,27 +66,16 @@ export const getAddPercentageStatTypes = (): StatTypes[] => {
 
 export const getStatTemplate = (): StatTemplate => {
   return {
+    // basic stats
     "BP": 0,
     "HP": 0,
     "PP": 0,
     "ATK": 0,
     "DEF": 0,
-
-    "HP boost": 1,
-    "HP recovery boost": 1,
-    "active PP recovery": 1,
-    "natural PP recovery": 1,
-    "PP cost": 1,
-    "PB gauge charge rate": 1,
-
-    "DMG boost": 1,
     "MEL pot": 1,
     "RNG pot": 1,
     "TEC pot": 1,
     "floor pot": 1,
-    "crit chance": 1,
-    "crit DMG": 1,
-
     "DMG resist": 1,
     "burn resist": 1,
     "freeze resist": 1,
@@ -95,6 +84,21 @@ export const getStatTemplate = (): StatTemplate => {
     "panic resist": 1,
     "poison resist": 1,
     "physical down resist": 1,
+
+    // indepth stats
+    "HP recovery boost": 1,
+    "active PP recovery": 1,
+    "natural PP recovery": 1,
+    "PP cost": 1,
+    "PB gauge charge rate": 1,
+    "DMG boost": 1,
+    "crit chance": 1,
+    "crit DMG": 1,
     "ailment duration": 1,
+
+    // hp boost expands into hp
+    // via multiplication
+    // so hp boost should not be seen at all
+    "HP boost": 1,
   };
 };

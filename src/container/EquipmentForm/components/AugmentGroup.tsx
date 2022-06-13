@@ -1,4 +1,11 @@
-import { FC, HTMLAttributes, memo, SyntheticEvent } from "react";
+import {
+  FC,
+  HTMLAttributes,
+  memo,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import {
   Autocomplete,
   Stack,
@@ -17,10 +24,6 @@ import AUGMENTS, {
   AugmentData,
   AugmentGroups,
 } from "../../../assets/augments";
-
-const getOptions = () => {
-  return [...AUGMENTS];
-};
 
 const getLabel = (augment: AugmentData): string => {
   const name = augment.isSType ? `${augment.name} s` : augment.name;
@@ -134,7 +137,7 @@ const AugmentSearch: FC<AugmentSearchProps> = memo(
         disabled={props.isDisabled}
         value={props.value}
         // -------------
-        options={getOptions()}
+        options={AUGMENTS}
         onChange={handleChange}
         getOptionLabel={getLabel}
         renderOption={renderOption}
@@ -194,66 +197,53 @@ const augmentsDoConflict = (
   return false;
 };
 
-const constrainAugments = (
-  new_augment: AugmentData | null,
-  target_index: number,
-  prev_augments: (AugmentData | null)[],
-): (AugmentData | null)[] => {
-  let next = [...prev_augments];
-  next[target_index] = new_augment;
-  if (new_augment === null) {
-    return next;
-  }
-
-  for (let i = 0; i < prev_augments.length; i++) {
-    if (i === target_index) {
-      continue;
-    }
-
-    const prev_augment = prev_augments[i];
-    if (
-      prev_augment &&
-      augmentsDoConflict(new_augment, prev_augment)
-    ) {
-      next[i] = null;
-    }
-  }
-
-  return next;
-};
-
-const getActiveSlots = (enhancement: number): number => {
-  return enhancement >= 20
-    ? 1 + Math.floor((enhancement - 10) / 10)
-    : 1;
-};
-
 interface AugmentGroupProps {
   disabled: boolean;
-  enhancement: number;
-  values: (AugmentData | null)[];
+  activeSlots: number;
+  getInitValues: () => (AugmentData | null)[];
   onChange: (values: (AugmentData | null)[]) => void;
 }
 const AugmentGroup: FC<AugmentGroupProps> = memo(
   (props) => {
-    const handleChange = (
-      augment: AugmentData | null,
-      index: number,
-    ) => {
-      props.onChange(constrainAugments(augment, index, props.values));
-    };
+    const [augments, setAugments] = useState(props.getInitValues);
+    useEffect(() => {
+      props.onChange(augments);
+    }, [augments, props]);
 
-    const active_slots = getActiveSlots(props.enhancement);
+    const handleChange = (
+      new_aug: AugmentData | null,
+      target_index: number,
+    ) => {
+      setAugments((prev) => {
+        let next = [...prev];
+        next[target_index] = new_aug;
+        if (new_aug === null) {
+          return next;
+        }
+
+        for (let i = 0; i < prev.length; i++) {
+          if (i === target_index) {
+            continue;
+          }
+
+          const prev_aug = prev[i];
+          if (prev_aug && augmentsDoConflict(new_aug, prev_aug)) {
+            next[i] = null;
+          }
+        }
+        return next;
+      });
+    };
 
     return (
       <Box>
         <Grid container columns={2} spacing={2}>
-          {props.values.map((value, i) => (
+          {augments.map((augment, i) => (
             <Grid item xs={2} sm={1} key={`augment-${i}`}>
               <AugmentSearch
-                value={value}
+                value={augment}
                 onChange={(value) => handleChange(value, i)}
-                isDisabled={props.disabled || i >= active_slots}
+                isDisabled={props.disabled || i >= props.activeSlots}
                 label="Augment"
               />
             </Grid>
@@ -269,33 +259,32 @@ const AugmentGroup: FC<AugmentGroupProps> = memo(
     }
 
     // ----------------
-    if (prev.enhancement !== next.enhancement) {
+    if (prev.activeSlots !== next.activeSlots) {
       return false;
     }
 
-    // ----------------
-    if (prev.values.length !== next.values.length) {
-      return false;
-    }
-    for (let i = 0; i < prev.values.length; i++) {
-      const prev_val = prev.values[i];
-      const next_val = next.values[i];
-      if (
-        (prev_val === null && next_val) ||
-        (prev_val && next_val === null)
-      ) {
-        return false;
-      } else if (
-        prev_val &&
-        next_val &&
-        (prev_val.name !== next_val.name ||
-          prev_val.level !== next_val.level ||
-          prev_val.isSType !== next_val.isSType)
-      ) {
-        return false;
-      }
-    }
-
+    // // ----------------
+    // if (prev.getInitValues.length !== next.getInitValues.length) {
+    //   return false;
+    // }
+    // for (let i = 0; i < prev.getInitValues.length; i++) {
+    //   const prev_val = prev.getInitValues[i];
+    //   const next_val = next.getInitValues[i];
+    //   if (
+    //     (prev_val === null && next_val) ||
+    //     (prev_val && next_val === null)
+    //   ) {
+    //     return false;
+    //   } else if (
+    //     prev_val &&
+    //     next_val &&
+    //     (prev_val.name !== next_val.name ||
+    //       prev_val.level !== next_val.level ||
+    //       prev_val.isSType !== next_val.isSType)
+    //   ) {
+    //     return false;
+    //   }
+    // }
     return true;
   },
 );

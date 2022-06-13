@@ -1,5 +1,12 @@
 import { FC } from "react";
-import { Box, Grid, Stack, Tooltip, Typography } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Grid,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { Info } from "@mui/icons-material";
 import {
   getAddStatTypes,
@@ -22,11 +29,19 @@ const StatsListItem: FC<StatsListItemProps> = (props) => {
   const parsed_amount = parseStatToDisplay(props.stat);
   return (
     <Box>
-      <Grid container>
+      <Grid
+        container
+        padding={2}
+        columns={10}
+        sx={{
+          alignItems: "center",
+          textTransform: "capitalize",
+        }}
+      >
         <Grid item md={6}>
           <Typography>{props.stat.stat_type}</Typography>
         </Grid>
-        <Grid item md={6}>
+        <Grid item md={4}>
           <Typography>{parsed_amount}</Typography>
         </Grid>
       </Grid>
@@ -76,31 +91,29 @@ const StatsList: FC<StatsListProps> = (props) => {
 
   return (
     <Box>
-      <Box sx={{ justifyContent: "flex-end", display: "flex" }}>
-        {conditions.length > 0 && (
-          <Tooltip
-            placement="left-start"
-            title={
-              <Box>
-                <Typography>Assumes that your character:</Typography>
-                <Stack paddingLeft={2} component="ul">
-                  {conditions.map((con, index) => (
-                    <Typography
-                      key={`${con}-${index}`}
-                      component="li"
-                    >
-                      {con}
-                    </Typography>
-                  ))}
-                </Stack>
-              </Box>
-            }
-          >
-            <Info color="info" />
-          </Tooltip>
-        )}
-      </Box>
-      <Stack sx={{ height: 380, overflowY: "auto" }} spacing={2}>
+      {conditions.length > 0 && (
+        <Tooltip
+          placement="right-start"
+          title={
+            <Box>
+              <Typography>Assumes that your character:</Typography>
+              <Stack paddingLeft={2}>
+                {conditions.map((con, index) => (
+                  <Typography key={`${con}-${index}`}>
+                    {`- ${con}`}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          }
+        >
+          <Info color="info" />
+        </Tooltip>
+      )}
+      <Stack
+        divider={<Divider flexItem />}
+        sx={{ height: 380, overflowY: "auto" }}
+      >
         {tallied.map((stat) => (
           <StatsListItem key={stat.stat_type} stat={stat} />
         ))}

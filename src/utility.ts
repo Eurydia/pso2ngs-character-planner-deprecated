@@ -132,11 +132,19 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
     template = addStatToTemplate(stat, template);
   }
 
+  if (template[StatTypes.HP_BOOST] !== 1) {
+    template[StatTypes.HP] *= template[StatTypes.HP_BOOST];
+    template["HP boost"] = 1;
+  }
+
+  const atk = template[StatTypes.ATK];
+  const floor_pot = template[StatTypes.FLOOR_POT];
+  template[StatTypes.BP] += Math.floor((atk * (2 - floor_pot)) / 2);
+
   let tallied: Stat[] = [];
   for (const key of Object.keys(template)) {
     const _key = key as StatTypes;
     const amount = template[_key];
-
     // If the amount is the same as `default` value
     // then don't include it in the result
     if (
@@ -145,8 +153,17 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
     ) {
       continue;
     }
+
     tallied.push(makeStat(_key, amount));
   }
 
   return tallied;
+};
+
+export const getActiveAugmentSlots = (
+  enhancement: number,
+): number => {
+  return enhancement >= 20
+    ? 1 + Math.floor((enhancement - 10) / 10)
+    : 1;
 };

@@ -15,7 +15,7 @@ const payloadGetterWrapper = (
   pot_level: number,
   payloadGetter: (pot_level: number) => StatPayload,
 ): StatPayload => {
-  if (pot_level < POTENTIAL_MIN) {
+  if (pot_level <= POTENTIAL_MIN) {
     return makeStatPayload([], []);
   }
   const _level =
@@ -161,7 +161,7 @@ export const BERSERK_UNIT = makePotentialData(
       const dmg_res = index < 3 ? 0.9 : 0.92;
       return makeStatPayload([
         makeStat(StatShorthands.POT, POTENCY[index]),
-        makeStat(StatShorthands.PP_RECOVERY, dmg_res),
+        makeStat(StatTypes.DMG_RESIST, dmg_res),
       ]);
     }),
 );

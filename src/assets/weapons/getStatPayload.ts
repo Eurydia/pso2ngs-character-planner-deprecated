@@ -113,6 +113,7 @@ export const getWeaponStatPayload = (
   enhancement: number,
   pot_level: number,
 ): StatPayload => {
+  const bp_from_pot_level = makeStat(StatTypes.BP, pot_level * 10);
   const atk = getWeaponAtk(
     weapon.base_attack,
     weapon.rarity,
@@ -123,6 +124,7 @@ export const getWeaponStatPayload = (
   const weapon_payload = weapon.payload;
 
   const stats: Stat[] = [
+    bp_from_pot_level,
     atk,
     ...weapon_payload.stats,
     ...pot_payload.stats,

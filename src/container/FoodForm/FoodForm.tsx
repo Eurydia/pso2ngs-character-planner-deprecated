@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, memo, useEffect, useState } from "react";
-import { Box, Paper, Stack, TextField } from "@mui/material";
+import { Box, Divider, Paper, Stack, TextField } from "@mui/material";
 import {
   AutoAwesome,
   Fastfood,

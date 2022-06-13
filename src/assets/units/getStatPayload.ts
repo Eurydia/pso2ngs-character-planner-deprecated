@@ -110,16 +110,22 @@ export const getUnitStatPayload = (
   unit: UnitData,
   enhancement: number,
 ): StatPayload => {
-  const unit_def = getUnitDEF(
-    unit.base_defense,
-    unit.rarity,
-    enhancement,
-  );
-  const unit_payload = unit.payload;
+  const def = getUnitDEF(unit.base_defense, unit.rarity, enhancement);
 
-  const stats = [unit_def, ...unit_payload.stats];
+  let bp_amount = Math.floor(def.amount / 2);
+  for (const stat of unit.payload.stats) {
+    if (stat.stat_type === StatTypes.HP) {
+      bp_amount += Math.round(stat.amount / 10);
+    }
+    if (stat.stat_type === StatTypes.PP) {
+      bp_amount += stat.amount;
+    }
+  }
+  const bp = makeStat(StatTypes.BP, bp_amount);
+
+  const stats = [bp, def, ...unit.payload.stats];
   // this is intentional
-  const conditionals = [...unit_payload.conditionals];
+  const conditionals = [...unit.payload.conditionals];
 
   return makeStatPayload(stats, conditionals);
 };

@@ -12,8 +12,8 @@ import {
 import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
-import UNITS, { getUnitDEF, UnitData } from "../../../assets/units";
 import { StatTypes } from "../../../assets/stats";
+import UNITS, { getUnitDEF, UnitData } from "../../../assets/units";
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
@@ -46,13 +46,9 @@ const renderOption = (
         }
         placement="right"
       >
-        <Box
-          sx={{
-            textTransform: "capitalize",
-          }}
-        >
+        <Box sx={{ textTransform: "capitalize" }}>
           <Typography>{option.name}</Typography>
-          <Typography fontSize="small">
+          <Typography noWrap fontSize="small">
             {`level required ${option.level_required}`}
           </Typography>
         </Box>
@@ -102,7 +98,7 @@ const UnitSearch: FC<UnitSearchProps> = memo(
   (props) => {
     const handleChange = (
       event: SyntheticEvent<Element, Event>,
-      value: UnitData | null,
+      value: null | UnitData,
     ) => {
       props.onChange(value);
     };
@@ -116,6 +112,7 @@ const UnitSearch: FC<UnitSearchProps> = memo(
         onChange={handleChange}
         filterOptions={filterOptions}
         renderOption={(p, o) => renderOption(p, o, props.enhancement)}
+        isOptionEqualToValue={(o, v) => o.name === v.name}
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }
@@ -167,7 +164,6 @@ const UnitSearch: FC<UnitSearchProps> = memo(
     ) {
       return false;
     }
-
     if (
       prev.value &&
       next.value &&

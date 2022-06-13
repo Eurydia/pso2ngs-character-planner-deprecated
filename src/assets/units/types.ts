@@ -16,7 +16,7 @@ export type UnitData = Readonly<
 >;
 
 export type Unit = {
-  unit: UnitData;
+  unit: UnitData | null;
   enhancement: number;
   fixa: FixaData | null;
   augments: (AugmentData | null)[];

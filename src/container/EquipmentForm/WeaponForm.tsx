@@ -12,6 +12,7 @@ import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
 import StatsList from "./components/StatsList";
 import { StatPayload } from "../../assets/stats";
+import { getActiveAugmentSlots } from "../../utility";
 
 interface WeaponFormProps {
   isRealistic: boolean;
@@ -47,20 +48,26 @@ const WeaponForm: FC<WeaponFormProps> = memo(
 
     const disabled = weapon === null && props.isRealistic;
 
+    const active_slots = props.isRealistic
+      ? getActiveAugmentSlots(enhancement)
+      : getActiveAugmentSlots(ENHANCEMENT_MAX);
+
     let payload: StatPayload[] = [];
-    if (weapon !== null) {
-      payload.push(
-        getWeaponStatPayload(weapon, enhancement, potLevel),
-      );
-    }
-    if (fixa !== null) {
-      payload.push(fixa.payload);
-    }
-    augments.forEach((augment) => {
-      if (augment !== null) {
-        payload.push(augment.payload);
+    if (!disabled) {
+      if (weapon !== null) {
+        payload.push(
+          getWeaponStatPayload(weapon, enhancement, potLevel),
+        );
       }
-    });
+      if (fixa !== null) {
+        payload.push(fixa.payload);
+      }
+      augments.forEach((augment, i) => {
+        if (augment !== null && i < active_slots) {
+          payload.push(augment.payload);
+        }
+      });
+    }
 
     return (
       <CustomCard
@@ -102,16 +109,14 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             augmentsSlot={
               <AugmentGroup
                 disabled={disabled}
-                enhancement={
-                  props.isRealistic ? enhancement : ENHANCEMENT_MAX
-                }
-                values={augments}
+                activeSlots={active_slots}
+                getInitValues={() => augments}
                 onChange={setAugments}
               />
             }
           />
         }
-        backTitle="[header]"
+        backTitle="Stats"
         backTitleIcon={<AutoAwesome />}
         backContent={
           <Box sx={{ height: 400 }}>

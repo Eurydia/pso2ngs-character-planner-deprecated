@@ -14,6 +14,7 @@ import {
   ENHANCEMENT_MAX,
   POTENTIAL_MIN,
   ENHANCEMENT_MIN,
+  CHARACTER_MAX,
 } from "../stores";
 import FOOD_ITEMS, {
   FoodItem,
@@ -34,6 +35,8 @@ import FIXAS, {
   typeguardFixaDataSignature,
 } from "../assets/fixas";
 import { typeguardWeaponDataSignature } from "../assets/weapons/typeguard";
+import UnitForm from "../container/EquipmentForm/UnitForm";
+import { Unit } from "../assets/units";
 
 const storeFoodItemToLocal = (items: FoodItem[]) => {
   let res: FoodItemSignature[] = [];
@@ -206,10 +209,18 @@ const getEmptyWeapon = (): Weapon => {
     augments,
   };
 };
+const getEmptyUnit = (): Unit => {
+  return {
+    unit: null,
+    fixa: null,
+    enhancement: 0,
+    augments: [null, null, null, null, null],
+  };
+};
 
 const CharacterPlanner = () => {
   const [isRealistic, setRealistic] = useState(true);
-  const [charLevel, setcharlevel] = useState(CHARACTER_MIN);
+  const [charLevel, setcharlevel] = useState(CHARACTER_MAX);
 
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   useEffect(() => {
@@ -221,6 +232,7 @@ const CharacterPlanner = () => {
     storeWeaponToLocal(weapon);
   }, [weapon]);
 
+  const [unitA, setUnitA] = useState<Unit>(getEmptyUnit);
   // const [unitA, setUnitA] = useState(getInitEquipment);
   // const [unitB, setUnitB] = useState(getInitEquipment);
   // const [unitC, setUnitC] = useState(getInitEquipment);
@@ -255,6 +267,14 @@ const CharacterPlanner = () => {
             charLevel={charLevel}
             getInitValue={getWeaponFromLocal}
             onChange={setWeapon}
+          />
+        </Grid>
+        <Grid item md={6}>
+          <UnitForm
+            isRealistic={isRealistic}
+            charLevel={charLevel}
+            getInitValue={() => unitA}
+            onChange={setUnitA}
           />
         </Grid>
         {/* 
