@@ -153,7 +153,6 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
     ) {
       continue;
     }
-
     tallied.push(makeStat(_key, amount));
   }
 

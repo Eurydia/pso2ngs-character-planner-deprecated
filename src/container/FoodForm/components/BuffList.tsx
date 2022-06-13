@@ -1,12 +1,5 @@
 import { FC, memo } from "react";
-import {
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-  Box,
-  Paper,
-} from "@mui/material";
+import { Divider, Grid, Stack, Typography, Box } from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,

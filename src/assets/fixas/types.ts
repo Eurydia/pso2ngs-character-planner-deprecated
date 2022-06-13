@@ -5,14 +5,11 @@ export enum FixaTypes {
   UNIT = "UNIT",
 }
 
-export interface FixaDataSignature {
+export type FixaData = Readonly<{
   name: string;
   level: number;
-}
+  fixa_type: FixaTypes;
+  payload: StatPayload;
+}>;
 
-export type FixaData = Readonly<
-  FixaDataSignature & {
-    fixa_type: FixaTypes;
-    payload: StatPayload;
-  }
->;
+export type FixaDataSignature = Pick<FixaData, "name" | "level">;

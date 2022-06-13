@@ -15,6 +15,7 @@ import { default as ward } from "./data/ward";
 
 export * from "./types";
 export * from "./typeguard";
+export * from "./utility";
 
 const AUGMENTS = Object.freeze([
   ...addi,

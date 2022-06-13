@@ -32,26 +32,22 @@ export type PotentialData = {
 };
 
 /**
- * If you know the name of a weapon,
- * you should be able to know about everything else.
- */
-export interface WeaponDataSignature {
-  name: string;
-}
-
-/**
  * Store the actual data of each weapon.
  * Should be immutable.
  */
-export type WeaponData = Readonly<
-  WeaponDataSignature & {
-    rarity: number;
-    level_required: number;
-    base_attack: number;
-    payload: StatPayload;
-    potential: PotentialData;
-  }
->;
+export type WeaponData = Readonly<{
+  name: string;
+  rarity: number;
+  level_required: number;
+  base_attack: number;
+  payload: StatPayload;
+  potential: PotentialData;
+}>;
+/**
+ * If you know the name of a weapon,
+ * you should be able to know about everything else.
+ */
+export type WeaponDataSignature = Pick<WeaponData, "name">;
 /**
  * What a weapon looks like when fully combined
  * with other aspects.
@@ -63,7 +59,6 @@ export type Weapon = {
   potential_level: number;
   augments: (AugmentData | null)[];
 };
-
 export type WeaponSignature = {
   weapon: WeaponDataSignature | null;
   enhancement: number;
