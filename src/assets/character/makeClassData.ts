@@ -12,9 +12,9 @@ import { ClassData } from "./types";
 
 export const makeClassData = (
   name: string,
+  base_hp: number,
   base_attack: number,
   base_defense: number,
-  base_hp: number,
   base_pp: number = 100,
 ): ClassData => {
   return {

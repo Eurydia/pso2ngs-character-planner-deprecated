@@ -65,11 +65,11 @@ const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
     makeGrowthRate(50, 92),
   ]);
 
-export const getWeaponAtk = (
+export const getWeaponATKAmount = (
   base_atk: number,
   rarity: number,
   enhancement: number,
-): Stat => {
+): number => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
   switch (rarity) {
     case 2:
@@ -105,7 +105,7 @@ export const getWeaponAtk = (
       bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(StatTypes.ATK, base_atk + Math.round(bonus));
+  return base_atk + Math.round(bonus);
 };
 
 export const getWeaponStatPayload = (
@@ -113,8 +113,7 @@ export const getWeaponStatPayload = (
   enhancement: number,
   pot_level: number,
 ): StatPayload => {
-  const bp_from_pot_level = makeStat(StatTypes.BP, pot_level * 10);
-  const atk = getWeaponAtk(
+  const atk_amount = getWeaponATKAmount(
     weapon.base_attack,
     weapon.rarity,
     enhancement,
@@ -123,8 +122,11 @@ export const getWeaponStatPayload = (
   const pot_payload = weapon.potential.getPayload(pot_level);
   const weapon_payload = weapon.payload;
 
+  const bp = makeStat(StatTypes.BP, pot_level * 10);
+  const atk = makeStat(StatTypes.ATK, atk_amount);
+
   const stats: Stat[] = [
-    bp_from_pot_level,
+    bp,
     atk,
     ...weapon_payload.stats,
     ...pot_payload.stats,

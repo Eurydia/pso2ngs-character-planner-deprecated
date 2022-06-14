@@ -6,7 +6,7 @@ import { AugmentData, AugmentDataSignature } from "./types";
 export const getAugmentTemplate = (): (AugmentData | null)[] => {
   let res: (AugmentData | null)[] = [];
 
-  const slots = 1 + Math.floor((ENHANCEMENT_MAX - 10) / 10);
+  const slots = 5;
   for (let i = 0; i < slots; i++) {
     res.push(null);
   }

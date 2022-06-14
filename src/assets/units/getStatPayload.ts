@@ -63,11 +63,11 @@ const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
     makeGrowthRate(50, 51),
   ]);
 
-export const getUnitDEF = (
+export const getUnitDEFAmount = (
   base_def: number,
   rarity: number,
   enhancement: number,
-): Stat => {
+): number => {
   let growth_rate = ONE_STAR_GROWTH_RATE;
   switch (rarity) {
     case 2:
@@ -103,16 +103,20 @@ export const getUnitDEF = (
       bonus = (enhancement / rate.enhancement) * rate.bonus;
     }
   }
-  return makeStat(StatTypes.DEF, base_def + Math.round(bonus));
+  return base_def + Math.round(bonus);
 };
 
 export const getUnitStatPayload = (
   unit: UnitData,
   enhancement: number,
 ): StatPayload => {
-  const def = getUnitDEF(unit.base_defense, unit.rarity, enhancement);
+  const def_amount = getUnitDEFAmount(
+    unit.base_defense,
+    unit.rarity,
+    enhancement,
+  );
 
-  let bp_amount = Math.floor(def.amount / 2);
+  let bp_amount = Math.floor(def_amount / 2);
   for (const stat of unit.payload.stats) {
     if (stat.stat_type === StatTypes.HP) {
       bp_amount += Math.round(stat.amount / 10);
@@ -122,6 +126,7 @@ export const getUnitStatPayload = (
     }
   }
   const bp = makeStat(StatTypes.BP, bp_amount);
+  const def = makeStat(StatTypes.DEF, def_amount);
 
   const stats = [bp, def, ...unit.payload.stats];
   // this is intentional

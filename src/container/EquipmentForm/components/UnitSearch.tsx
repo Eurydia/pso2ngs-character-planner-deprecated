@@ -13,18 +13,21 @@ import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
 import { StatTypes } from "../../../assets/stats";
-import UNITS, { getUnitDEF, UnitData } from "../../../assets/units";
+import UNITS, {
+  getUnitDEFAmount,
+  UnitData,
+} from "../../../assets/units";
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: UnitData,
   enhancement: number,
 ) => {
-  const def = getUnitDEF(
+  const def_amount = getUnitDEFAmount(
     option.base_defense,
     option.rarity,
     enhancement,
-  ).amount;
+  );
 
   return (
     <MenuItem {...props}>
@@ -36,7 +39,7 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            <Typography>{`+${def} ${StatTypes.DEF}`}</Typography>
+            <Typography>{`+${def_amount} ${StatTypes.DEF}`}</Typography>
             {option.payload.stats.map((stat) => (
               <Typography key={stat.stat_type}>
                 {`${parseStatToDisplay(stat)} ${stat.stat_type}`}

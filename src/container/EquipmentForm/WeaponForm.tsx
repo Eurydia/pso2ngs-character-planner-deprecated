@@ -10,7 +10,7 @@ import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
-import StatsList from "./components/StatsList";
+import StatsList from "../../components/StatsList";
 import { StatPayload } from "../../assets/stats";
 import { getActiveAugmentSlots } from "../../utility";
 
@@ -44,12 +44,14 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         augments,
       });
     }, [weapon, potLevel, enhancement, fixa, augments, props]);
-
+    // FIXME: You should not be able to select a fixa
+    // when the weapon slot is empty.
     const disabled = weapon === null && props.isRealistic;
     const active_slots = props.isRealistic
       ? getActiveAugmentSlots(enhancement)
       : getActiveAugmentSlots(ENHANCEMENT_MAX);
 
+    // TODO: Fix these
     let payload: StatPayload[] = [];
     if (!disabled) {
       if (weapon !== null) {

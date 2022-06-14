@@ -139,7 +139,10 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
 
   const atk = template[StatTypes.ATK];
   const floor_pot = template[StatTypes.FLOOR_POT];
-  template[StatTypes.BP] += Math.floor((atk * (2 - floor_pot)) / 2);
+  template[StatTypes.BP] += Math.round((atk * (2 - floor_pot)) / 2);
+
+  const def = template[StatTypes.DEF];
+  template[StatTypes.BP] += Math.round(def / 2);
 
   let tallied: Stat[] = [];
   for (const key of Object.keys(template)) {
@@ -162,7 +165,13 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
 export const getActiveAugmentSlots = (
   enhancement: number,
 ): number => {
-  return enhancement >= 20
-    ? 1 + Math.floor((enhancement - 10) / 10)
-    : 1;
+  if (enhancement >= 50) {
+    return 5;
+  } else if (enhancement >= 40) {
+    return 4;
+  } else if (enhancement >= 20) {
+    return 3;
+  } else {
+    return 2;
+  }
 };

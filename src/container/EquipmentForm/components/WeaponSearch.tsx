@@ -13,7 +13,7 @@ import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import { parseStatToDisplay } from "../../../utility";
 import WEAPONS, {
-  getWeaponAtk,
+  getWeaponATKAmount,
   WeaponData,
 } from "../../../assets/weapons";
 import { StatTypes } from "../../../assets/stats";
@@ -23,11 +23,11 @@ const renderOption = (
   option: WeaponData,
   enhancement: number,
 ) => {
-  const atk = getWeaponAtk(
+  const atk_amount = getWeaponATKAmount(
     option.base_attack,
     option.rarity,
     enhancement,
-  ).amount;
+  );
 
   return (
     <MenuItem {...props}>
@@ -39,7 +39,7 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            <Typography>{`+${atk} ${StatTypes.ATK}`}</Typography>
+            <Typography>{`+${atk_amount} ${StatTypes.ATK}`}</Typography>
             {option.payload.stats.map((stat) => (
               <Typography key={stat.stat_type}>
                 {`${parseStatToDisplay(stat)} ${stat.stat_type}`}

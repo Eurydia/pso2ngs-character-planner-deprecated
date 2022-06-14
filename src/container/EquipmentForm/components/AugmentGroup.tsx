@@ -196,7 +196,6 @@ const augmentsDoConflict = (
 
   return false;
 };
-
 interface AugmentGroupProps {
   disabled: boolean;
   activeSlots: number;

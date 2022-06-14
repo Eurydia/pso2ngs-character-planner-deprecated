@@ -1,12 +1,18 @@
 import { FC, Fragment, memo, useEffect, useState } from "react";
 import { Box, Divider, Grid, Stack } from "@mui/material";
-import { Accessibility } from "@mui/icons-material";
-import { Character, ClassData } from "../../assets/character";
+import { Accessibility, AutoAwesome } from "@mui/icons-material";
+import {
+  Character,
+  ClassData,
+  getCharacterStatPayload,
+} from "../../assets/character";
 import CustomCard from "../../components/CustomCard";
 import ClassSearch from "./components/ClassSearch";
 import CharLevelSelect from "./components/CharLevelSelect";
 import SPSelect from "./components/SPselect";
 import ClassEditLayout from "./layout/ClassEditLayout";
+import StatsList from "../../components/StatsList";
+import { StatPayload } from "../../assets/stats";
 
 interface CharacterFormProps {
   getInitValue: () => Character;
@@ -63,6 +69,15 @@ const CharacterForm: FC<CharacterFormProps> = memo(
       setSubClass(value);
     };
 
+    const payload = [
+      getCharacterStatPayload({
+        level,
+        main_class: mainClass,
+        main_sp: mainSP,
+        sub_class: subClass,
+        sub_sp: subSP,
+      }),
+    ];
     return (
       <CustomCard
         frontTitle="Character"
@@ -102,9 +117,13 @@ const CharacterForm: FC<CharacterFormProps> = memo(
             />
           </Stack>
         }
-        backTitle=""
-        backTitleIcon={<Fragment />}
-        backContent={<Fragment />}
+        backTitle="Stats"
+        backTitleIcon={<AutoAwesome />}
+        backContent={
+          <Box sx={{ height: 250, overflowY: "auto" }}>
+            <StatsList payloads={payload} />
+          </Box>
+        }
       />
     );
   },

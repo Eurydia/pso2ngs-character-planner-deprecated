@@ -15,12 +15,12 @@ import {
   StatPayload,
   StatTypes,
   getStatTemplate,
-} from "../../../assets/stats";
+} from "../assets/stats";
 import {
   parseStatToDisplay,
   tallyStats,
   addStatToTemplate,
-} from "../../../utility";
+} from "../utility";
 
 interface StatsListItemProps {
   stat: Stat;
