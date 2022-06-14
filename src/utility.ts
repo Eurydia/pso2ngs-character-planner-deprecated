@@ -134,7 +134,7 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
 
   if (template[StatTypes.HP_BOOST] !== 1) {
     template[StatTypes.HP] *= template[StatTypes.HP_BOOST];
-    template["HP boost"] = 1;
+    template[StatTypes.HP_BOOST] = 1;
   }
 
   const atk = template[StatTypes.ATK];

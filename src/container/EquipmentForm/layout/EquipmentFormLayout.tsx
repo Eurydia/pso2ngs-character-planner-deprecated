@@ -12,7 +12,6 @@ const EquipmentFormLayout: FC<EquipmentFormLayoutProps> = (props) => {
   return (
     <Box>
       <Stack
-        spacing={4}
         divider={<Divider flexItem />}
         justifyContent="space-between"
         sx={{

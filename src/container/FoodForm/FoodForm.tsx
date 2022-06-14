@@ -127,11 +127,8 @@ const FoodForm: FC<FoodFormProps> = memo(
                 }}
               />
             </Paper>
-            <Paper
-              variant="outlined"
+            <Box
               sx={{
-                paddingY: 1,
-                paddingX: 2,
                 height: 250,
                 overflowY: "auto",
               }}
@@ -141,7 +138,7 @@ const FoodForm: FC<FoodFormProps> = memo(
                 items={filterItems(filterString, items)}
                 onChange={handleAmountChange}
               />
-            </Paper>
+            </Box>
           </Stack>
         }
         backTitleIcon={<AutoAwesome />}

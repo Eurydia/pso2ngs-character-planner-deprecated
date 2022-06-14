@@ -77,7 +77,7 @@ export const saveUnitToLocal = (
   localStorage.setItem(key, JSON.stringify(signature));
 };
 
-export const getUnitFromLocal = (key: UnitKey): Unit => {
+export const loadUnitFromLocal = (key: UnitKey): Unit => {
   const as_string = localStorage.getItem(key);
 
   if (!as_string) {

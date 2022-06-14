@@ -85,7 +85,7 @@ export const saveWeaponToLocal = ({
   localStorage.setItem("weapon", JSON.stringify(signature));
 };
 
-export const getWeaponFromLocal = (): Weapon => {
+export const loadWeaponFromLocal = (): Weapon => {
   const as_string = localStorage.getItem("weapon");
 
   if (!as_string) {

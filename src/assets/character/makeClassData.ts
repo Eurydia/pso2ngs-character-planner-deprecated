@@ -1,4 +1,4 @@
-import { CharacterClassData } from "./types";
+import { ClassData } from "./types";
 
 // export const makeClassSkill = (
 //   name: string,
@@ -10,13 +10,13 @@ import { CharacterClassData } from "./types";
 //   };
 // };
 
-export const makeCharacterClassData = (
+export const makeClassData = (
   name: string,
   base_attack: number,
   base_defense: number,
   base_hp: number,
   base_pp: number = 100,
-): CharacterClassData => {
+): ClassData => {
   return {
     name,
     base_attack,

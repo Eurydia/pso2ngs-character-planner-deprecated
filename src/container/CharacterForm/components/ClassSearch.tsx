@@ -1,28 +1,29 @@
 import { ChangeEvent, FC, memo } from "react";
 import { MenuItem, Paper, TextField } from "@mui/material";
 import CHARACTER_CLASSES, {
-  CharacterClassData,
-} from "../../../assets/character-classes";
+  ClassData,
+} from "../../../assets/character";
+
 interface ClassSearchProps {
   label: string;
-  value: CharacterClassData;
-  onChange: (value: CharacterClassData) => void;
+  value: ClassData;
+  onChange: (value: ClassData) => void;
 }
 const ClassSearch: FC<ClassSearchProps> = memo(
   (props) => {
     const handleChange = (
       e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     ) => {
-      const input_value = e.target.value;
+      const value = e.target.value;
 
-      let value = CHARACTER_CLASSES[0];
-      for (let i = 1; i < CHARACTER_CLASSES.length - 1; i++) {
-        if (CHARACTER_CLASSES[i].name === input_value) {
-          value = CHARACTER_CLASSES[i];
+      let selected = CHARACTER_CLASSES[0];
+      for (const char_class of CHARACTER_CLASSES) {
+        if (char_class.name === value) {
+          selected = char_class;
           break;
         }
       }
-      props.onChange(value);
+      props.onChange(selected);
     };
 
     return (

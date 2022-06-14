@@ -57,11 +57,13 @@ const FoodListItem: FC<FoodListItemProps> = memo(
     };
 
     return (
-      <Box paddingX={2}>
+      <Box>
         <Grid
           container
           columnSpacing={2}
           sx={{
+            paddingY: 1,
+            paddingX: 2,
             alignItems: "center",
           }}
         >
@@ -139,7 +141,7 @@ interface FoodListProps {
 const FoodList: FC<FoodListProps> = memo(
   (props) => {
     return (
-      <Stack spacing={1} divider={<Divider flexItem />}>
+      <Stack divider={<Divider flexItem />}>
         {props.items.map((item) => (
           <FoodListItem
             key={item.name}

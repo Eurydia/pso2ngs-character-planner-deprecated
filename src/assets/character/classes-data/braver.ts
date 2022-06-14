@@ -1,6 +1,6 @@
-import { makeCharacterClassData } from "../makeCharacterClass";
+import { makeClassData } from "../makeClassData";
 
-const CLASS_DATA = makeCharacterClassData(
+const CLASS_DATA = makeClassData(
   "braver",
   270,
   452,

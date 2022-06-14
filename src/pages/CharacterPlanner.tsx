@@ -5,36 +5,53 @@ import {
   Switch,
   FormControlLabel,
 } from "@mui/material";
-import FoodForm from "../container/FoodForm/FoodForm";
-import ClassForm from "../container/ClassForm/ClassForm";
-import WeaponForm from "../container/EquipmentForm/WeaponForm";
-import { CHARACTER_MAX } from "../stores";
 import {
   FoodItem,
-  getFoodItemsFromLocal,
-  storeFoodItemToLocal,
+  loadFoodItemsFromLocal,
+  saveFoodItemToLocal,
 } from "../assets/food";
 import {
   Weapon,
   getWeaponTemplate,
   saveWeaponToLocal,
-  getWeaponFromLocal,
+  loadWeaponFromLocal,
+  getWeaponStatPayload,
+  getWeaponAtk,
 } from "../assets/weapons";
-import UnitForm from "../container/EquipmentForm/UnitForm";
 import {
   Unit,
-  getUnitFromLocal,
+  loadUnitFromLocal,
   getUnitTemplate,
   saveUnitToLocal,
+  getUnitStatPayload,
 } from "../assets/units";
+import {
+  Character,
+  getCharacterTemplate,
+  loadCharacterFromLocal,
+  saveCharacterToLocal,
+} from "../assets/character";
+import CharacterForm from "../container/CharacterForm/CharacterForm";
+import FoodForm from "../container/FoodForm/FoodForm";
+import WeaponForm from "../container/EquipmentForm/WeaponForm";
+import UnitForm from "../container/EquipmentForm/UnitForm";
+import BPGateVisualizer from "../container/BPGateVisualizer";
+import { tallyStats } from "../utility";
+import { Stat } from "../assets/stats";
 
 const CharacterPlanner = () => {
   const [isRealistic, setRealistic] = useState(true);
-  const [charLevel, setcharlevel] = useState(CHARACTER_MAX);
+
+  const [character, setCharacter] = useState<Character>(
+    getCharacterTemplate,
+  );
+  useEffect(() => {
+    saveCharacterToLocal(character);
+  }, [character]);
 
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   useEffect(() => {
-    storeFoodItemToLocal(foodItems);
+    saveFoodItemToLocal(foodItems);
   }, [foodItems]);
 
   const [weapon, setWeapon] = useState<Weapon>(getWeaponTemplate);
@@ -57,6 +74,8 @@ const CharacterPlanner = () => {
     saveUnitToLocal(unitC, "unitc");
   }, [unitC]);
 
+  const char_level = character.level;
+
   return (
     <Container maxWidth="lg">
       <FormControlLabel
@@ -69,50 +88,59 @@ const CharacterPlanner = () => {
         label="is realistic"
       />
       <Grid container spacing={2}>
-        <Grid item md={6}>
-          <ClassForm
-            charLevel={charLevel}
-            onCharLevelChange={setcharlevel}
+        <Grid
+          item
+          md={6}
+          sx={{
+            display: "grid",
+            alignItems: "flex-end",
+          }}
+        >
+          <CharacterForm
+            getInitValue={loadCharacterFromLocal}
+            onChange={setCharacter}
           />
         </Grid>
         <Grid item md={6}>
           <FoodForm
-            getInitValues={getFoodItemsFromLocal}
+            getInitValues={loadFoodItemsFromLocal}
             onChange={setFoodItems}
           />
         </Grid>
-
         <Grid item md={6}>
           <WeaponForm
             isRealistic={isRealistic}
-            charLevel={charLevel}
-            getInitValue={getWeaponFromLocal}
+            charLevel={char_level}
+            getInitValue={loadWeaponFromLocal}
             onChange={setWeapon}
           />
         </Grid>
         <Grid item md={6}>
           <UnitForm
             isRealistic={isRealistic}
-            charLevel={charLevel}
-            getInitValue={() => getUnitFromLocal("unita")}
+            charLevel={char_level}
+            getInitValue={() => loadUnitFromLocal("unita")}
             onChange={setUnitA}
           />
         </Grid>
         <Grid item md={6}>
           <UnitForm
             isRealistic={isRealistic}
-            charLevel={charLevel}
-            getInitValue={() => getUnitFromLocal("unitb")}
+            charLevel={char_level}
+            getInitValue={() => loadUnitFromLocal("unitb")}
             onChange={setUnitB}
           />
         </Grid>
         <Grid item md={6}>
           <UnitForm
             isRealistic={isRealistic}
-            charLevel={charLevel}
-            getInitValue={() => getUnitFromLocal("unitc")}
+            charLevel={char_level}
+            getInitValue={() => loadUnitFromLocal("unitc")}
             onChange={setUnitC}
           />
+        </Grid>
+        <Grid item md={12}>
+          <BPGateVisualizer character_bp={300} />
         </Grid>
       </Grid>
     </Container>

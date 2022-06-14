@@ -11,6 +11,6 @@ export enum ContentTypes {
 export type BPGateData = Readonly<{
   name: string;
   content_type: ContentTypes;
-  bp: number;
+  bp_required: number;
   enemy_level: number;
 }>;

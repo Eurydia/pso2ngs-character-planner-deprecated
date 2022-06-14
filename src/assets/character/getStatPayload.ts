@@ -6,7 +6,7 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
-import { CharacterClassData } from "./types";
+import { ClassData } from "./types";
 
 const getHPAmount = (base_hp: number, level: number): number => {
   return base_hp * 1.1 ** ((level - 1) / 5);
@@ -24,7 +24,7 @@ const getDEFAmount = (
 };
 
 export const getStatPayload = (
-  character_class: CharacterClassData,
+  character_class: ClassData,
   level: number,
 ): StatPayload => {
   const hp = makeStat(

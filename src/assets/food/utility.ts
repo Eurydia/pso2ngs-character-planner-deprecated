@@ -25,7 +25,7 @@ export const foodItemFromSignature = (
   return null;
 };
 
-export const storeFoodItemToLocal = (items: FoodItem[]) => {
+export const saveFoodItemToLocal = (items: FoodItem[]) => {
   let res: FoodItemSignature[] = [];
   for (const item of items) {
     res.push(foodItemToSignature(item));
@@ -33,7 +33,7 @@ export const storeFoodItemToLocal = (items: FoodItem[]) => {
   localStorage.setItem("food", JSON.stringify(res));
 };
 
-export const getFoodItemsFromLocal = (): FoodItem[] => {
+export const loadFoodItemsFromLocal = (): FoodItem[] => {
   const as_string = localStorage.getItem("food");
   if (!as_string) {
     return [];

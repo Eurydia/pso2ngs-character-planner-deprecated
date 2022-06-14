@@ -35,7 +35,6 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     const [enhancement, setEnhancement] = useState(init_enhacement);
     const [fixa, setFixa] = useState(init_fixa);
     const [augments, setAugments] = useState(init_augments);
-
     useEffect(() => {
       props.onChange({
         weapon,
@@ -47,7 +46,6 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     }, [weapon, potLevel, enhancement, fixa, augments, props]);
 
     const disabled = weapon === null && props.isRealistic;
-
     const active_slots = props.isRealistic
       ? getActiveAugmentSlots(enhancement)
       : getActiveAugmentSlots(ENHANCEMENT_MAX);
