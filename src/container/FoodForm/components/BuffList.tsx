@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, ReactNode } from "react";
 import {
   Divider,
   Grid,
@@ -23,7 +23,7 @@ import { FoodCategory } from "../../../assets/food";
 
 interface FoodBuff {
   name: string;
-  item_used: number;
+  item_used_amount: number;
   origin: string;
   parsed_amount: string;
 }
@@ -70,7 +70,7 @@ const getFoodBuffsFromItems = (
       continue;
     }
     let level = template[_key];
-    let item_used = level;
+    let item_used_amount = level;
     let parsed_amount: string = "";
     if (categories.has(_key)) {
       parsed_amount = parseNumberToDisplay(
@@ -78,7 +78,7 @@ const getFoodBuffsFromItems = (
         _key === FoodCategory.FRUIT,
       );
     } else {
-      item_used += 3;
+      item_used_amount += 3;
       parsed_amount = parseNumberToDisplay(
         getAttributeStatAmount(_key as FoodAttribute, level),
         false,
@@ -87,12 +87,69 @@ const getFoodBuffsFromItems = (
     res.push({
       name: BUFF_NAME[key],
       origin: key,
-      item_used: level,
+      item_used_amount,
       parsed_amount,
     });
   }
 
   return res;
+};
+
+interface BuffListRowProps {
+  isHeader?: boolean;
+  itemUsedAmountSlot: ReactNode;
+  originSlot: ReactNode;
+  nameSlot: ReactNode;
+  parsedAmountSlot: ReactNode;
+}
+const BuffListRow: FC<BuffListRowProps> = (props) => {
+  return (
+    <Grid
+      container
+      paddingX={2}
+      alignItems="flex-end"
+      sx={{
+        textTransform: "capitalize",
+      }}
+    >
+      <Grid item xs={2}>
+        <Typography
+          sx={{
+            fontWeight: props.isHeader ? "500" : undefined,
+          }}
+        >
+          {props.itemUsedAmountSlot}
+        </Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <Typography
+          sx={{
+            fontWeight: props.isHeader ? "500" : undefined,
+          }}
+        >
+          {props.originSlot}
+        </Typography>
+      </Grid>
+      <Grid item xs>
+        <Typography
+          sx={{
+            fontWeight: props.isHeader ? "500" : undefined,
+          }}
+        >
+          {props.nameSlot}
+        </Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <Typography
+          sx={{
+            fontWeight: props.isHeader ? "500" : undefined,
+          }}
+        >
+          {props.parsedAmountSlot}
+        </Typography>
+      </Grid>
+    </Grid>
+  );
 };
 
 interface BuffListProps {
@@ -103,35 +160,26 @@ const BuffList: FC<BuffListProps> = memo(
     return (
       <Box>
         {props.items.length > 0 ? (
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell># of Items</TableCell>
-                  <TableCell>Origin</TableCell>
-                  <TableCell>Buff</TableCell>
-                  <TableCell align="right">Amount</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getFoodBuffsFromItems(props.items).map(
-                  ({ name, origin, item_used, parsed_amount }) => (
-                    <TableRow
-                      key={name}
-                      sx={{ textTransform: "capitalize" }}
-                    >
-                      <TableCell>{item_used}</TableCell>
-                      <TableCell>{origin}</TableCell>
-                      <TableCell>{name}</TableCell>
-                      <TableCell align="right">
-                        {parsed_amount}
-                      </TableCell>
-                    </TableRow>
-                  ),
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <Stack spacing={2} divider={<Divider flexItem />}>
+            <BuffListRow
+              isHeader
+              itemUsedAmountSlot="# of items"
+              originSlot="origin"
+              nameSlot="effect"
+              parsedAmountSlot="amount"
+            />
+            {getFoodBuffsFromItems(props.items).map(
+              ({ name, origin, item_used_amount, parsed_amount }) => (
+                <BuffListRow
+                  key={name}
+                  itemUsedAmountSlot={item_used_amount}
+                  originSlot={origin.toLowerCase()}
+                  nameSlot={name}
+                  parsedAmountSlot={parsed_amount}
+                />
+              ),
+            )}
+          </Stack>
         ) : (
           <Typography>No active food buff...</Typography>
         )}
