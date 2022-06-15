@@ -7,10 +7,8 @@ import {
   useState,
 } from "react";
 import {
-  Box,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardHeader,
@@ -18,7 +16,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   Paper,
   Stack,
   TextField,
@@ -28,15 +25,12 @@ import {
   AutoAwesome,
   Fastfood,
   FilterAlt,
-  ThumbUp,
 } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import FOOD, { FoodItem } from "../../assets/food";
 import { FOOD_ITEM_MAX } from "../../stores";
-import CustomCard from "../../components/CustomCard";
 import FoodList from "./components/FoodList";
 import BuffList from "./components/BuffList";
-import { isUint16Array } from "util/types";
 import { sortByAlphabet } from "../../utility";
 
 const filterItems = (
@@ -166,18 +160,11 @@ const FoodForm: FC<FoodFormProps> = memo(
                   }}
                 />
               </Paper>
-              <Box
-                sx={{
-                  height: 300,
-                  overflowY: "auto",
-                }}
-              >
-                <FoodList
-                  isFull={leftover === 0}
-                  items={filterItems(filterString, items)}
-                  onChange={handleAmountChange}
-                />
-              </Box>
+              <FoodList
+                isFull={leftover === 0}
+                items={filterItems(filterString, items)}
+                onChange={handleAmountChange}
+              />
             </Stack>
           </CardContent>
           <CardActions>
@@ -195,6 +182,7 @@ const FoodForm: FC<FoodFormProps> = memo(
           onClose={closeDialog}
           fullWidth
           maxWidth="sm"
+          scroll="body"
         >
           <DialogTitle>
             <Stack spacing={1} direction="row" alignItems="center">

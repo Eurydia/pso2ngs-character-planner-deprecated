@@ -9,27 +9,12 @@ import {
   Divider,
   Tooltip,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../../stores";
 import {
   FoodItem,
   FoodAttribute,
   FoodCategory,
 } from "../../../assets/food";
-
-const CATEGORY_EFFECT: { [key: string]: string } = Object.freeze({
-  MEAT: "+ potency [meat]",
-  FRUIT: "+ PP [fruit]",
-  VEGETABLE: "+ DMG resist [vegetable]",
-  SEAFOOD: "+ HP [seafood]",
-});
-
-const ATTRIBUTE_EFFECT: { [key: string]: string } = Object.freeze({
-  CRISPY: "+ weak point DMG [crispy]",
-  LIGHT: "+ PP recovery [light]",
-  ROBUST: "+ HP recovery [robust]",
-  RICH: "- PP cost [rich]",
-});
 
 interface FoodListItemProps {
   isDisabled: boolean;
@@ -41,7 +26,20 @@ interface FoodListItemProps {
 }
 const FoodListItem: FC<FoodListItemProps> = memo(
   (props) => {
-    const theme = useTheme();
+    const CATEGORY_EFFECT: { [key: string]: string } = {
+      MEAT: "+ potency [meat]",
+      FRUIT: "+ PP [fruit]",
+      VEGETABLE: "+ DMG resist [vegetable]",
+      SEAFOOD: "+ HP [seafood]",
+    };
+
+    const ATTRIBUTE_EFFECT: { [key: string]: string } = {
+      CRISPY: "+ weak point DMG [crispy]",
+      LIGHT: "+ PP recovery [light]",
+      ROBUST: "+ HP recovery [robust]",
+      RICH: "- PP cost [rich]",
+    };
+
     const handleChange = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -57,64 +55,52 @@ const FoodListItem: FC<FoodListItemProps> = memo(
     };
 
     return (
-      <Box>
-        <Grid
-          container
-          columnSpacing={2}
-          sx={{
-            paddingY: 1,
-            paddingX: 2,
-            alignItems: "center",
-          }}
-        >
-          <Grid item md={4}>
-            <Tooltip
-              arrow
-              placement="right"
-              title={
-                <Box
-                  sx={{
-                    textTransform: "capitalize",
-                  }}
-                >
-                  <Typography>
-                    {CATEGORY_EFFECT[props.category]}
-                  </Typography>
-                  <Typography>
-                    {ATTRIBUTE_EFFECT[props.attribute]}
-                  </Typography>
-                </Box>
-              }
-            >
-              <Typography
+      <Grid
+        container
+        paddingX={2}
+        alignItems="center"
+        sx={{ textTransform: "capitalize" }}
+      >
+        <Grid item md>
+          <Tooltip
+            placement="right"
+            title={
+              <Stack
                 sx={{
                   textTransform: "capitalize",
-                  fontWeight: props.value > 0 ? 500 : undefined,
-                  color:
-                    props.value > 0
-                      ? theme.palette.primary.main
-                      : undefined,
                 }}
               >
-                {props.name}
-              </Typography>
-            </Tooltip>
-          </Grid>
-          <Grid item md={4}></Grid>
-          <Grid item md={3}>
-            <Paper elevation={props.isDisabled ? 0 : 4}>
-              <TextField
-                disabled={props.isDisabled}
-                value={props.value}
-                onChange={handleChange}
-                fullWidth
-                type="number"
-                size="small"
-              />
-            </Paper>
-          </Grid>
+                <Typography>
+                  {CATEGORY_EFFECT[props.category]}
+                </Typography>
+                <Typography>
+                  {ATTRIBUTE_EFFECT[props.attribute]}
+                </Typography>
+              </Stack>
+            }
+          >
+            <Typography
+              noWrap
+              fontWeight={props.value > 0 ? "500" : undefined}
+            >
+              {props.name}
+            </Typography>
+          </Tooltip>
         </Grid>
-      </Box>
+        <Grid item md />
+        <Grid item md={3}>
+          <Paper elevation={props.isDisabled ? 0 : 4}>
+            <TextField
+              disabled={props.isDisabled}
+              value={props.value}
+              onChange={handleChange}
+              fullWidth
+              type="number"
+              size="small"
+            />
+          </Paper>
+        </Grid>
+      </Grid>
     );
   },
   (prev, next) => {
@@ -141,19 +127,21 @@ interface FoodListProps {
 const FoodList: FC<FoodListProps> = memo(
   (props) => {
     return (
-      <Stack divider={<Divider flexItem />}>
-        {props.items.map((item) => (
-          <FoodListItem
-            key={item.name}
-            isDisabled={props.isFull && item.amount === 0}
-            name={item.name.toLowerCase()}
-            category={item.category}
-            attribute={item.attribute}
-            value={item.amount}
-            onChange={(v) => props.onChange(v, item.name)}
-          />
-        ))}
-      </Stack>
+      <Box height={300} overflow="auto">
+        <Stack spacing={1} divider={<Divider flexItem />}>
+          {props.items.map((item) => (
+            <FoodListItem
+              key={item.name}
+              isDisabled={props.isFull && item.amount === 0}
+              name={item.name.toLowerCase()}
+              category={item.category}
+              attribute={item.attribute}
+              value={item.amount}
+              onChange={(v) => props.onChange(v, item.name)}
+            />
+          ))}
+        </Stack>
+      </Box>
     );
   },
   (prev, next) => {

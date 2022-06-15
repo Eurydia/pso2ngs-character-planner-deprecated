@@ -1,17 +1,5 @@
 import { FC, memo, ReactNode } from "react";
-import {
-  Divider,
-  Grid,
-  Stack,
-  Typography,
-  Box,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
+import { Divider, Grid, Stack, Typography, Box } from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,
@@ -107,7 +95,7 @@ const BuffListRow: FC<BuffListRowProps> = (props) => {
     <Grid
       container
       paddingX={2}
-      alignItems="flex-end"
+      alignItems="flex-start"
       sx={{
         textTransform: "capitalize",
       }}
