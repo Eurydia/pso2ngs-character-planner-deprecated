@@ -47,7 +47,7 @@ const BPGateVisualizer: FC<BPGateVisualizerProps> = (props) => {
     <Grid container spacing={4} columns={16}>
       {getBPGates().map((gate) => (
         <Grid item md={4} key={gate.name}>
-          <BPGateItem char_bp={props.character_bp} {...gate} />
+          {/* <BPGateItem char_bp={props.character_bp} {...gate} /> */}
         </Grid>
       ))}
     </Grid>

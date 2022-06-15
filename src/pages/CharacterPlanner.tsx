@@ -135,16 +135,6 @@ const getTotalBP = (
   from_unit_hp /= 10;
   from_char_def /= 2;
 
-  console.log(
-    from_char_atk,
-    from_weapon_atk,
-    from_potential,
-    from_char_def,
-    from_augment_bp,
-    from_unit_hp,
-    from_unit_pp,
-    from_sp,
-  );
   return (
     from_char_atk +
     Math.floor(from_weapon_atk) +
@@ -199,7 +189,7 @@ const CharacterPlanner = () => {
     [unitA, unitB, unitC],
     isRealistic,
   );
-  console.log(bp);
+
   return (
     <Container maxWidth="lg">
       {/* <FormControlLabel

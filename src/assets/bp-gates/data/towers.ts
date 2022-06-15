@@ -1,4 +1,4 @@
-import { BPGateData, ContentTypes } from "../types";
+import { BPGateData, ContentRegions, ContentTypes } from "../types";
 import { makeBPGateData } from "../makeBPGateData";
 
 // ---------------------------
@@ -8,12 +8,44 @@ let bp_gates: BPGateData[] = [];
 
 // ---------------------------
 // aelio
-bp_gates.push(makeBPGateData("alters rush", content_type, 1184, 0));
-bp_gates.push(makeBPGateData("great wall", content_type, 1184, 0));
-bp_gates.push(makeBPGateData("aero runner", content_type, 1184, 0));
+bp_gates.push(
+  makeBPGateData(
+    "alters rush",
+    ContentRegions.AELIO,
+    content_type,
+    1184,
+    0,
+  ),
+);
+bp_gates.push(
+  makeBPGateData(
+    "great wall",
+    ContentRegions.AELIO,
+    content_type,
+    1184,
+    0,
+  ),
+);
+bp_gates.push(
+  makeBPGateData(
+    "aero runner",
+    ContentRegions.AELIO,
+    content_type,
+    1184,
+    0,
+  ),
+);
 
 // ---------------------------
 // retem
-bp_gates.push(makeBPGateData("dolls burrow", content_type, 1592, 0));
+bp_gates.push(
+  makeBPGateData(
+    "dolls burrow",
+    ContentRegions.RETEM,
+    content_type,
+    1592,
+    0,
+  ),
+);
 
 export default bp_gates;

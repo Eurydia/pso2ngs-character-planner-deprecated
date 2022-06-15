@@ -100,8 +100,8 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             }
             fixaSlot={
               <FixaSearch
-                isDisabled={disabled}
                 mode="weapon"
+                isDisabled={disabled}
                 value={fixa}
                 onChange={setFixa}
               />

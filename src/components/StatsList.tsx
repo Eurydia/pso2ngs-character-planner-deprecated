@@ -3,6 +3,7 @@ import {
   Box,
   Divider,
   Grid,
+  Modal,
   Stack,
   Tooltip,
   Typography,
