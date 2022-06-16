@@ -8,19 +8,21 @@ import {
   MenuItem,
   Paper,
   Box,
+  AutocompleteRenderOptionState,
 } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
-import { parseStatToDisplay } from "../../../utility";
-import { StatTypes } from "../../../assets/stats";
+import { isStatAddType, StatTypes } from "../../../assets/stats";
 import UNITS, {
   getUnitDEFAmount,
   UnitData,
 } from "../../../assets/units";
+import { parseNumberToDisplay } from "../../../utility";
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: UnitData,
+  _: AutocompleteRenderOptionState,
   enhancement: number,
 ) => {
   const def_amount = getUnitDEFAmount(
@@ -40,17 +42,23 @@ const renderOption = (
             }}
           >
             <Typography>{`+${def_amount} ${StatTypes.DEF}`}</Typography>
-            {option.payload.stats.map((stat) => (
-              <Typography key={stat.stat_type}>
-                {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
-              </Typography>
-            ))}
+            {option.payload.stats.map(({ stat_type, amount }) => {
+              const parsed_amount = parseNumberToDisplay(
+                amount,
+                isStatAddType(stat_type),
+              );
+              return (
+                <Typography key={stat_type}>
+                  {`${parsed_amount} ${stat_type}`}
+                </Typography>
+              );
+            })}
           </Box>
         }
         placement="right"
       >
         <Box sx={{ textTransform: "capitalize" }}>
-          <Typography>{option.name}</Typography>
+          <Typography noWrap>{option.name}</Typography>
           <Typography noWrap fontSize="small">
             {`level required ${option.level_required}`}
           </Typography>
@@ -89,7 +97,6 @@ const filterOptions = (
     .sort((a, b) => a.rarity - b.rarity);
   return result;
 };
-
 interface UnitSearchProps {
   isRealistic: boolean;
   charLevel: number;
@@ -100,7 +107,7 @@ interface UnitSearchProps {
 const UnitSearch: FC<UnitSearchProps> = memo(
   (props) => {
     const handleChange = (
-      event: SyntheticEvent<Element, Event>,
+      _: SyntheticEvent<Element, Event>,
       value: null | UnitData,
     ) => {
       props.onChange(value);
@@ -114,8 +121,12 @@ const UnitSearch: FC<UnitSearchProps> = memo(
         options={UNITS}
         onChange={handleChange}
         filterOptions={filterOptions}
-        renderOption={(p, o) => renderOption(p, o, props.enhancement)}
-        isOptionEqualToValue={(o, v) => o.name === v.name}
+        renderOption={(params, option, _) =>
+          renderOption(params, option, _, props.enhancement)
+        }
+        isOptionEqualToValue={(option, value) =>
+          option.name === value.name
+        }
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }

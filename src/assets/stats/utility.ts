@@ -1,27 +1,18 @@
 import { StatShorthands, StatTemplate, StatTypes } from "./types";
 
-/**
- * Expand `StatShorthands.PP_GAIN`
- * @returns
- */
-export const getExpandedPPGain = (): StatTypes[] => {
+export const expandHPBoost = (): StatTypes[] => {
+  return [StatTypes.HP];
+};
+export const expandPPGain = (): StatTypes[] => {
   return [
     StatTypes.ACTIVE_PP_RECOVERY,
     StatTypes.NATURAL_PP_RECOVERY,
   ];
 };
-/**
- * Expand `StatShorthands.POT`
- * @returns
- */
-export const getExpandedPot = (): StatTypes[] => {
+export const expandPot = (): StatTypes[] => {
   return [StatTypes.MEL_POT, StatTypes.RNG_POT, StatTypes.TEC_POT];
 };
-/**
- * Expand `StatShorthands.AILMENT_RES`
- * @returns
- */
-export const getExpandedAilmentRes = (): StatTypes[] => {
+export const expandAilmentRes = (): StatTypes[] => {
   return [
     StatTypes.BURN_RESIST,
     StatTypes.FREEZE_RESIST,
@@ -32,73 +23,79 @@ export const getExpandedAilmentRes = (): StatTypes[] => {
     StatTypes.PHYDOWN_RESIST,
   ];
 };
-
-export const getExpandedShorthand = (
+export const expandShorthand = (
   shorthand: StatShorthands,
 ): StatTypes[] => {
   const lookup: { [key in StatShorthands]: () => StatTypes[] } = {
-    "pot": getExpandedPot,
-    "ailment resist": getExpandedAilmentRes,
-    "PP recovery": getExpandedPPGain,
+    [StatShorthands.HP_BOOST]: expandHPBoost,
+    [StatShorthands.POT]: expandPot,
+    [StatShorthands.AILMENT_RES]: expandAilmentRes,
+    [StatShorthands.PP_RECOVERY]: expandPPGain,
   };
 
   return lookup[shorthand]();
 };
 
-/**
- * @returns Stats stack via addition
- */
-export const getAddStatTypes = (): StatTypes[] => {
-  return [
+export const getStatTemplate = (): StatTemplate => {
+  return {
+    // basic stats
+    [StatTypes.BP]: 0,
+    [StatTypes.HP]: 0,
+    [StatTypes.PP]: 0,
+    [StatTypes.ATK]: 0,
+    [StatTypes.DEF]: 0,
+    [StatTypes.MEL_POT]: 1,
+    [StatTypes.RNG_POT]: 1,
+    [StatTypes.TEC_POT]: 1,
+    [StatTypes.FLOOR_POT]: 1,
+    [StatTypes.DMG_RESIST]: 1,
+    [StatTypes.BURN_RESIST]: 1,
+    [StatTypes.FREEZE_RESIST]: 1,
+    [StatTypes.SHOCK_RESIST]: 1,
+    [StatTypes.BLIND_RESIST]: 1,
+    [StatTypes.PANIC_RESIST]: 1,
+    [StatTypes.POISON_RESIST]: 1,
+    [StatTypes.PHYDOWN_RESIST]: 1,
+
+    // indepth stats
+    [StatTypes.HP_RECOVERY_BOOST]: 1,
+    [StatTypes.ACTIVE_PP_RECOVERY]: 1,
+    [StatTypes.NATURAL_PP_RECOVERY]: 1,
+    [StatTypes.PP_COST]: 1,
+    [StatTypes.PB_GAUGE_CHARGE_RATE]: 1,
+    [StatTypes.DMG_BOOST]: 1,
+    [StatTypes.CRIT_CHANCE]: 1,
+    [StatTypes.CRIT_DMG]: 1,
+    [StatTypes.AILMENT_DURATION]: 1,
+  };
+};
+
+export const isStatAddType = (
+  stat_type: StatTypes | StatShorthands,
+): boolean => {
+  const lookup = [
     StatTypes.BP,
     StatTypes.HP,
     StatTypes.PP,
     StatTypes.ATK,
     StatTypes.DEF,
   ];
+  if (Object.keys(StatTypes).includes(stat_type)) {
+    return lookup.includes(stat_type as StatTypes);
+  } else {
+    const expanded = expandShorthand(stat_type as StatShorthands);
+    return lookup.includes(expanded[0]);
+  }
 };
-/**
- * @returns Stats stack via addition, but displayed as percentage
- */
-export const getAddPercentageStatTypes = (): StatTypes[] => {
-  return [StatTypes.CRIT_CHANCE];
-};
 
-export const getStatTemplate = (): StatTemplate => {
-  return {
-    // basic stats
-    "BP": 0,
-    "HP": 0,
-    "PP": 0,
-    "ATK": 0,
-    "DEF": 0,
-    "MEL pot": 1,
-    "RNG pot": 1,
-    "TEC pot": 1,
-    "floor pot": 1,
-    "DMG resist": 1,
-    "burn resist": 1,
-    "freeze resist": 1,
-    "shock resist": 1,
-    "blind resist": 1,
-    "panic resist": 1,
-    "poison resist": 1,
-    "physical down resist": 1,
-
-    // indepth stats
-    "HP recovery boost": 1,
-    "active PP recovery": 1,
-    "natural PP recovery": 1,
-    "PP cost": 1,
-    "PB gauge charge rate": 1,
-    "DMG boost": 1,
-    "crit chance": 1,
-    "crit DMG": 1,
-    "ailment duration": 1,
-
-    // hp boost expands into hp
-    // via multiplication
-    // so hp boost should not be seen at all
-    "HP boost": 1,
-  };
+export const isStatSpecialMulType = (
+  stat_type: StatTypes | StatShorthands,
+) => {
+  const lookup = [StatTypes.CRIT_CHANCE];
+  if (Object.keys(StatTypes).includes(stat_type)) {
+    return lookup.includes(stat_type as StatTypes);
+  } else {
+    const expanded = expandShorthand(stat_type as StatShorthands);
+    return lookup.includes(expanded[0]);
+  }
 };

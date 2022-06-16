@@ -11,8 +11,9 @@ import {
   Paper,
 } from "@mui/material";
 import { matchSorter } from "match-sorter";
-import { parseStatToDisplay } from "../../../utility";
 import FIXAS, { FixaData, FixaTypes } from "../../../assets/fixas";
+import { parseNumberToDisplay } from "../../../utility";
+import { isStatAddType } from "../../../assets/stats";
 
 const getWeaponOptions = () => {
   return FIXAS.filter((fixa) => fixa.fixa_type === FixaTypes.WEAPON);
@@ -22,16 +23,6 @@ const getUnitOption = () => {
   return FIXAS.filter((fixa) => fixa.fixa_type === FixaTypes.UNIT);
 };
 
-const SORT_ORDER = [
-  "attack",
-  "fatale",
-  "termina",
-  "guard",
-  "performa",
-  "natura",
-  "enthusia",
-];
-
 const getLabel = (fixa: FixaData): string => {
   return `${fixa.name} lv. ${fixa.level}`;
 };
@@ -39,7 +30,7 @@ const getLabel = (fixa: FixaData): string => {
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: FixaData,
-  state: AutocompleteRenderOptionState,
+  _: AutocompleteRenderOptionState,
 ) => {
   return (
     <MenuItem {...props}>
@@ -51,11 +42,17 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            {option.payload.stats.map((stat) => (
-              <Typography key={stat.stat_type}>
-                {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
-              </Typography>
-            ))}
+            {option.payload.stats.map(({ stat_type, amount }) => {
+              const parsed_amount = parseNumberToDisplay(
+                amount,
+                isStatAddType(stat_type),
+              );
+              return (
+                <Typography key={stat_type}>
+                  {`${parsed_amount} ${stat_type}`}
+                </Typography>
+              );
+            })}
           </Stack>
         }
         placement="right"
@@ -87,6 +84,17 @@ const filterOptions = (
   if (terms.length === 0) {
     return options;
   }
+
+  const SORT_ORDER = [
+    "attack",
+    "fatale",
+    "termina",
+    "guard",
+    "performa",
+    "natura",
+    "enthusia",
+  ];
+
   const result = terms
     .reduceRight(
       (res, term) =>
@@ -111,7 +119,7 @@ interface FixaSearchProps {
 const FixaSearch: FC<FixaSearchProps> = memo(
   (props) => {
     const handleChange = (
-      event: SyntheticEvent<Event | Element>,
+      _: SyntheticEvent<Event | Element>,
       value: null | FixaData,
     ) => {
       props.onChange(value);

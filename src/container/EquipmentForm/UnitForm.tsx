@@ -107,7 +107,7 @@ const UnitForm: FC<UnitFormProps> = memo(
         backTitleIcon={<AutoAwesome />}
         backContent={
           <Box sx={{ height: 400 }}>
-            <StatsList payloads={payload} />
+            {/* <StatsList payloads={payload} /> */}
           </Box>
         }
       />

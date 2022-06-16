@@ -15,9 +15,7 @@ const ClassEditLayout: FC<ClassEditLayoutProp> = (props) => {
             <Grid item md={6}>
               {props.charLevelSelect}
             </Grid>
-            <Grid item md={6}>
-              {/* I am a spacer */}
-            </Grid>
+            <Grid item md={6} />
           </Fragment>
         )}
         <Grid item md={6}>

@@ -1,6 +1,6 @@
 import {
   StatTypes,
-  getExpandedAilmentRes,
+  expandAilmentRes,
   makeStat,
   StatShorthands,
 } from "../../stats";
@@ -27,7 +27,7 @@ let augments: AugmentData[] = [];
   ];
 
   const bp = [4, 5, 6];
-  const ailement_type = getExpandedAilmentRes();
+  const ailement_type = expandAilmentRes();
   const ailment_res = [1.2, 1.25, 1.3];
 
   names.forEach((name, i) => {

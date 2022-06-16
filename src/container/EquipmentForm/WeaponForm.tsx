@@ -13,6 +13,41 @@ import PotentialSelect from "./components/PotentialSelect";
 import StatsList from "../../components/StatsList";
 import { StatPayload } from "../../assets/stats";
 import { getActiveAugmentSlots } from "../../utility";
+// let stats: Stat[] = [];
+// let conditions: string[] = [];
+
+// for (const payload of props.payloads) {
+//   let template = getStatTemplate();
+
+//   for (const stat of payload.stats) {
+//     template = addStatToTemplate(stat, template);
+//   }
+
+//   for (const con of payload.conditionals) {
+//     conditions.push(con.condition);
+//     for (const stat of con.stats) {
+//       template = addStatToTemplate(stat, template);
+//     }
+//   }
+
+//   const add_stat_types = getAddStatTypes();
+//   let payload_stats: Stat[] = [];
+//   for (const key of Object.keys(template)) {
+//     const _key = key as StatTypes;
+//     const amount = template[_key];
+//     if (
+//       (add_stat_types.includes(_key) && amount === 0) ||
+//       amount === 1
+//     ) {
+//       continue;
+//     }
+//     payload_stats.push(
+//       makeStat(key as StatTypes, template[key as StatTypes]!),
+//     );
+//   }
+//   stats.push(...payload_stats);
+// }
+// const tallied = tallyStats(stats);
 
 interface WeaponFormProps {
   isRealistic: boolean;
@@ -120,7 +155,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         backTitleIcon={<AutoAwesome />}
         backContent={
           <Box sx={{ height: 400 }}>
-            <StatsList payloads={payload} />
+            {/* <StatsList payloads={payload} /> */}
           </Box>
         }
       />

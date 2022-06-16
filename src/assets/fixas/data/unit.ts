@@ -27,7 +27,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
 
   pp_usage.forEach((amount, i) => {
     const level = i + 1;
-    const stats = [makeStat(StatTypes.PP_USAGE, amount)];
+    const stats = [makeStat(StatTypes.PP_COST, amount)];
 
     fixa.push(makeFixaData("performa", level, FIXA_TYPE, stats));
   });

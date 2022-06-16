@@ -4,14 +4,12 @@ export enum StatTypes {
   PP = "PP",
   ATK = "ATK",
   DEF = "DEF",
-  //   This HP boost should not be seen
-  HP_BOOST = "HP boost",
 
   HP_RECOVERY_BOOST = "HP recovery boost",
 
   ACTIVE_PP_RECOVERY = "active PP recovery",
   NATURAL_PP_RECOVERY = "natural PP recovery",
-  PP_USAGE = "PP cost",
+  PP_COST = "PP cost",
 
   PB_GAUGE_CHARGE_RATE = "PB gauge charge rate",
 
@@ -38,6 +36,7 @@ export enum StatTypes {
  * Stat shorthands, these stats get expanded into other stats
  * */
 export enum StatShorthands {
+  HP_BOOST = "HP boost",
   POT = "pot",
   AILMENT_RES = "ailment resist",
   PP_RECOVERY = "PP recovery",

@@ -1,6 +1,6 @@
 import {
   makeStat,
-  getExpandedPot,
+  expandPot,
   StatTypes,
   StatShorthands,
 } from "../../stats";
@@ -83,7 +83,7 @@ let augments: AugmentData[] = [];
 // might | precision | techinque
 (() => {
   const bps = [4, 5, 6];
-  const pot_type = getExpandedPot();
+  const pot_type = expandPot();
   const pot = [1.01, 1.015, 1.02];
 
   const names = ["might", "precision", "technique"];

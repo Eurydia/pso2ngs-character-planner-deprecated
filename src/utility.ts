@@ -1,13 +1,12 @@
 import {
   Stat,
   StatTypes,
-  makeStat,
   StatShorthands,
   getStatTemplate,
-  getAddStatTypes,
-  getAddPercentageStatTypes,
-  getExpandedShorthand,
+  expandShorthand,
   StatTemplate,
+  isStatAddType,
+  isStatSpecialMulType,
 } from "./assets/stats";
 
 /**
@@ -65,34 +64,21 @@ export const parseNumberToDisplay = (
   return `${sign}${parsed_value}`;
 };
 
-/**
- * Parse value according to the stacking type.
- * @param stat
- * @returns
- */
-export const parseStatToDisplay = (stat: Stat): string => {
-  let stat_type = stat.stat_type;
-
-  // better to be implicit, I guess?
-  if (stat_type === StatShorthands.POT) {
-    stat_type = StatTypes.MEL_POT;
-  } else if (stat_type === StatShorthands.AILMENT_RES) {
-    stat_type = StatTypes.BURN_RESIST;
-  } else if (stat_type === StatShorthands.PP_RECOVERY) {
-    stat_type = StatTypes.NATURAL_PP_RECOVERY;
-  }
-
-  const display_stat_as_add = getAddStatTypes().includes(stat_type);
-
-  return parseNumberToDisplay(stat.amount, display_stat_as_add);
-};
-
 export const addStatToTemplate = (
   stat: Stat,
   template: StatTemplate,
 ): StatTemplate => {
   let _template = { ...template };
 
+  const doAdd = (key: StatTypes) => {
+    if (isStatSpecialMulType(key)) {
+      _template[key] += stat.amount - 1;
+    } else if (isStatAddType(key)) {
+      _template[key] += stat.amount;
+    } else {
+      _template[key] *= stat.amount;
+    }
+  };
   // if `stat_type` is a shorthand,
   // expand them and add them to the template
   if (
@@ -100,42 +86,25 @@ export const addStatToTemplate = (
       stat.stat_type as StatShorthands,
     )
   ) {
-    getExpandedShorthand(stat.stat_type as StatShorthands).forEach(
-      (_s) => {
-        if (getAddPercentageStatTypes().includes(_s)) {
-          _template[_s] += stat.amount - 1;
-        } else if (getAddStatTypes().includes(_s)) {
-          _template[_s] += stat.amount;
-        } else {
-          _template[_s] *= stat.amount;
-        }
-      },
-    );
+    expandShorthand(stat.stat_type as StatShorthands).forEach(doAdd);
   } else {
-    const _s = stat.stat_type as StatTypes;
-    if (getAddPercentageStatTypes().includes(_s)) {
-      _template[_s] += stat.amount - 1;
-    } else if (getAddStatTypes().includes(_s)) {
-      _template[_s] += stat.amount;
-    } else {
-      _template[_s] *= stat.amount;
-    }
+    doAdd(stat.stat_type as StatTypes);
   }
   return _template;
 };
 
-export const tallyStats = (stats: Stat[]): Stat[] => {
-  const add_stat_types = getAddStatTypes();
-
+export const tallyStats = (stats: Stat[]): StatTemplate => {
+  let hp_boost_percent = 1;
   let template = getStatTemplate();
   for (const stat of stats) {
+    if (stat.stat_type === StatShorthands.HP_BOOST) {
+      hp_boost_percent *= stat.amount;
+      continue;
+    }
     template = addStatToTemplate(stat, template);
   }
 
-  if (template[StatTypes.HP_BOOST] !== 1) {
-    template[StatTypes.HP] *= template[StatTypes.HP_BOOST];
-    template[StatTypes.HP_BOOST] = 1;
-  }
+  template[StatTypes.HP] *= hp_boost_percent;
 
   const atk = template[StatTypes.ATK];
   const floor_pot = template[StatTypes.FLOOR_POT];
@@ -144,22 +113,23 @@ export const tallyStats = (stats: Stat[]): Stat[] => {
   const def = template[StatTypes.DEF];
   template[StatTypes.BP] += Math.round(def / 2);
 
-  let tallied: Stat[] = [];
-  for (const key of Object.keys(template)) {
-    const _key = key as StatTypes;
-    const amount = template[_key];
-    // If the amount is the same as `default` value
-    // then don't include it in the result
-    if (
-      (add_stat_types.includes(_key) && amount === 0) ||
-      amount === 1
-    ) {
-      continue;
-    }
-    tallied.push(makeStat(_key, amount));
-  }
+  return template;
+  // let tallied: Stat[] = [];
+  // for (const key of Object.keys(template)) {
+  //   const _key = key as StatTypes;
+  //   const amount = template[_key];
+  //   // If the amount is the same as `default` value
+  //   // then don't include it in the result
+  //   if (
+  //     (add_stat_types.includes(_key) && amount === 0) ||
+  //     amount === 1
+  //   ) {
+  //     continue;
+  //   }
+  //   tallied.push(makeStat(_key, amount));
+  // }
 
-  return tallied;
+  // return tallied;
 };
 
 export const getActiveAugmentSlots = (

@@ -1,4 +1,4 @@
-import { StatTypes, getExpandedPot, makeStat } from "../../stats";
+import { StatTypes, expandPot, makeStat } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -15,7 +15,7 @@ let augments: AugmentData[] = [];
 
   const bps = [6, 8, 10];
   const hp = [5, 10, 15];
-  const pot_type = getExpandedPot();
+  const pot_type = expandPot();
   const pot = [1.015, 1.02, 1.025];
   names.forEach((name, i) => {
     bps.forEach((bp, j) => {

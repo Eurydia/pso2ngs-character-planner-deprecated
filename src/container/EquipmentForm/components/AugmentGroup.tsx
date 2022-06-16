@@ -17,13 +17,18 @@ import {
   MenuItem,
   Tooltip,
   Paper,
+  AutocompleteRenderOptionState,
 } from "@mui/material";
 import { matchSorter } from "match-sorter";
-import { convertToRoman, parseStatToDisplay } from "../../../utility";
+import { isStatAddType } from "../../../assets/stats";
 import AUGMENTS, {
   AugmentData,
   AugmentGroups,
 } from "../../../assets/augments";
+import {
+  convertToRoman,
+  parseNumberToDisplay,
+} from "../../../utility";
 
 const getLabel = (augment: AugmentData): string => {
   const name = augment.isSType ? `${augment.name} s` : augment.name;
@@ -34,6 +39,7 @@ const getLabel = (augment: AugmentData): string => {
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: AugmentData,
+  _: AutocompleteRenderOptionState,
 ) => {
   return (
     <MenuItem {...props}>
@@ -45,22 +51,32 @@ const renderOption = (
               textTransform: "capitalize",
             }}
           >
-            {option.payload.stats.map((stat) => (
-              <Typography key={stat.stat_type}>
-                {`${parseStatToDisplay(stat)} ${stat.stat_type} `}
-              </Typography>
-            ))}
+            {option.payload.stats.map(({ stat_type, amount }) => {
+              const parsed_amount = parseNumberToDisplay(
+                amount,
+                isStatAddType(stat_type),
+              );
+              return (
+                <Typography key={stat_type}>
+                  {`${parsed_amount} ${stat_type}`}
+                </Typography>
+              );
+            })}
             {option.payload.conditionals.map((conditional) => (
               <Stack key={conditional.condition}>
                 <Typography>{conditional.condition}</Typography>
                 <Stack paddingX={2}>
-                  {conditional.stats.map((stat) => (
-                    <Typography key={stat.stat_type}>
-                      {`${parseStatToDisplay(stat)} ${
-                        stat.stat_type
-                      } `}
-                    </Typography>
-                  ))}
+                  {conditional.stats.map(({ stat_type, amount }) => {
+                    const parsed_amount = parseNumberToDisplay(
+                      amount,
+                      isStatAddType(stat_type),
+                    );
+                    return (
+                      <Typography key={stat_type}>
+                        {`${parsed_amount} ${stat_type}`}
+                      </Typography>
+                    );
+                  })}
                 </Stack>
               </Stack>
             ))}
@@ -127,7 +143,7 @@ interface AugmentSearchProps {
 const AugmentSearch: FC<AugmentSearchProps> = memo(
   (props) => {
     const handleChange = (
-      e: SyntheticEvent<Element, Event>,
+      _: SyntheticEvent<Element, Event>,
       value: AugmentData | null,
     ) => {
       props.onChange(value);

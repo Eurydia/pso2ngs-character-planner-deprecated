@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  FC,
-  Fragment,
-  memo,
-  useEffect,
-  useState,
-} from "react";
+import { FC, Fragment, memo, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -16,22 +9,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Paper,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
-import {
-  AutoAwesome,
-  Fastfood,
-  FilterAlt,
-} from "@mui/icons-material";
+import { AutoAwesome, Fastfood } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import FOOD, { FoodItem } from "../../assets/food";
+import { sortByAlphabet } from "../../utility";
 import { FOOD_ITEM_MAX } from "../../stores";
 import FoodList from "./components/FoodList";
 import BuffList from "./components/BuffList";
-import { sortByAlphabet } from "../../utility";
+import FilterTextField from "./components/FilterTextField";
 
 const filterItems = (
   filter_string: string,
@@ -76,9 +64,6 @@ interface FoodFormProps {
 const FoodForm: FC<FoodFormProps> = memo(
   (props) => {
     const [dialogOpen, setDialogOpen] = useState(false);
-    const openDialog = () => setDialogOpen(true);
-    const closeDialog = () => setDialogOpen(false);
-
     const [filterString, setFilterString] = useState("");
     const [items, setItems] = useState<FoodItem[]>(() => {
       let from_local = props.getInitValues();
@@ -120,13 +105,8 @@ const FoodForm: FC<FoodFormProps> = memo(
         return next;
       });
     };
-
-    const handleFilterStringChange = (
-      event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    ) => {
-      const value = event.target.value.normalize();
-      setFilterString(value);
-    };
+    const openDialog = () => setDialogOpen(true);
+    const closeDialog = () => setDialogOpen(false);
 
     let leftover = FOOD_ITEM_MAX;
     for (const item of items) {
@@ -148,18 +128,10 @@ const FoodForm: FC<FoodFormProps> = memo(
           />
           <CardContent>
             <Stack spacing={4}>
-              <Paper elevation={4}>
-                <TextField
-                  value={filterString}
-                  onChange={handleFilterStringChange}
-                  fullWidth
-                  variant="outlined"
-                  label="Filter Items"
-                  InputProps={{
-                    startAdornment: <FilterAlt />,
-                  }}
-                />
-              </Paper>
+              <FilterTextField
+                value={filterString}
+                onChange={setFilterString}
+              />
               <FoodList
                 isFull={leftover === 0}
                 items={filterItems(filterString, items)}

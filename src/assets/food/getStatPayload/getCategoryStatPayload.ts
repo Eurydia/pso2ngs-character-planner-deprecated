@@ -72,7 +72,7 @@ export const getCategoryStatPayload = (
       stats = [makeStat(StatTypes.DMG_RESIST, amount)];
       break;
     case FoodCategory.SEAFOOD:
-      stats = [makeStat(StatTypes.HP_BOOST, amount)];
+      stats = [makeStat(StatShorthands.HP_BOOST, amount)];
       break;
     case FoodCategory.FRUIT:
       stats = [makeStat(StatTypes.PP, amount)];

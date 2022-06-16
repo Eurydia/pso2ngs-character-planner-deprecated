@@ -80,7 +80,7 @@ export const getAttributeStatPayload = (
       stats = [makeStat(StatTypes.HP_RECOVERY_BOOST, amount)];
       break;
     case FoodAttribute.RICH:
-      stats = [makeStat(StatTypes.PP_USAGE, amount)];
+      stats = [makeStat(StatTypes.PP_COST, amount)];
       break;
   }
 

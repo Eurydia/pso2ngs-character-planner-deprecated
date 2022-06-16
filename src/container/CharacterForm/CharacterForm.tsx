@@ -1,5 +1,21 @@
 import { FC, Fragment, memo, useEffect, useState } from "react";
-import { Box, Divider, Grid, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Modal,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Accessibility, AutoAwesome } from "@mui/icons-material";
 import {
   Character,
@@ -28,6 +44,7 @@ const CharacterForm: FC<CharacterFormProps> = memo(
       sub_sp: init_sub_sp,
     } = props.getInitValue();
 
+    const [dialogOpen, setDialogOpen] = useState(false);
     const [level, setLevel] = useState(init_level);
     const [mainClass, setMainClass] = useState(init_main_class);
     const [mainSP, setMainSP] = useState(init_main_sp);
@@ -55,7 +72,6 @@ const CharacterForm: FC<CharacterFormProps> = memo(
 
       setMainClass(value);
     };
-
     const handleSubClassChange = (value: ClassData) => {
       if (value.name === mainClass.name) {
         setMainClass(subClass);
@@ -68,6 +84,8 @@ const CharacterForm: FC<CharacterFormProps> = memo(
       }
       setSubClass(value);
     };
+    const openDialog = () => setDialogOpen(true);
+    const closeDialog = () => setDialogOpen(false);
 
     const payload = [
       getCharacterStatPayload({
@@ -78,53 +96,96 @@ const CharacterForm: FC<CharacterFormProps> = memo(
         sub_sp: subSP,
       }),
     ];
+
     return (
-      <CustomCard
-        frontTitle="Character"
-        frontTitleIcon={<Accessibility />}
-        frontContent={
-          <Stack
-            divider={<Divider flexItem />}
-            justifyContent="space-between"
-            sx={{ height: 250 }}
-          >
-            <ClassEditLayout
-              charLevelSelect={
-                <CharLevelSelect value={level} onChange={setLevel} />
-              }
-              classSearchSlot={
-                <ClassSearch
-                  label="Main Class"
-                  value={mainClass}
-                  onChange={handleMainClassChange}
-                />
-              }
-              spSelectSlot={
-                <SPSelect value={mainSP} onChange={setMainSP} />
-              }
-            />
-            <ClassEditLayout
-              classSearchSlot={
-                <ClassSearch
-                  label="Sub Class"
-                  value={subClass}
-                  onChange={handleSubClassChange}
-                />
-              }
-              spSelectSlot={
-                <SPSelect value={subSP} onChange={setSubSP} />
-              }
-            />
-          </Stack>
-        }
-        backTitle="Stats"
-        backTitleIcon={<AutoAwesome />}
-        backContent={
-          <Box sx={{ height: 250, overflowY: "auto" }}>
-            <StatsList payloads={payload} />
-          </Box>
-        }
-      />
+      <Fragment>
+        <Card variant="outlined">
+          <CardHeader
+            title={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Accessibility color="primary" />
+                <Typography variant="h6" color="primary">
+                  Character
+                </Typography>
+              </Stack>
+            }
+          />
+          <CardContent>
+            <Stack spacing={4} divider={<Divider flexItem />}>
+              <ClassEditLayout
+                charLevelSelect={
+                  <CharLevelSelect
+                    value={level}
+                    onChange={setLevel}
+                  />
+                }
+                classSearchSlot={
+                  <ClassSearch
+                    label="Main Class"
+                    value={mainClass}
+                    onChange={handleMainClassChange}
+                  />
+                }
+                spSelectSlot={
+                  <SPSelect
+                    label="Main SP"
+                    value={mainSP}
+                    onChange={setMainSP}
+                  />
+                }
+              />
+              <ClassEditLayout
+                classSearchSlot={
+                  <ClassSearch
+                    label="Sub Class"
+                    value={subClass}
+                    onChange={handleSubClassChange}
+                  />
+                }
+                spSelectSlot={
+                  <SPSelect
+                    label="Sub SP"
+                    value={subSP}
+                    onChange={setSubSP}
+                  />
+                }
+              />
+            </Stack>
+          </CardContent>
+          <CardActions>
+            <Button
+              onClick={openDialog}
+              variant="contained"
+              startIcon={<AutoAwesome />}
+            >
+              view stats
+            </Button>
+          </CardActions>
+        </Card>
+
+        <Dialog
+          open={dialogOpen}
+          onClose={closeDialog}
+          fullWidth
+          maxWidth="sm"
+          scroll="body"
+        >
+          <DialogTitle>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <AutoAwesome color="primary" />
+              <Typography variant="h6" color="primary">
+                Character Stats
+              </Typography>
+            </Stack>
+          </DialogTitle>
+          <DialogContent>
+            {/* <StatsList paylosads={payload} /> */}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeDialog}>close</Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
     );
   },
   (prev, next) => {

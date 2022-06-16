@@ -1,7 +1,7 @@
 import {
   StatTypes,
   makeStat,
-  getExpandedPot,
+  expandPot,
   StatShorthands,
 } from "../../stats";
 import { makeUnitData } from "../makeUnitData";
@@ -97,7 +97,7 @@ units.push(
 // -------------------------
 // schwarz
 (() => {
-  const pot_type = getExpandedPot();
+  const pot_type = expandPot();
 
   const names = ["schwarzest", "schwarzgarde", "schwarzrosso"];
   names.forEach((name, i) =>

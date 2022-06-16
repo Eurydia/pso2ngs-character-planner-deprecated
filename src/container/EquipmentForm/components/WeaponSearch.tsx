@@ -8,19 +8,21 @@ import {
   MenuItem,
   Paper,
   Box,
+  AutocompleteRenderOptionState,
 } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
-import { parseStatToDisplay } from "../../../utility";
+import { isStatAddType, StatTypes } from "../../../assets/stats";
 import WEAPONS, {
   getWeaponATKAmount,
   WeaponData,
 } from "../../../assets/weapons";
-import { StatTypes } from "../../../assets/stats";
+import { parseNumberToDisplay } from "../../../utility";
 
 const renderOption = (
   props: HTMLAttributes<HTMLLIElement>,
   option: WeaponData,
+  _: AutocompleteRenderOptionState,
   enhancement: number,
 ) => {
   const atk_amount = getWeaponATKAmount(
@@ -40,11 +42,17 @@ const renderOption = (
             }}
           >
             <Typography>{`+${atk_amount} ${StatTypes.ATK}`}</Typography>
-            {option.payload.stats.map((stat) => (
-              <Typography key={stat.stat_type}>
-                {`${parseStatToDisplay(stat)} ${stat.stat_type}`}
-              </Typography>
-            ))}
+            {option.payload.stats.map(({ stat_type, amount }) => {
+              const parsed_amount = parseNumberToDisplay(
+                amount,
+                isStatAddType(stat_type),
+              );
+              return (
+                <Typography key={stat_type}>
+                  {`${parsed_amount} ${stat_type}`}
+                </Typography>
+              );
+            })}
           </Box>
         }
         placement="right"
@@ -89,7 +97,6 @@ const filterOptions = (
     .sort((a, b) => a.rarity - b.rarity);
   return result;
 };
-
 interface WeaponSearchProps {
   isRealistic: boolean;
   charLevel: number;
@@ -100,7 +107,7 @@ interface WeaponSearchProps {
 const WeaponSearch: FC<WeaponSearchProps> = memo(
   (props) => {
     const handleChange = (
-      event: SyntheticEvent<Element, Event>,
+      _: SyntheticEvent<Element, Event>,
       value: WeaponData | null,
     ) => {
       props.onChange(value);
@@ -114,10 +121,12 @@ const WeaponSearch: FC<WeaponSearchProps> = memo(
         options={WEAPONS}
         onChange={handleChange}
         filterOptions={filterOptions}
-        renderOption={(p, o, s) =>
-          renderOption(p, o, props.enhancement)
+        renderOption={(params, option, _) =>
+          renderOption(params, option, _, props.enhancement)
         }
-        isOptionEqualToValue={(o, v) => o.name === v.name}
+        isOptionEqualToValue={(option, value) =>
+          option.name === value.name
+        }
         getOptionDisabled={(option) =>
           props.isRealistic && option.level_required > props.charLevel
         }

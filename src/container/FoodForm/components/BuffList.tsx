@@ -100,7 +100,7 @@ const BuffListRow: FC<BuffListRowProps> = (props) => {
         textTransform: "capitalize",
       }}
     >
-      <Grid item xs={2}>
+      <Grid item xs={3}>
         <Typography
           sx={{
             fontWeight: props.isHeader ? "500" : undefined,
@@ -127,7 +127,7 @@ const BuffListRow: FC<BuffListRowProps> = (props) => {
           {props.nameSlot}
         </Typography>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={2} display="flex" justifyContent="flex-end">
         <Typography
           sx={{
             fontWeight: props.isHeader ? "500" : undefined,

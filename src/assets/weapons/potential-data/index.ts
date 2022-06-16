@@ -300,7 +300,7 @@ export const IMBUED_UNIT = makePotentialData(
       return makeStatPayload(
         [
           makeStat(StatShorthands.POT, POTENCY[index]),
-          makeStat(StatTypes.PP_USAGE, 0.9),
+          makeStat(StatTypes.PP_COST, 0.9),
         ],
         [
           makeConditional(

@@ -3,6 +3,7 @@ import { ChangeEvent, FC } from "react";
 import { SKILL_POINTS_MAX, SKILL_POINTS_MIN } from "../../../stores";
 
 interface SPSelectProps {
+  label: string;
   value: number;
   onChange: (value: number) => void;
 }
@@ -23,10 +24,10 @@ const SPSelect: FC<SPSelectProps> = (props) => {
   return (
     <Paper elevation={4}>
       <TextField
+        label={props.label}
         value={props.value}
         onChange={handleChange}
         fullWidth
-        label="Main SP used"
         type="number"
       />
     </Paper>
