@@ -11,8 +11,6 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  Grid,
-  Modal,
   Stack,
   Typography,
 } from "@mui/material";
@@ -22,13 +20,11 @@ import {
   ClassData,
   getCharacterStatPayload,
 } from "../../assets/character";
-import CustomCard from "../../components/CustomCard";
+import StatsList from "../../components/StatsList";
 import ClassSearch from "./components/ClassSearch";
 import CharLevelSelect from "./components/CharLevelSelect";
 import SPSelect from "./components/SPselect";
 import ClassEditLayout from "./layout/ClassEditLayout";
-import StatsList from "../../components/StatsList";
-import { StatPayload } from "../../assets/stats";
 
 interface CharacterFormProps {
   getInitValue: () => Character;
@@ -162,7 +158,6 @@ const CharacterForm: FC<CharacterFormProps> = memo(
             </Button>
           </CardActions>
         </Card>
-
         <Dialog
           open={dialogOpen}
           onClose={closeDialog}
@@ -179,7 +174,7 @@ const CharacterForm: FC<CharacterFormProps> = memo(
             </Stack>
           </DialogTitle>
           <DialogContent>
-            {/* <StatsList paylosads={payload} /> */}
+            <StatsList />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>close</Button>
