@@ -1,5 +1,5 @@
 import { FC, memo, ReactNode } from "react";
-import { Divider, Grid, Stack, Typography, Box } from "@mui/material";
+import { Grid, Typography, Box, SxProps } from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,
@@ -8,6 +8,7 @@ import {
 } from "../../../assets/food";
 import { parseNumberToDisplay } from "../../../utility";
 import { FoodCategory } from "../../../assets/food";
+import { grey } from "@mui/material/colors";
 
 interface FoodBuff {
   name: string;
@@ -84,55 +85,40 @@ const getFoodBuffsFromItems = (
 };
 
 interface BuffListRowProps {
-  isHeader?: boolean;
+  bold?: boolean;
+  backgroundColor?: string;
   itemUsedAmountSlot: ReactNode;
   originSlot: ReactNode;
   nameSlot: ReactNode;
   parsedAmountSlot: ReactNode;
 }
 const BuffListRow: FC<BuffListRowProps> = (props) => {
+  const typography_sx: SxProps = {
+    fontWeight: props.bold ? "500" : undefined,
+  };
   return (
     <Grid
       container
-      paddingX={2}
-      alignItems="flex-start"
+      padding={2}
+      alignItems="flex-end"
       sx={{
+        backgroundColor: props.backgroundColor,
         textTransform: "capitalize",
       }}
     >
       <Grid item xs={3}>
-        <Typography
-          sx={{
-            fontWeight: props.isHeader ? "500" : undefined,
-          }}
-        >
+        <Typography sx={typography_sx}>
           {props.itemUsedAmountSlot}
         </Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography
-          sx={{
-            fontWeight: props.isHeader ? "500" : undefined,
-          }}
-        >
-          {props.originSlot}
-        </Typography>
+        <Typography sx={typography_sx}>{props.originSlot}</Typography>
       </Grid>
       <Grid item xs>
-        <Typography
-          sx={{
-            fontWeight: props.isHeader ? "500" : undefined,
-          }}
-        >
-          {props.nameSlot}
-        </Typography>
+        <Typography sx={typography_sx}>{props.nameSlot}</Typography>
       </Grid>
       <Grid item xs={2} display="flex" justifyContent="flex-end">
-        <Typography
-          sx={{
-            fontWeight: props.isHeader ? "500" : undefined,
-          }}
-        >
+        <Typography sx={typography_sx}>
           {props.parsedAmountSlot}
         </Typography>
       </Grid>
@@ -145,31 +131,33 @@ interface BuffListProps {
 }
 const BuffList: FC<BuffListProps> = memo(
   (props) => {
+    const active_buffs = getFoodBuffsFromItems(props.items);
     return (
       <Box>
-        {props.items.length > 0 ? (
-          <Stack spacing={2} divider={<Divider flexItem />}>
+        <BuffListRow
+          bold
+          backgroundColor={grey[200]}
+          itemUsedAmountSlot="# of items"
+          originSlot="origin"
+          nameSlot="effect"
+          parsedAmountSlot="amount"
+        />
+        {active_buffs.map(
+          (
+            { name, origin, item_used_amount, parsed_amount },
+            index,
+          ) => (
             <BuffListRow
-              isHeader
-              itemUsedAmountSlot="# of items"
-              originSlot="origin"
-              nameSlot="effect"
-              parsedAmountSlot="amount"
+              key={name}
+              backgroundColor={
+                index % 2 === 1 ? grey[100] : undefined
+              }
+              itemUsedAmountSlot={item_used_amount}
+              originSlot={origin.toLowerCase()}
+              nameSlot={name}
+              parsedAmountSlot={parsed_amount}
             />
-            {getFoodBuffsFromItems(props.items).map(
-              ({ name, origin, item_used_amount, parsed_amount }) => (
-                <BuffListRow
-                  key={name}
-                  itemUsedAmountSlot={item_used_amount}
-                  originSlot={origin.toLowerCase()}
-                  nameSlot={name}
-                  parsedAmountSlot={parsed_amount}
-                />
-              ),
-            )}
-          </Stack>
-        ) : (
-          <Typography>No active food buff...</Typography>
+          ),
         )}
       </Box>
     );

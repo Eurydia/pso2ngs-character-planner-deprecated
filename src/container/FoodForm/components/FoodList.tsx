@@ -6,7 +6,6 @@ import {
   Paper,
   Box,
   Stack,
-  Divider,
   Tooltip,
 } from "@mui/material";
 import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../../stores";
@@ -15,8 +14,10 @@ import {
   FoodAttribute,
   FoodCategory,
 } from "../../../assets/food";
+import { grey } from "@mui/material/colors";
 
 interface FoodListItemProps {
+  backgroundColor?: string;
   isDisabled: boolean;
   name: string;
   attribute: FoodAttribute;
@@ -57,9 +58,13 @@ const FoodListItem: FC<FoodListItemProps> = memo(
     return (
       <Grid
         container
+        paddingY={1}
         paddingX={2}
         alignItems="center"
-        sx={{ textTransform: "capitalize" }}
+        sx={{
+          textTransform: "capitalize",
+          backgroundColor: props.backgroundColor,
+        }}
       >
         <Grid item md>
           <Tooltip
@@ -128,19 +133,22 @@ const FoodList: FC<FoodListProps> = memo(
   (props) => {
     return (
       <Box height={300} overflow="auto">
-        <Stack spacing={1} divider={<Divider flexItem />}>
-          {props.items.map((item) => (
+        {props.items.map(
+          ({ name, category, attribute, amount }, index) => (
             <FoodListItem
-              key={item.name}
-              isDisabled={props.isFull && item.amount === 0}
-              name={item.name.toLowerCase()}
-              category={item.category}
-              attribute={item.attribute}
-              value={item.amount}
-              onChange={(v) => props.onChange(v, item.name)}
+              key={name}
+              backgroundColor={
+                index % 2 === 1 ? grey[100] : undefined
+              }
+              isDisabled={props.isFull && amount === 0}
+              name={name.toLowerCase()}
+              category={category}
+              attribute={attribute}
+              value={amount}
+              onChange={(v) => props.onChange(v, name)}
             />
-          ))}
-        </Stack>
+          ),
+        )}
       </Box>
     );
   },
