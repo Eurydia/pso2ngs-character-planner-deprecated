@@ -1,0 +1,99 @@
+import { FC } from "react";
+import { SvgIcon, SvgIconProps } from "@mui/material";
+
+const AilPanicIcon: FC<SvgIconProps> = (props) => {
+  return (
+    <SvgIcon
+      {...props}
+      viewBox="0 0 16 16"
+      display="box"
+      width={16}
+      height={16}
+    >
+      <path d="M0 0H16V16H0V0Z" fill="#AB2121" />
+      <path
+        d="M5 2H10V3H11V4H12V5H13V6H12V7H11V8H10V11H12V10H14V11H13V12H12V13H11V14H9V13H8V7H9V6H10V4H6V5H5V9H3V4H4V3H5V2Z"
+        fill="#FFE5CE"
+      />
+      <path
+        d="M1 1H5V2H4V3H3V4H2V9H3V10H5V9H6V5H9V6H8V7H7V13H8V14H9V15H6V12H5V11H3V12H2V15H1V1Z"
+        fill="#2D1717"
+      />
+      <path
+        d="M5 1H10V2H5V1ZM4 2H5V3H4V2ZM10 2H11V3H10V2ZM3 3H4V4H3V3ZM11 3H12V4H11V3ZM2 4H3V9H2V4ZM6 4H10V6H9V5H6V4ZM12 4H13V5H12V4ZM5 5H6V9H5V5ZM8 6H9V7H8V6ZM7 7H8V13H7V7ZM3 9H5V10H3V9ZM12 9H14V10H12V9ZM10 10H12V11H10V10ZM14 10H15V11H14V10ZM13 11H14V12H13V11ZM12 12H13V13H12V12ZM8 13H9V14H8V13ZM11 13H12V14H11V13ZM9 14H11V15H9V14Z"
+        fill="#967E72"
+      />
+      <path d="M0 2H1V15H2V12H3V11H5V12H6V16H0V2Z" fill="#AB2121" />
+      <path
+        d="M10 1H15V10H14V9H12V10H10V8H11V7H12V6H13V4H12V3H11V2H10V1Z"
+        fill="#2D1717"
+      />
+      <path
+        d="M5 1H10V2H5V1ZM4 2H5V3H4V2ZM10 2H11V3H10V2ZM3 3H4V4H3V3ZM11 3H12V4H11V3ZM2 4H3V9H2V4ZM12 4H13V5H12V4ZM5 7H6V9H5V7ZM3 9H5V10H3V9Z"
+        fill="#967E72"
+      />
+      <path d="M0 0H16V2H15V1H1V2H0V0Z" fill="#AA2121" />
+      <path d="M1 1H5V2H4V3H3V4H2V9H1V1Z" fill="#2D1717" />
+      <path d="M3 11H5V12H6V14H5V15H3V14H2V12H3V11Z" fill="#EAD1BC" />
+      <path
+        d="M14 11H15V15H11V14H12V13H13V12H14V11Z"
+        fill="#2D1717"
+      />
+      <path d="M1 9H3V10H4V11H3V12H2V15H1V9Z" fill="#2D1717" />
+      <path
+        d="M12 9H14V10H12V9ZM10 10H12V11H10V10ZM14 10H15V11H14V10ZM13 11H14V12H13V11ZM12 12H13V13H12V12ZM11 13H12V14H11V13ZM10 14H11V15H10V14Z"
+        fill="#967E72"
+      />
+      <path d="M6 12H7V13H8V14H9V15H6V12Z" fill="#2D1717" />
+      <path d="M6 9H7V12H5V10H6V9Z" fill="#2D1717" />
+      <path d="M6 4H9V5H6V4ZM5 5H6V7H5V5Z" fill="#967E73" />
+      <path d="M3 12H5V14H3V12Z" fill="#FFE5CE" />
+      <path
+        d="M14 11H15V12H14V11ZM13 12H14V13H13V12ZM12 13H13V14H12V13ZM11 14H12V15H11V14Z"
+        fill="#2D1717"
+      />
+      <path
+        d="M9 1H10V2H9V1ZM10 2H11V3H10V2ZM11 3H12V4H11V3ZM12 4H13V5H12V4Z"
+        fill="#967E72"
+      />
+      <path d="M2 13H3V14H2V13ZM3 14H5V15H3V14Z" fill="#EAD1BC" />
+      <path d="M1 12H2V15H1V12Z" fill="#2D1717" />
+      <path
+        d="M7 12H8V13H7V12ZM8 13H9V14H8V13ZM9 14H10V15H9V14Z"
+        fill="#967E73"
+      />
+      <path d="M5 7H6V9H5V7ZM4 9H5V10H4V9Z" fill="#967E73" />
+      <path
+        d="M12 6H13V7H12V6ZM11 7H12V8H11V7ZM10 8H11V9H10V8Z"
+        fill="#967E73"
+      />
+      <path d="M1 1H3V2H2V3H1V1Z" fill="#2D1717" />
+      <path d="M0 0H2V1H1V2H0V0Z" fill="#AA2121" />
+      <path d="M5 14H6V16H5V14Z" fill="#AB2121" />
+      <path d="M3 15H5V16H3V15Z" fill="#AB2121" />
+      <path d="M2 14H3V16H2V14Z" fill="#AB2121" />
+      <path d="M0 15H2V16H0V15Z" fill="#AB2121" />
+      <path d="M2 8H3V9H2V8ZM3 9H4V10H3V9Z" fill="#967E73" />
+      <path d="M15 15H16V16H15V15Z" fill="#AC2222" />
+      <path d="M14 14H15V15H14V14Z" fill="#4A1919" />
+      <path d="M5 14H6V15H5V14Z" fill="#6A534C" />
+      <path d="M4 14H5V15H4V14Z" fill="#E9CFBB" />
+      <path d="M2 14H3V15H2V14Z" fill="#6A534C" />
+      <path d="M1 14H2V15H1V14Z" fill="#4B1919" />
+      <path d="M0 14H1V15H0V14Z" fill="#AA2121" />
+      <path d="M5 13H6V14H5V13Z" fill="#EBD2BD" />
+      <path d="M5 11H6V12H5V11Z" fill="#69524B" />
+      <path d="M2 11H3V12H2V11Z" fill="#69524B" />
+      <path d="M7 10H8V11H7V10Z" fill="#967E73" />
+      <path d="M7 8H8V9H7V8Z" fill="#967E73" />
+      <path d="M5 7H6V8H5V7Z" fill="#CAB1A0" />
+      <path d="M5 6H6V7H5V6Z" fill="#624B45" />
+      <path d="M2 5H3V6H2V5Z" fill="#967E73" />
+      <path d="M14 1H15V2H14V1Z" fill="#4B1919" />
+      <path d="M1 1H2V2H1V1Z" fill="#4B1919" />
+      <path d="M15 0H16V1H15V0Z" fill="#AB1F1F" />
+      <path d="M0 0H1V1H0V0Z" fill="#AB1F1F" />
+    </SvgIcon>
+  );
+};
+export default AilPanicIcon;

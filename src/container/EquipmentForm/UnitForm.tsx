@@ -8,7 +8,7 @@ import UnitSearch from "./components/UnitSearch";
 import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
-import StatsList from "../../components/StatsList";
+import StatsList from "../../components/StatList/StatList";
 import { StatPayload } from "../../assets/stats";
 import { getActiveAugmentSlots } from "../../utility";
 import { getUnitStatPayload, Unit } from "../../assets/units";

@@ -21,44 +21,9 @@ import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
-import StatsList from "../../components/StatsList";
-import { Stat } from "../../assets/stats";
-import { getActiveAugmentSlots, tallyStats } from "../../utility";
-// let stats: Stat[] = [];
-// let conditions: string[] = [];
-
-// for (const payload of props.payloads) {
-//   let template = getStatTemplate();
-
-//   for (const stat of payload.stats) {
-//     template = addStatToTemplate(stat, template);
-//   }
-
-//   for (const con of payload.conditionals) {
-//     conditions.push(con.condition);
-//     for (const stat of con.stats) {
-//       template = addStatToTemplate(stat, template);
-//     }
-//   }
-
-//   const add_stat_types = getAddStatTypes();
-//   let payload_stats: Stat[] = [];
-//   for (const key of Object.keys(template)) {
-//     const _key = key as StatTypes;
-//     const amount = template[_key];
-//     if (
-//       (add_stat_types.includes(_key) && amount === 0) ||
-//       amount === 1
-//     ) {
-//       continue;
-//     }
-//     payload_stats.push(
-//       makeStat(key as StatTypes, template[key as StatTypes]!),
-//     );
-//   }
-//   stats.push(...payload_stats);
-// }
-// const tallied = tallyStats(stats);
+import StatsList from "../../components/StatList/StatList";
+import { StatPayload } from "../../assets/stats";
+import { getActiveAugmentSlots } from "../../utility";
 
 interface WeaponFormProps {
   isRealistic: boolean;
@@ -75,6 +40,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
       enhancement: init_enhacement,
       augments: init_augments,
     } = props.getInitValue();
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [weapon, setWeapon] = useState(init_weapon);
     const [potLevel, setPotLevel] = useState(init_pot_level);
@@ -94,29 +60,29 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    // FIXME: You should not be able to select a fixa
-    // when the weapon slot is empty.
-    const disabled = weapon === null && props.isRealistic;
-    const active_slots = props.isRealistic
-      ? getActiveAugmentSlots(enhancement)
-      : getActiveAugmentSlots(ENHANCEMENT_MAX);
+    const weaponIsNull = weapon === null;
+    const active_slots = getActiveAugmentSlots(
+      props.isRealistic ? enhancement : ENHANCEMENT_MAX,
+    );
 
-    // TODO: Fix these
-    let stats: Stat[] = [];
-    if (weapon !== null) {
-      stats.push(
-        ...getWeaponStatPayload(weapon, enhancement, potLevel).stats,
+    let payload: StatPayload[] = [];
+    /**
+     * Don't include fixa stats when weapon is empty
+     */
+    if (!weaponIsNull) {
+      payload.push(
+        getWeaponStatPayload(weapon, enhancement, potLevel),
       );
       if (fixa !== null) {
-        stats.push(...fixa.payload.stats);
+        payload.push(fixa.payload);
       }
-      augments.forEach((augment, i) => {
-        if (augment !== null && i < active_slots) {
-          stats.push(...augment.payload.stats);
-        }
-      });
     }
-    const tallied = tallyStats(stats);
+    for (let i = 0; i < active_slots; i++) {
+      const augment = augments[i];
+      if (augment !== null) {
+        payload.push(augment.payload);
+      }
+    }
 
     return (
       <Fragment>
@@ -144,14 +110,14 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               }
               potentialSlot={
                 <PotentialSelect
-                  isDisabled={disabled}
+                  isDisabled={weaponIsNull}
                   value={potLevel}
                   onChange={setPotLevel}
                 />
               }
               enhancementSlot={
                 <EnhancementSelect
-                  isDisabled={disabled}
+                  isDisabled={weaponIsNull}
                   value={enhancement}
                   onChange={setEnhancement}
                 />
@@ -159,14 +125,14 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               fixaSlot={
                 <FixaSearch
                   mode="weapon"
-                  isDisabled={disabled}
+                  isDisabled={weaponIsNull}
                   value={fixa}
                   onChange={setFixa}
                 />
               }
               augmentsSlot={
                 <AugmentGroup
-                  disabled={disabled}
+                  disabled={weaponIsNull && props.isRealistic}
                   activeSlots={active_slots}
                   getInitValues={() => augments}
                   onChange={setAugments}
@@ -200,7 +166,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <StatsList stats={tallied} />
+            <StatsList payload={payload} />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>close</Button>

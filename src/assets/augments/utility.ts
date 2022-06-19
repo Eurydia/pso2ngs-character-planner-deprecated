@@ -1,5 +1,4 @@
 import AUGMENTS from ".";
-import { ENHANCEMENT_MAX } from "../../stores";
 import { typeguardAugmentDataSignature } from "./typeguard";
 import { AugmentData, AugmentDataSignature } from "./types";
 

@@ -19,12 +19,11 @@ import {
   ClassData,
   getCharacterStatPayload,
 } from "../../assets/character";
-import StatsList from "../../components/StatsList";
+import StatsList from "../../components/StatList/StatList";
 import ClassSearch from "./components/ClassSearch";
 import CharLevelSelect from "./components/CharLevelSelect";
 import SPSelect from "./components/SPselect";
 import ClassEditLayout from "./layout/ClassEditLayout";
-import { tallyStats } from "../../utility";
 
 interface CharacterFormProps {
   getInitValue: () => Character;
@@ -83,16 +82,15 @@ const CharacterForm: FC<CharacterFormProps> = memo(
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    const stats_as_template = tallyStats(
+    const payload = [
       getCharacterStatPayload({
         level,
         main_class: mainClass,
         main_sp: mainSP,
         sub_class: subClass,
         sub_sp: subSP,
-      }).stats,
-    );
-
+      }),
+    ];
     return (
       <Fragment>
         <Card variant="outlined">
@@ -174,7 +172,7 @@ const CharacterForm: FC<CharacterFormProps> = memo(
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <StatsList stats={stats_as_template} />
+            <StatsList payload={payload} />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>close</Button>
