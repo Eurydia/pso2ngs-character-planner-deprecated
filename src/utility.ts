@@ -108,7 +108,9 @@ export const tallyStats = (stats: Stat[]): StatTemplate => {
 
   const atk = template[StatTypes.ATK];
   const floor_pot = template[StatTypes.FLOOR_POT];
-  template[StatTypes.BP] += Math.round((atk * (2 - floor_pot)) / 2);
+  template[StatTypes.BP] += Math.round(
+    (atk * (1 + (floor_pot - 1))) / 2,
+  );
 
   const def = template[StatTypes.DEF];
   template[StatTypes.BP] += Math.round(def / 2);

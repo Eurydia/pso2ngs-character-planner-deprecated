@@ -1,5 +1,10 @@
 import { FC, memo, ReactNode } from "react";
-import { Grid, Typography, Box, SxProps } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Box,
+  TypographyProps,
+} from "@mui/material";
 import {
   FoodItem,
   FoodAttribute,
@@ -93,7 +98,7 @@ interface BuffListRowProps {
   parsedAmountSlot: ReactNode;
 }
 const BuffListRow: FC<BuffListRowProps> = (props) => {
-  const typography_sx: SxProps = {
+  const typo_sx: TypographyProps = {
     fontWeight: props.bold ? "500" : undefined,
   };
   return (
@@ -107,20 +112,18 @@ const BuffListRow: FC<BuffListRowProps> = (props) => {
       }}
     >
       <Grid item xs={3}>
-        <Typography sx={typography_sx}>
+        <Typography {...typo_sx}>
           {props.itemUsedAmountSlot}
         </Typography>
       </Grid>
       <Grid item xs={3}>
-        <Typography sx={typography_sx}>{props.originSlot}</Typography>
+        <Typography {...typo_sx}>{props.originSlot}</Typography>
       </Grid>
       <Grid item xs>
-        <Typography sx={typography_sx}>{props.nameSlot}</Typography>
+        <Typography {...typo_sx}>{props.nameSlot}</Typography>
       </Grid>
       <Grid item xs={2} display="flex" justifyContent="flex-end">
-        <Typography sx={typography_sx}>
-          {props.parsedAmountSlot}
-        </Typography>
+        <Typography {...typo_sx}>{props.parsedAmountSlot}</Typography>
       </Grid>
     </Grid>
   );
@@ -136,7 +139,7 @@ const BuffList: FC<BuffListProps> = memo(
       <Box>
         <BuffListRow
           bold
-          backgroundColor={grey[200]}
+          backgroundColor={grey[300]}
           itemUsedAmountSlot="# of items"
           originSlot="origin"
           nameSlot="effect"

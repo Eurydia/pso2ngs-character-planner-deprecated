@@ -1,6 +1,15 @@
 import { FC } from "react";
-import { Box, Divider, Grid, Typography } from "@mui/material";
-import { StatTypes } from "../assets/stats";
+import {
+  Box,
+  Grid,
+  Typography,
+  TypographyProps,
+} from "@mui/material";
+import {
+  isStatAddType,
+  StatTemplate,
+  StatTypes,
+} from "../assets/stats";
 import { parseNumberToDisplay } from "../utility";
 import mel_pot_icon from "../assets/images/stats/mel-pot-icon.png";
 import rng_pot_icon from "../assets/images/stats/rng-pot-icon.png";
@@ -12,20 +21,33 @@ import blind_ail_icon from "../assets/images/stats/blind-ail-icon.png";
 import panic_ail_icon from "../assets/images/stats/panic-ail-icon.png";
 import poison_ail_icon from "../assets/images/stats/poison-ail-icon.png";
 import phydown_ail_icon from "../assets/images/stats/phydown-ail-icon.png";
+import { grey } from "@mui/material/colors";
 
 interface StatItemProps {
-  name: string;
-  amount: string | number;
+  bold?: boolean;
   iconSrc?: string;
+  backgroundColor?: string;
+  nameSlot: string;
+  amountSlot: string | number;
 }
 const StatItem: FC<StatItemProps> = (props) => {
+  const typo_sx: TypographyProps = {
+    fontWeight: props.bold ? "500" : undefined,
+  };
   return (
-    <Grid container alignItems="flex-end" textTransform="capitalize">
+    <Grid
+      container
+      paddingX={2}
+      paddingY={1}
+      alignItems="flex-end"
+      textTransform="capitalize"
+      sx={{ backgroundColor: props.backgroundColor }}
+    >
       <Grid item md={1}>
         {props.iconSrc && (
           <img
             src={props.iconSrc}
-            alt={`icon for ${props.name}.`}
+            alt={`icon for ${props.nameSlot}.`}
             width={20}
             height={20}
           />
@@ -33,10 +55,10 @@ const StatItem: FC<StatItemProps> = (props) => {
       </Grid>
       <Grid container item md alignItems="flex-end">
         <Grid item md={8}>
-          <Typography>{`${props.name}:`}</Typography>
+          <Typography {...typo_sx}>{props.nameSlot}</Typography>
         </Grid>
         <Grid item md={4}>
-          <Typography>{props.amount}</Typography>
+          <Typography {...typo_sx}>{props.amountSlot}</Typography>
         </Grid>
       </Grid>
     </Grid>
@@ -45,205 +67,79 @@ const StatItem: FC<StatItemProps> = (props) => {
 
 type StatsListProps = {
   // [key in StatTypes]: string | number;
+  stats: StatTemplate;
 };
 const StatsList: FC<StatsListProps> = (props) => {
+  const icon_lookup: Partial<{ [key in StatTypes]: string }> = {
+    [StatTypes.MEL_POT]: mel_pot_icon,
+    [StatTypes.RNG_POT]: rng_pot_icon,
+    [StatTypes.TEC_POT]: tec_pot_icon,
+    [StatTypes.BURN_RESIST]: burn_ail_icon,
+    [StatTypes.FREEZE_RESIST]: freeze_ail_icon,
+    [StatTypes.SHOCK_RESIST]: shock_ail_icon,
+    [StatTypes.BLIND_RESIST]: blind_ail_icon,
+    [StatTypes.PANIC_RESIST]: panic_ail_icon,
+    [StatTypes.POISON_RESIST]: poison_ail_icon,
+    [StatTypes.PHYDOWN_RESIST]: phydown_ail_icon,
+  };
+  // const basic_stats: StatTypes[] = [
+  //   StatTypes.BP,
+  //   StatTypes.HP,
+  //   StatTypes.PP,
+  //   StatTypes.ATK,
+  //   StatTypes.DEF,
+  //   StatTypes.MEL_POT,
+  //   StatTypes.RNG_POT,
+  //   StatTypes.TEC_POT,
+  //   StatTypes.FLOOR_POT,
+  //   StatTypes.BURN_RESIST,
+  //   StatTypes.FREEZE_RESIST,
+  //   StatTypes.SHOCK_RESIST,
+  //   StatTypes.BLIND_RESIST,
+  //   StatTypes.PANIC_RESIST,
+  //   StatTypes.POISON_RESIST,
+  //   StatTypes.PHYDOWN_RESIST,
+  // ];
+
+  // let basic_stat_elements: JSX.Element[] = [];
+  // for (let i = 0; i < basic_stats.length; i++) {
+  //   const stat = basic_stats[i];
+  //   const value = props.stats[stat];
+  //   basic_stat_elements.push(
+  //     <StatItem
+  //       key={stat}
+  //       iconSrc={icon_lookup[stat]}
+  //       backgroundColor={i % 2 === 1 ? grey[100] : undefined}
+  //       nameSlot={stat}
+  //       amountSlot={parseNumberToDisplay(value, isStatAddType(stat))}
+  //     />,
+  //   );
+  // }
+
   return (
     <Box>
-      <Grid container spacing={2} textTransform="capitalize">
-        <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.BP}
-              amount={parseNumberToDisplay(0, true)}
-            />
-          </Grid>
-          <Grid item md={6} />
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.HP}
-              amount={parseNumberToDisplay(0, true)}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.PP}
-              amount={parseNumberToDisplay(0, true)}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.ATK}
-              amount={parseNumberToDisplay(0, true)}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.DEF}
-              amount={parseNumberToDisplay(0, true)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item md={12}>
-          <Divider flexItem />
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.MEL_POT}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={mel_pot_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.RNG_POT}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={rng_pot_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.TEC_POT}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={tec_pot_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.FLOOR_POT}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item md={12}>
-          <Divider flexItem />
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.BURN_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={burn_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.FREEZE_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={freeze_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.SHOCK_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={shock_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.BLIND_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={blind_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.PANIC_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={panic_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.POISON_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={poison_ail_icon}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.PHYDOWN_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-              iconSrc={phydown_ail_icon}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-
-      {/* <Grid item md={12}>
-          <Divider flexItem textAlign="center">
-            <Typography>advanced stats</Typography>
-          </Divider>
-        </Grid> */}
-      {/* <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.PB_GAUGE_CHARGE_RATE}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-          <Grid item md={6} />
-        </Grid>
-        <Grid item md={12}>
-          <Divider flexItem />
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.DMG_BOOST}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.DMG_RESIST}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item md={12}>
-          <Divider flexItem />
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.CRIT_CHANCE}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <StatItem
-              name={StatTypes.CRIT_DMG}
-              amount={parseNumberToDisplay(1, false)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item md={6}>
+      <StatItem
+        bold
+        backgroundColor={grey["300"]}
+        nameSlot="Stat"
+        amountSlot="Amount"
+      />
+      {Object.keys(props.stats).map((key, index) => {
+        const _key = key as StatTypes;
+        const value = props.stats[_key];
+        return (
           <StatItem
-            name={StatTypes.PP_COST}
-            amount={parseNumberToDisplay(1, false)}
+            key={_key}
+            iconSrc={icon_lookup[_key]}
+            backgroundColor={index % 2 === 1 ? grey[100] : undefined}
+            nameSlot={_key}
+            amountSlot={parseNumberToDisplay(
+              value,
+              isStatAddType(_key),
+            )}
           />
-        </Grid>
-        <Grid item md={6} />
-        <Grid item md={6}>
-          <StatItem
-            name={StatTypes.NATURAL_PP_RECOVERY}
-            amount={parseNumberToDisplay(1, false)}
-          />
-        </Grid>
-        <Grid item md={6}>
-          <StatItem
-            name={StatTypes.ACTIVE_PP_RECOVERY}
-            amount={parseNumberToDisplay(1, false)}
-          />
-        </Grid>
-      <Grid item md={6}>
-        <StatItem
-          name={StatTypes.AILMENT_DURATION}
-          amount={parseNumberToDisplay(1, false)}
-        />
-      </Grid> */}
+        );
+      })}
     </Box>
   );
 };

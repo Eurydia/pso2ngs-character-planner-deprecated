@@ -7,9 +7,9 @@ export enum StatTypes {
 
   HP_RECOVERY_BOOST = "HP recovery boost",
 
+  PP_COST = "PP cost",
   ACTIVE_PP_RECOVERY = "active PP recovery",
   NATURAL_PP_RECOVERY = "natural PP recovery",
-  PP_COST = "PP cost",
 
   PB_GAUGE_CHARGE_RATE = "PB gauge charge rate",
 

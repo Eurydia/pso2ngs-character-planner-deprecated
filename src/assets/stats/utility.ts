@@ -33,6 +33,10 @@ export const expandShorthand = (
     [StatShorthands.PP_RECOVERY]: expandPPGain,
   };
 
+  if (lookup[shorthand] === undefined) {
+    return [];
+  }
+
   return lookup[shorthand]();
 };
 
@@ -48,7 +52,6 @@ export const getStatTemplate = (): StatTemplate => {
     [StatTypes.RNG_POT]: 1,
     [StatTypes.TEC_POT]: 1,
     [StatTypes.FLOOR_POT]: 1,
-    [StatTypes.DMG_RESIST]: 1,
     [StatTypes.BURN_RESIST]: 1,
     [StatTypes.FREEZE_RESIST]: 1,
     [StatTypes.SHOCK_RESIST]: 1,
@@ -59,14 +62,15 @@ export const getStatTemplate = (): StatTemplate => {
 
     // indepth stats
     [StatTypes.HP_RECOVERY_BOOST]: 1,
+    [StatTypes.PP_COST]: 1,
     [StatTypes.ACTIVE_PP_RECOVERY]: 1,
     [StatTypes.NATURAL_PP_RECOVERY]: 1,
-    [StatTypes.PP_COST]: 1,
-    [StatTypes.PB_GAUGE_CHARGE_RATE]: 1,
+    [StatTypes.DMG_RESIST]: 1,
     [StatTypes.DMG_BOOST]: 1,
     [StatTypes.CRIT_CHANCE]: 1,
     [StatTypes.CRIT_DMG]: 1,
     [StatTypes.AILMENT_DURATION]: 1,
+    [StatTypes.PB_GAUGE_CHARGE_RATE]: 1,
   };
 };
 

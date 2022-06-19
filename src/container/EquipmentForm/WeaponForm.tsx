@@ -1,9 +1,20 @@
-import { FC, memo, useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { FC, Fragment, memo, useEffect, useState } from "react";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
 import { ENHANCEMENT_MAX } from "../../stores";
 import { getWeaponStatPayload, Weapon } from "../../assets/weapons";
-import CustomCard from "../../components/CustomCard";
 import AugmentGroup from "./components/AugmentGroup";
 import WeaponSearch from "./components/WeaponSearch";
 import FixaSearch from "./components/FixaSearch";
@@ -11,8 +22,8 @@ import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
 import StatsList from "../../components/StatsList";
-import { StatPayload } from "../../assets/stats";
-import { getActiveAugmentSlots } from "../../utility";
+import { Stat } from "../../assets/stats";
+import { getActiveAugmentSlots, tallyStats } from "../../utility";
 // let stats: Stat[] = [];
 // let conditions: string[] = [];
 
@@ -64,7 +75,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
       enhancement: init_enhacement,
       augments: init_augments,
     } = props.getInitValue();
-
+    const [dialogOpen, setDialogOpen] = useState(false);
     const [weapon, setWeapon] = useState(init_weapon);
     const [potLevel, setPotLevel] = useState(init_pot_level);
     const [enhancement, setEnhancement] = useState(init_enhacement);
@@ -79,6 +90,10 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         augments,
       });
     }, [weapon, potLevel, enhancement, fixa, augments, props]);
+
+    const openDialog = () => setDialogOpen(true);
+    const closeDialog = () => setDialogOpen(false);
+
     // FIXME: You should not be able to select a fixa
     // when the weapon slot is empty.
     const disabled = weapon === null && props.isRealistic;
@@ -87,78 +102,111 @@ const WeaponForm: FC<WeaponFormProps> = memo(
       : getActiveAugmentSlots(ENHANCEMENT_MAX);
 
     // TODO: Fix these
-    let payload: StatPayload[] = [];
-    if (!disabled) {
-      if (weapon !== null) {
-        payload.push(
-          getWeaponStatPayload(weapon, enhancement, potLevel),
-        );
-      }
+    let stats: Stat[] = [];
+    if (weapon !== null) {
+      stats.push(
+        ...getWeaponStatPayload(weapon, enhancement, potLevel).stats,
+      );
       if (fixa !== null) {
-        payload.push(fixa.payload);
+        stats.push(...fixa.payload.stats);
       }
       augments.forEach((augment, i) => {
         if (augment !== null && i < active_slots) {
-          payload.push(augment.payload);
+          stats.push(...augment.payload.stats);
         }
       });
     }
+    const tallied = tallyStats(stats);
 
     return (
-      <CustomCard
-        frontTitle="Weapon"
-        frontTitleIcon={<Carpenter />}
-        frontContent={
-          <EquipmentFormLayout
-            equipmentSlot={
-              <WeaponSearch
-                isRealistic={props.isRealistic}
-                charLevel={props.charLevel}
-                enhancement={enhancement}
-                value={weapon}
-                onChange={setWeapon}
-              />
-            }
-            potentialSlot={
-              <PotentialSelect
-                isDisabled={disabled}
-                value={potLevel}
-                onChange={setPotLevel}
-              />
-            }
-            enhancementSlot={
-              <EnhancementSelect
-                isDisabled={disabled}
-                value={enhancement}
-                onChange={setEnhancement}
-              />
-            }
-            fixaSlot={
-              <FixaSearch
-                mode="weapon"
-                isDisabled={disabled}
-                value={fixa}
-                onChange={setFixa}
-              />
-            }
-            augmentsSlot={
-              <AugmentGroup
-                disabled={disabled}
-                activeSlots={active_slots}
-                getInitValues={() => augments}
-                onChange={setAugments}
-              />
+      <Fragment>
+        <Card variant="outlined">
+          <CardHeader
+            title={
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Carpenter color="primary" />
+                <Typography variant="h6" color="primary">
+                  Weapon
+                </Typography>
+              </Stack>
             }
           />
-        }
-        backTitle="Stats"
-        backTitleIcon={<AutoAwesome />}
-        backContent={
-          <Box sx={{ height: 400 }}>
-            {/* <StatsList payloads={payload} /> */}
-          </Box>
-        }
-      />
+          <CardContent>
+            <EquipmentFormLayout
+              equipmentSlot={
+                <WeaponSearch
+                  isRealistic={props.isRealistic}
+                  charLevel={props.charLevel}
+                  enhancement={enhancement}
+                  value={weapon}
+                  onChange={setWeapon}
+                />
+              }
+              potentialSlot={
+                <PotentialSelect
+                  isDisabled={disabled}
+                  value={potLevel}
+                  onChange={setPotLevel}
+                />
+              }
+              enhancementSlot={
+                <EnhancementSelect
+                  isDisabled={disabled}
+                  value={enhancement}
+                  onChange={setEnhancement}
+                />
+              }
+              fixaSlot={
+                <FixaSearch
+                  mode="weapon"
+                  isDisabled={disabled}
+                  value={fixa}
+                  onChange={setFixa}
+                />
+              }
+              augmentsSlot={
+                <AugmentGroup
+                  disabled={disabled}
+                  activeSlots={active_slots}
+                  getInitValues={() => augments}
+                  onChange={setAugments}
+                />
+              }
+            />
+          </CardContent>
+          <CardActions>
+            <Button
+              onClick={openDialog}
+              variant="contained"
+              startIcon={<AutoAwesome />}
+            >
+              view stats
+            </Button>
+          </CardActions>
+        </Card>
+        <Dialog
+          open={dialogOpen}
+          onClose={closeDialog}
+          fullWidth
+          maxWidth="sm"
+          scroll="body"
+        >
+          <DialogTitle>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <AutoAwesome color="primary" />
+              <Typography variant="h6" color="primary">
+                Weapon Stats
+              </Typography>
+            </Stack>
+          </DialogTitle>
+          <DialogContent>
+            <StatsList stats={tallied} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeDialog}>close</Button>
+          </DialogActions>
+        </Dialog>
+      </Fragment>
     );
   },
   (prev, next) => {
