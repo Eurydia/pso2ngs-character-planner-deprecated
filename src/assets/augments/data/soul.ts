@@ -20,14 +20,13 @@ let augments: AugmentData[] = [];
   const hp = [5, 10, 15];
   const dmg_res = [1.01, 1.02, 1.025];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.HP, hp[i]),
-      makeStat(StatTypes.DMG_RESIST, dmg_res[i]),
+      makeStat(StatTypes.HP, hp[level_index]),
+      makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-
     augments.push(
       makeAugmentData("alts soul", level, GROUP, CONFLICT, stats),
     );
@@ -41,12 +40,12 @@ let augments: AugmentData[] = [];
   const pp = [5, 5, 5];
   const floor_pot = [1.01, 1.02, 1.025];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.PP, pp[i]),
-      makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
+      makeStat(StatTypes.PP, pp[level_index]),
+      makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
     ];
     augments.push(
       makeAugmentData("dolz soul", level, GROUP, CONFLICT, stats),
@@ -63,15 +62,14 @@ let augments: AugmentData[] = [];
   const dmg_res = [1, 1.02, 1.025];
 
   const names = ["forms", "forms machini", "forms sand"];
-  names.forEach((name, i) => {
-    bps.forEach((bp, j) => {
-      const level = j + 1;
+  names.forEach((name, pot_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = level_index + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(pot_type[i], pot[j]),
-        makeStat(StatTypes.DMG_RESIST, dmg_res[j]),
+        makeStat(pot_type[pot_type_index], pot[level_index]),
+        makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
       ];
-
       augments.push(
         makeAugmentData(
           `${name} soul`,
@@ -94,15 +92,14 @@ let augments: AugmentData[] = [];
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["daityl", "pettas", "nex"];
-  names.forEach((name, i) => {
-    bps.forEach((bp, j) => {
-      const level = j + 1;
+  names.forEach((name, pot_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = level_index + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(StatTypes.PP, pp[j]),
-        makeStat(pot_type[i], pot[j]),
+        makeStat(StatTypes.PP, pp[level_index]),
+        makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-
       augments.push(
         makeAugmentData(
           `${name} soul`,
@@ -125,15 +122,14 @@ let augments: AugmentData[] = [];
   const pot = [1.01, 1.02, 1.025];
 
   const names = ["dust", "ragras", "renus"];
-  names.forEach((name, i) => {
-    bps.forEach((bp, j) => {
-      const level = j + 1;
+  names.forEach((name, pot_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = level_index + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(StatTypes.HP, hp[j]),
-        makeStat(pot_type[i], pot[j]),
+        makeStat(StatTypes.HP, hp[level_index]),
+        makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-
       augments.push(
         makeAugmentData(
           `${name} soul`,
@@ -155,13 +151,13 @@ let augments: AugmentData[] = [];
   const pp = [4, 4, 4];
   const pot = [1.01, 1.015, 1.02];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.HP, hp[i]),
-      makeStat(StatTypes.PP, pp[i]),
-      makeStat(StatShorthands.POT, pot[i]),
+      makeStat(StatTypes.HP, hp[level_index]),
+      makeStat(StatTypes.PP, pp[level_index]),
+      makeStat(StatShorthands.POT, pot[level_index]),
     ];
     augments.push(
       makeAugmentData("eradi soul", level, GROUP, CONFLICT, stats),

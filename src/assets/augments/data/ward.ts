@@ -16,6 +16,10 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // ward
 (() => {
+  const bps = [4, 5, 6];
+  const ail_type = expandAilmentRes();
+  const ail_res = [1.2, 1.25, 1.3];
+
   const names = [
     "burn",
     "freeze",
@@ -25,19 +29,13 @@ let augments: AugmentData[] = [];
     "poison",
     "pain",
   ];
-
-  const bp = [4, 5, 6];
-  const ailement_type = expandAilmentRes();
-  const ailment_res = [1.2, 1.25, 1.3];
-
-  names.forEach((name, i) => {
-    for (let i = 0; i < 3; i++) {
-      const level = i + 1;
+  names.forEach((name, ail_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = ail_type_index + 1;
       const stats = [
-        makeStat(StatTypes.BP, bp[i]),
-        makeStat(ailement_type[i], ailment_res[i]),
+        makeStat(StatTypes.BP, bp),
+        makeStat(ail_type[ail_type_index], ail_res[level_index]),
       ];
-
       augments.push(
         makeAugmentData(
           `${name} ward`,
@@ -47,7 +45,7 @@ let augments: AugmentData[] = [];
           stats,
         ),
       );
-    }
+    });
   });
 })();
 
@@ -57,13 +55,12 @@ let augments: AugmentData[] = [];
   const bps = [6, 8, 10];
   const ailemnt_res = [1.2, 1.25, 1.3];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatShorthands.AILMENT_RES, ailemnt_res[i]),
+      makeStat(StatShorthands.AILMENT_RES, ailemnt_res[level_index]),
     ];
-
     augments.push(
       makeAugmentData(
         "sovereign ward",

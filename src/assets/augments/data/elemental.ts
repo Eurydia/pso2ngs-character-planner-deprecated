@@ -23,7 +23,6 @@ let augments: AugmentData[] = [];
     "wind",
     "dark",
   ];
-
   elements.forEach((element) => {
     augments.push(
       makeAugmentData(

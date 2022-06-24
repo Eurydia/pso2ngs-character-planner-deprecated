@@ -14,31 +14,16 @@ let augments: AugmentData[] = [];
   const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.MEL_POT, pot[i]),
-      makeStat(StatTypes.RNG_POT, pot[i]),
+      makeStat(StatTypes.MEL_POT, pot[level_index]),
+      makeStat(StatTypes.RNG_POT, pot[level_index]),
     ];
-    // generic
     augments.push(
       makeAugmentData("melra dualble", level, GROUP, CONFLICT, stats),
     );
-    // // s type
-    // if (level === 3) {
-    //   augments.push(
-    //     makeAugmentData(
-    //       "melra dualble",
-    //       level,
-    //       AugmentGroups.S,
-    //       [AugmentGroups.S],
-    //       stats,
-    //       [],
-    //       true,
-    //     ),
-    //   );
-    // }
   });
 })();
 
@@ -48,14 +33,13 @@ let augments: AugmentData[] = [];
   const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.MEL_POT, pot[i]),
-      makeStat(StatTypes.TEC_POT, pot[i]),
+      makeStat(StatTypes.MEL_POT, pot[level_index]),
+      makeStat(StatTypes.TEC_POT, pot[level_index]),
     ];
-    // generic
     augments.push(
       makeAugmentData(
         "meltech dualble",
@@ -65,20 +49,6 @@ let augments: AugmentData[] = [];
         stats,
       ),
     );
-    // // s type
-    // if (level === 3) {
-    //   augments.push(
-    //     makeAugmentData(
-    //       "meltech dualble",
-    //       level,
-    //       AugmentGroups.S,
-    //       [AugmentGroups.S],
-    //       stats,
-    //       [],
-    //       true,
-    //     ),
-    //   );
-    // }
   });
 })();
 
@@ -88,14 +58,13 @@ let augments: AugmentData[] = [];
   const bps = [4, 5, 6];
   const pot = [1.0075, 1.0125, 1.0175];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.RNG_POT, pot[i]),
-      makeStat(StatTypes.TEC_POT, pot[i]),
+      makeStat(StatTypes.RNG_POT, pot[level_index]),
+      makeStat(StatTypes.TEC_POT, pot[level_index]),
     ];
-    // generic
     augments.push(
       makeAugmentData(
         "ratech dualble",
@@ -105,20 +74,6 @@ let augments: AugmentData[] = [];
         stats,
       ),
     );
-    // // s type
-    // if (level === 3) {
-    //   augments.push(
-    //     makeAugmentData(
-    //       "ratech dualble",
-    //       level,
-    //       AugmentGroups.S,
-    //       [AugmentGroups.S],
-    //       stats,
-    //       [],
-    //       true,
-    //     ),
-    //   );
-    // }
   });
 })();
 

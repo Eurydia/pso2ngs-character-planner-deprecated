@@ -11,21 +11,20 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 // might | precicion | technique
 (() => {
-  const names = ["might", "precision", "technique"];
-
   const bps = [6, 8, 10];
   const hp = [5, 10, 15];
   const pot_type = expandPot();
   const pot = [1.015, 1.02, 1.025];
-  names.forEach((name, i) => {
-    bps.forEach((bp, j) => {
-      const level = j + 1;
+
+  const names = ["might", "precision", "technique"];
+  names.forEach((name, pot_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = level_index + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
-        makeStat(StatTypes.HP, hp[j]),
-        makeStat(pot_type[i], pot[j]),
+        makeStat(StatTypes.HP, hp[level_index]),
+        makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-
       augments.push(
         makeAugmentData(
           `gigas ${name}`,

@@ -32,7 +32,6 @@ augments.push(
     makeStat(StatTypes.RNG_POT, 1.01),
   ]),
 );
-
 // c
 augments.push(
   makeAugmentData("ael note c", 0, GROUP, CONFLICT, [
@@ -41,7 +40,6 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.0075),
   ]),
 );
-
 // d
 augments.push(
   makeAugmentData("ael note d", 0, GROUP, CONFLICT, [
@@ -77,7 +75,6 @@ augments.push(
     makeStat(StatTypes.HP, 10),
   ]),
 );
-
 // b
 augments.push(
   makeAugmentData("ret note b", 0, GROUP, CONFLICT, [
@@ -86,7 +83,6 @@ augments.push(
     makeStat(StatTypes.RNG_POT, 1.0075),
   ]),
 );
-
 // c
 augments.push(
   makeAugmentData("ret note c", 0, GROUP, CONFLICT, [
@@ -95,7 +91,6 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.0075),
   ]),
 );
-
 // d
 augments.push(
   makeAugmentData("ret note d", 0, GROUP, CONFLICT, [
@@ -114,7 +109,6 @@ augments.push(
     makeStat(StatTypes.FLOOR_POT, 1.02),
   ]),
 );
-
 // maqea
 augments.push(
   makeAugmentData(`maqea note`, 0, GROUP, CONFLICT, [

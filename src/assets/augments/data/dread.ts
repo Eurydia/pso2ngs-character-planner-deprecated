@@ -17,14 +17,14 @@ let augments: AugmentData[] = [];
   const floor_pot = [1.01, 1.015, 1.02];
   const dmg_res = [1.01, 1.015, 1.02];
 
-  bps.forEach((bp, i) => {
-    const level = i + 1;
+  bps.forEach((bp, level_index) => {
+    const level = level_index + 1;
     const stats = [
       makeStat(StatTypes.BP, bp),
-      makeStat(StatTypes.HP, hp[i]),
-      makeStat(StatTypes.PP, pp[i]),
-      makeStat(StatTypes.FLOOR_POT, floor_pot[i]),
-      makeStat(StatTypes.DMG_RESIST, dmg_res[i]),
+      makeStat(StatTypes.HP, hp[level_index]),
+      makeStat(StatTypes.PP, pp[level_index]),
+      makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
+      makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
     augments.push(
       makeAugmentData("dread keeper", level, GROUP, CONFLICT, stats),

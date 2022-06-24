@@ -13,8 +13,8 @@ let augments: AugmentData[] = [];
   const pot_type = expandPot();
 
   const names = ["mel", "ra", "tech"];
-  names.forEach((name, i) => {
-    const pot = makeStat(pot_type[i], 1.0225);
+  names.forEach((name, pot_type_index) => {
+    const pot = makeStat(pot_type[pot_type_index], 1.0225);
 
     // sta
     augments.push(

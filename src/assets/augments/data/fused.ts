@@ -9,11 +9,11 @@ let augments: AugmentData[] = [];
 // --------------------------------------
 
 (() => {
-  const names = ["might", "precision", "technique"];
-
   const pot_type = expandPot();
-  names.forEach((name, i) => {
-    const pot = makeStat(pot_type[i], 1.02);
+
+  const names = ["might", "precision", "technique"];
+  names.forEach((name, pot_type_index) => {
+    const pot = makeStat(pot_type[pot_type_index], 1.02);
 
     // sta
     augments.push(
