@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, memo, ReactNode, useState } from "react";
 import {
   Box,
   Grid,
@@ -31,58 +31,75 @@ import AilPhyDownIcon from "./icons/AilPhyDownIcon";
 import StatBPIcon from "./icons/StatBPIcon";
 
 interface StatItemProps {
+  // static
   bold?: boolean;
+  // dynamic
   icon?: ReactNode;
   backgroundColor?: string;
-  textColor?: string;
   nameSlot: string;
   amountSlot: string | number;
 }
-const StatItem: FC<StatItemProps> = (props) => {
-  const typo_sx: TypographyProps = {
-    color: props.textColor,
-    fontWeight: props.bold ? "500" : undefined,
-  };
-  return (
-    <Grid
-      container
-      paddingX={2}
-      paddingY={1}
-      alignItems="flex-end"
-      textTransform="capitalize"
-      sx={{ backgroundColor: props.backgroundColor }}
-    >
-      <Grid item md={1}>
-        {props.icon}
-      </Grid>
-      <Grid container item md alignItems="flex-end">
-        <Grid item md={8}>
-          <Typography {...typo_sx}>{props.nameSlot}</Typography>
+const StatItem: FC<StatItemProps> = memo(
+  (props) => {
+    const typo_sx: TypographyProps = {
+      fontWeight: props.bold ? "500" : undefined,
+    };
+    return (
+      <Grid
+        container
+        paddingX={2}
+        paddingY={1}
+        alignItems="flex-end"
+        textTransform="capitalize"
+        sx={{ backgroundColor: props.backgroundColor }}
+      >
+        <Grid item md={1}>
+          {props.icon}
         </Grid>
-        <Grid item md={4}>
-          <Typography {...typo_sx}>{props.amountSlot}</Typography>
+        <Grid container item md alignItems="flex-end">
+          <Grid item md={8}>
+            <Typography {...typo_sx}>{props.nameSlot}</Typography>
+          </Grid>
+          <Grid item md={4}>
+            <Typography {...typo_sx}>{props.amountSlot}</Typography>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  );
-};
-
-type StatsListProps = {
-  payload: StatPayload[];
-};
-const StatsList: FC<StatsListProps> = (props) => {
-  const [activeCondition, setActiveCondition] = useState<{
-    [key: string]: boolean;
-  }>(() => {
-    let init: { [key: string]: boolean } = {};
-    for (const payload_data of props.payload) {
-      for (const conditional of payload_data.conditionals) {
-        const condition = conditional.condition;
-        init[condition] = true;
-      }
+    );
+  },
+  (prev, next) => {
+    if (
+      prev.nameSlot !== next.amountSlot ||
+      prev.amountSlot !== next.amountSlot ||
+      prev.backgroundColor !== next.backgroundColor
+    ) {
+      return false;
     }
-    return init;
-  });
+    return true;
+  },
+);
+
+interface StatListProps {
+  payload: StatPayload[];
+}
+/**
+ *
+ * @param props
+ * @returns
+ */
+const StatList: FC<StatListProps> = (props) => {
+  // const [activeCondition, setActiveCondition] = useState<{
+  //   [key: string]: boolean;
+  // }>(() => {
+  //   let init: { [key: string]: boolean } = {};
+  //   for (const payload_data of props.payload) {
+  //     for (const conditional of payload_data.conditionals) {
+  //       const condition = conditional.condition;
+  //       init[condition] = true;
+  //     }
+  //   }
+  //   return init;
+  // });
 
   const icon_lookup: Partial<{ [key in StatTypes]: ReactNode }> = {
     [StatTypes.BP]: <StatBPIcon />,
@@ -101,8 +118,6 @@ const StatsList: FC<StatsListProps> = (props) => {
     [StatTypes.POISON_RESIST]: <AilPoisonIcon />,
     [StatTypes.PHYDOWN_RESIST]: <AilPhyDownIcon />,
   };
-
-  const template = getStatTemplate();
 
   let tallied = getStatTemplate();
   for (const payload_data of props.payload) {
@@ -123,12 +138,13 @@ const StatsList: FC<StatsListProps> = (props) => {
     }
   }
 
+  const default_lookup = getStatTemplate();
   let index = 0;
-  const stat_items: JSX.Element[] = [];
+  let stat_items: JSX.Element[] = [];
   for (const key of Object.keys(tallied)) {
     const _key = key as StatTypes;
     const value = tallied[_key];
-    const default_value = template[_key];
+    const default_value = default_lookup[_key];
 
     if (value === default_value) {
       continue;
@@ -159,4 +175,4 @@ const StatsList: FC<StatsListProps> = (props) => {
   );
 };
 
-export default StatsList;
+export default StatList;

@@ -1,7 +1,7 @@
+import { tallyStats } from "../../utility";
 import {
   makeStat,
   makeStatPayload,
-  Stat,
   StatPayload,
   StatTypes,
 } from "../stats";
@@ -115,18 +115,16 @@ export const getUnitStatPayload = (
     unit.rarity,
     enhancement,
   );
+  const tallied = tallyStats(unit.payload.stats);
+  const bp_from_hp = tallied[StatTypes.HP] / 10;
+  const bp_from_pp = tallied[StatTypes.PP];
+  const bp_from_def = Math.floor(def_amount / 2);
 
-  let bp_amount = Math.floor(def_amount / 2);
-  for (const stat of unit.payload.stats) {
-    if (stat.stat_type === StatTypes.HP) {
-      bp_amount += Math.round(stat.amount / 10);
-    }
-    if (stat.stat_type === StatTypes.PP) {
-      bp_amount += stat.amount;
-    }
-  }
-  const bp = makeStat(StatTypes.BP, bp_amount);
   const def = makeStat(StatTypes.DEF, def_amount);
+  const bp = makeStat(
+    StatTypes.BP,
+    bp_from_hp + bp_from_pp + bp_from_def,
+  );
 
   const stats = [bp, def, ...unit.payload.stats];
   // this is intentional

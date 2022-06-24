@@ -60,6 +60,6 @@ export type StatPayload = Readonly<{
   conditionals: Conditional[];
 }>;
 
-export type StatTemplate = {
+export type StatObject = {
   [key in StatTypes]: number;
 };

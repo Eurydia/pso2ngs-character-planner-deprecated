@@ -6,7 +6,7 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
-import { Character, ClassData } from "./types";
+import { Character } from "./types";
 
 export const getCharHPAmount = (
   base_hp: number,
@@ -39,18 +39,24 @@ export const getCharacterStatPayload = ({
   main_sp,
   sub_sp,
 }: Character): StatPayload => {
-  const bp_amount = (main_sp + sub_sp) * 3;
+  const hp_amount = getCharHPAmount(main_class.base_hp, level);
   const pp_amount = main_class.base_pp;
   const atk_amount = getCharATKAmount(main_class.base_attack, level);
-  const hp_amount = getCharHPAmount(main_class.base_hp, level);
   const def_amount = getCharDEFAmount(main_class.base_defense, level);
 
-  const bp = makeStat(StatTypes.BP, bp_amount);
+  const bp_from_atk = atk_amount;
+  const bp_from_def = Math.floor(def_amount / 2);
+  const bp_from_sp = (main_sp + sub_sp) * 3;
+
   const hp = makeStat(StatTypes.HP, hp_amount);
   const pp = makeStat(StatTypes.PP, pp_amount);
   const atk = makeStat(StatTypes.ATK, atk_amount);
   const def = makeStat(StatTypes.DEF, def_amount);
   const crit_chance = makeStat(StatTypes.CRIT_CHANCE, 1.05);
+  const bp = makeStat(
+    StatTypes.BP,
+    bp_from_atk + bp_from_def + bp_from_sp,
+  );
 
   let stats: Stat[] = [bp, hp, pp, atk, def, crit_chance];
   let conditionals: Conditional[] = [];

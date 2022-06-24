@@ -19,7 +19,7 @@ import {
   ClassData,
   getCharacterStatPayload,
 } from "../../assets/character";
-import StatsList from "../../components/StatList/StatList";
+import StatList from "../../components/StatList/StatList";
 import ClassSearch from "./components/ClassSearch";
 import CharLevelSelect from "./components/CharLevelSelect";
 import SPSelect from "./components/SPselect";
@@ -172,7 +172,7 @@ const CharacterForm: FC<CharacterFormProps> = memo(
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <StatsList payload={payload} />
+            <StatList payload={payload} />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>close</Button>

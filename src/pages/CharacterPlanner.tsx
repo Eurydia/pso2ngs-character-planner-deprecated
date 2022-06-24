@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Grid,
-  Container,
-  Switch,
-  FormControlLabel,
-} from "@mui/material";
+import { Grid, Container } from "@mui/material";
 import {
   FoodItem,
   loadFoodItemsFromLocal,
@@ -15,7 +10,6 @@ import {
   getWeaponTemplate,
   saveWeaponToLocal,
   loadWeaponFromLocal,
-  getWeaponStatPayload,
   getWeaponATKAmount,
 } from "../assets/weapons";
 import {
@@ -23,7 +17,6 @@ import {
   loadUnitFromLocal,
   getUnitTemplate,
   saveUnitToLocal,
-  getUnitStatPayload,
   getUnitDEFAmount,
 } from "../assets/units";
 import {
@@ -38,10 +31,7 @@ import CharacterForm from "../container/CharacterForm/CharacterForm";
 import FoodForm from "../container/FoodForm/FoodForm";
 import WeaponForm from "../container/EquipmentForm/WeaponForm";
 import UnitForm from "../container/EquipmentForm/UnitForm";
-import BPGateVisualizer from "../container/BPGateVisualizer";
-import { tallyStats } from "../utility";
-import { Stat, StatTypes } from "../assets/stats";
-import { AugmentData } from "../assets/augments";
+import { StatTypes } from "../assets/stats";
 
 const getTotalBP = (
   character: Character,
@@ -49,17 +39,6 @@ const getTotalBP = (
   units: Unit[],
   realistic: boolean,
 ): number => {
-  // terms
-
-  // sp used * 3
-  // char atk
-  // weapon pot level * 10
-
-  // pp from equipment
-  // hp from equipment
-  // round((char def / 2) + augment bp)
-  // round(weapon atk * (1 - floor pot) / 2)
-
   const from_sp = (character.sub_sp + character.main_sp) * 3;
 
   const from_char_atk = getCharATKAmount(
@@ -202,14 +181,7 @@ const CharacterPlanner = () => {
         label="is realistic"
       /> */}
       <Grid container spacing={2}>
-        <Grid
-          item
-          md={6}
-          sx={{
-            display: "grid",
-            alignItems: "flex-end",
-          }}
-        >
+        <Grid item md={6} display="flex" alignItems="flex-end">
           <CharacterForm
             getInitValue={loadCharacterFromLocal}
             onChange={setCharacter}
@@ -225,6 +197,7 @@ const CharacterPlanner = () => {
           <WeaponForm
             isRealistic={isRealistic}
             charLevel={char_level}
+            label="Weapon"
             getInitValue={loadWeaponFromLocal}
             onChange={setWeapon}
           />
@@ -233,6 +206,7 @@ const CharacterPlanner = () => {
           <UnitForm
             isRealistic={isRealistic}
             charLevel={char_level}
+            label="Unit #1"
             getInitValue={() => loadUnitFromLocal("unita")}
             onChange={setUnitA}
           />
@@ -241,6 +215,7 @@ const CharacterPlanner = () => {
           <UnitForm
             isRealistic={isRealistic}
             charLevel={char_level}
+            label="Unit #2"
             getInitValue={() => loadUnitFromLocal("unitb")}
             onChange={setUnitB}
           />
@@ -249,6 +224,7 @@ const CharacterPlanner = () => {
           <UnitForm
             isRealistic={isRealistic}
             charLevel={char_level}
+            label="Unit #3"
             getInitValue={() => loadUnitFromLocal("unitc")}
             onChange={setUnitC}
           />

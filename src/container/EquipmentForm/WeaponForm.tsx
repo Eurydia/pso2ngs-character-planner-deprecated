@@ -21,13 +21,14 @@ import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
-import StatsList from "../../components/StatList/StatList";
+import StatList from "../../components/StatList/StatList";
 import { StatPayload } from "../../assets/stats";
 import { getActiveAugmentSlots } from "../../utility";
 
 interface WeaponFormProps {
   isRealistic: boolean;
   charLevel: number;
+  label: string;
   getInitValue: () => Weapon;
   onChange: (value: Weapon) => void;
 }
@@ -60,15 +61,11 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    const weaponIsNull = weapon === null;
-    const active_slots = getActiveAugmentSlots(
-      props.isRealistic ? enhancement : ENHANCEMENT_MAX,
-    );
-
-    let payload: StatPayload[] = [];
     /**
      * Don't include fixa stats when weapon is empty
      */
+    const weaponIsNull = weapon === null;
+    let payload: StatPayload[] = [];
     if (!weaponIsNull) {
       payload.push(
         getWeaponStatPayload(weapon, enhancement, potLevel),
@@ -77,6 +74,9 @@ const WeaponForm: FC<WeaponFormProps> = memo(
         payload.push(fixa.payload);
       }
     }
+    const active_slots = getActiveAugmentSlots(
+      props.isRealistic ? enhancement : ENHANCEMENT_MAX,
+    );
     for (let i = 0; i < active_slots; i++) {
       const augment = augments[i];
       if (augment !== null) {
@@ -92,7 +92,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               <Stack direction="row" spacing={1} alignItems="center">
                 <Carpenter color="primary" />
                 <Typography variant="h6" color="primary">
-                  Weapon
+                  {props.label}
                 </Typography>
               </Stack>
             }
@@ -166,7 +166,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             </Stack>
           </DialogTitle>
           <DialogContent>
-            <StatsList payload={payload} />
+            <StatList payload={payload} />
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDialog}>close</Button>

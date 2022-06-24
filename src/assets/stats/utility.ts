@@ -1,7 +1,7 @@
-import { StatShorthands, StatTemplate, StatTypes } from "./types";
+import { StatShorthands, StatObject, StatTypes } from "./types";
 
 export const expandHPBoost = (): StatTypes[] => {
-  return [StatTypes.HP];
+  return [];
 };
 export const expandPPGain = (): StatTypes[] => {
   return [
@@ -40,7 +40,7 @@ export const expandShorthand = (
   return lookup[shorthand]();
 };
 
-export const getStatTemplate = (): StatTemplate => {
+export const getStatTemplate = (): StatObject => {
   return {
     // basic stats
     [StatTypes.BP]: 0,
@@ -92,6 +92,13 @@ export const isStatAddType = (
   }
 };
 
+/**
+ * Basically checking for the crit chance and harsh envi resist
+ * Stats that are displayed as percentage, but
+ * stacked additively.
+ * @param stat_type
+ * @returns
+ */
 export const isStatSpecialMulType = (
   stat_type: StatTypes | StatShorthands,
 ) => {

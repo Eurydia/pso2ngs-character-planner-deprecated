@@ -4,7 +4,7 @@ import {
   StatShorthands,
   getStatTemplate,
   expandShorthand,
-  StatTemplate,
+  StatObject,
   isStatAddType,
   isStatSpecialMulType,
 } from "./assets/stats";
@@ -66,8 +66,8 @@ export const parseNumberToDisplay = (
 
 export const addStatToTemplate = (
   stat: Stat,
-  template: StatTemplate,
-): StatTemplate => {
+  template: StatObject,
+): StatObject => {
   let _template = { ...template };
 
   const doAdd = (key: StatTypes) => {
@@ -93,7 +93,7 @@ export const addStatToTemplate = (
   return _template;
 };
 
-export const tallyStats = (stats: Stat[]): StatTemplate => {
+export const tallyStats = (stats: Stat[]): StatObject => {
   let hp_boost_percent = 1;
   let template = getStatTemplate();
   for (const stat of stats) {
@@ -106,32 +106,7 @@ export const tallyStats = (stats: Stat[]): StatTemplate => {
 
   template[StatTypes.HP] *= hp_boost_percent;
 
-  const atk = template[StatTypes.ATK];
-  const floor_pot = template[StatTypes.FLOOR_POT];
-  template[StatTypes.BP] += Math.round(
-    (atk * (1 + (floor_pot - 1))) / 2,
-  );
-
-  const def = template[StatTypes.DEF];
-  template[StatTypes.BP] += Math.round(def / 2);
-
   return template;
-  // let tallied: Stat[] = [];
-  // for (const key of Object.keys(template)) {
-  //   const _key = key as StatTypes;
-  //   const amount = template[_key];
-  //   // If the amount is the same as `default` value
-  //   // then don't include it in the result
-  //   if (
-  //     (add_stat_types.includes(_key) && amount === 0) ||
-  //     amount === 1
-  //   ) {
-  //     continue;
-  //   }
-  //   tallied.push(makeStat(_key, amount));
-  // }
-
-  // return tallied;
 };
 
 export const getActiveAugmentSlots = (
