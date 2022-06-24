@@ -64,31 +64,34 @@ export const parseNumberToDisplay = (
   return `${sign}${parsed_value}`;
 };
 
-export const addStatToTemplate = (
+export const addStatToStatObject = (
   stat: Stat,
   template: StatObject,
 ): StatObject => {
-  let _template = { ...template };
-
-  const doAdd = (key: StatTypes) => {
+  const doAdd = (key: StatTypes, _t: StatObject) => {
     if (isStatSpecialMulType(key)) {
-      _template[key] += stat.amount - 1;
-    } else if (isStatAddType(key)) {
-      _template[key] += stat.amount;
+      _t[key] += stat.amount - 1;
     } else {
-      _template[key] *= stat.amount;
+      if (isStatAddType(key)) {
+        _t[key] += stat.amount;
+      } else {
+        _t[key] *= stat.amount;
+      }
     }
   };
   // if `stat_type` is a shorthand,
   // expand them and add them to the template
+  let _template = { ...template };
   if (
     Object.values(StatShorthands).includes(
       stat.stat_type as StatShorthands,
     )
   ) {
-    expandShorthand(stat.stat_type as StatShorthands).forEach(doAdd);
+    expandShorthand(stat.stat_type as StatShorthands).forEach((s) =>
+      doAdd(s, _template),
+    );
   } else {
-    doAdd(stat.stat_type as StatTypes);
+    doAdd(stat.stat_type as StatTypes, _template);
   }
   return _template;
 };
@@ -101,26 +104,11 @@ export const tallyStats = (stats: Stat[]): StatObject => {
       hp_boost_percent *= stat.amount;
       continue;
     }
-    template = addStatToTemplate(stat, template);
+    template = addStatToStatObject(stat, template);
   }
-
   template[StatTypes.HP] *= hp_boost_percent;
 
   return template;
-};
-
-export const getActiveAugmentSlots = (
-  enhancement: number,
-): number => {
-  if (enhancement >= 50) {
-    return 5;
-  } else if (enhancement >= 40) {
-    return 4;
-  } else if (enhancement >= 20) {
-    return 3;
-  } else {
-    return 2;
-  }
 };
 
 export const sortByAlphabet = (a: string, b: string): number => {

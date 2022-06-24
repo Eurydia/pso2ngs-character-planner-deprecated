@@ -77,19 +77,18 @@ export const getStatTemplate = (): StatObject => {
 export const isStatAddType = (
   stat_type: StatTypes | StatShorthands,
 ): boolean => {
-  const lookup = [
+  const lookup = new Set([
     StatTypes.BP,
     StatTypes.HP,
     StatTypes.PP,
     StatTypes.ATK,
     StatTypes.DEF,
-  ];
-  if (Object.keys(StatTypes).includes(stat_type)) {
-    return lookup.includes(stat_type as StatTypes);
-  } else {
+  ]);
+  if (Object.keys(StatShorthands).includes(stat_type)) {
     const expanded = expandShorthand(stat_type as StatShorthands);
-    return lookup.includes(expanded[0]);
+    return lookup.has(expanded[0]);
   }
+  return lookup.has(stat_type as StatTypes);
 };
 
 /**
@@ -102,11 +101,11 @@ export const isStatAddType = (
 export const isStatSpecialMulType = (
   stat_type: StatTypes | StatShorthands,
 ) => {
-  const lookup = [StatTypes.CRIT_CHANCE];
-  if (Object.keys(StatTypes).includes(stat_type)) {
-    return lookup.includes(stat_type as StatTypes);
-  } else {
+  const lookup = new Set([StatTypes.CRIT_CHANCE]);
+
+  if (Object.keys(StatShorthands).includes(stat_type)) {
     const expanded = expandShorthand(stat_type as StatShorthands);
-    return lookup.includes(expanded[0]);
+    return lookup.has(expanded[0]);
   }
+  return lookup.has(stat_type as StatTypes);
 };

@@ -52,13 +52,12 @@ export const getCharacterStatPayload = ({
   const pp = makeStat(StatTypes.PP, pp_amount);
   const atk = makeStat(StatTypes.ATK, atk_amount);
   const def = makeStat(StatTypes.DEF, def_amount);
-  const crit_chance = makeStat(StatTypes.CRIT_CHANCE, 1.05);
   const bp = makeStat(
     StatTypes.BP,
     bp_from_atk + bp_from_def + bp_from_sp,
   );
 
-  let stats: Stat[] = [bp, hp, pp, atk, def, crit_chance];
+  let stats: Stat[] = [bp, hp, pp, atk, def];
   let conditionals: Conditional[] = [];
   return makeStatPayload(stats, conditionals);
 };

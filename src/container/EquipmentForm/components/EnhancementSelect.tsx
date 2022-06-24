@@ -1,6 +1,5 @@
 import { ChangeEvent, FC, memo } from "react";
 import { Paper, TextField } from "@mui/material";
-import { Add } from "@mui/icons-material";
 import { ENHANCEMENT_MIN, ENHANCEMENT_MAX } from "../../../stores";
 
 interface EnhancementSelectProps {
@@ -34,7 +33,7 @@ const EnhancementSelect: FC<EnhancementSelectProps> = memo(
           label="Enhancement Level"
           type="number"
           InputProps={{
-            startAdornment: <Add fontSize="small" />,
+            startAdornment: "+",
           }}
         />
       </Paper>

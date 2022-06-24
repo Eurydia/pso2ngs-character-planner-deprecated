@@ -1,4 +1,4 @@
-import { Conditional, Stat, StatPayload } from "../stats";
+import { StatPayload } from "../stats";
 
 export enum AugmentGroups {
   BASIC = "BASIC",

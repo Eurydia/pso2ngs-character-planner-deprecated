@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useState } from "react";
+import { FC, memo, ReactNode, useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -14,7 +14,7 @@ import {
   StatTypes,
 } from "../../assets/stats";
 import {
-  addStatToTemplate,
+  addStatToStatObject,
   parseNumberToDisplay,
   tallyStats,
 } from "../../utility";
@@ -88,18 +88,24 @@ interface StatListProps {
  * @returns
  */
 const StatList: FC<StatListProps> = (props) => {
-  // const [activeCondition, setActiveCondition] = useState<{
-  //   [key: string]: boolean;
-  // }>(() => {
-  //   let init: { [key: string]: boolean } = {};
-  //   for (const payload_data of props.payload) {
-  //     for (const conditional of payload_data.conditionals) {
-  //       const condition = conditional.condition;
-  //       init[condition] = true;
-  //     }
-  //   }
-  //   return init;
-  // });
+  const [conditions, setConditions] = useState<{
+    [key: string]: boolean;
+  }>({});
+  useEffect(() => {
+    setConditions((prev) => {
+      let next: { [keys: string]: boolean } = {};
+      for (const { conditionals } of props.payload) {
+        for (const { condition } of conditionals) {
+          if (prev[condition] !== undefined) {
+            next[condition] = prev[condition];
+          } else {
+            next[condition] = true;
+          }
+        }
+      }
+      return next;
+    });
+  }, [props, setConditions]);
 
   const icon_lookup: Partial<{ [key in StatTypes]: ReactNode }> = {
     [StatTypes.BP]: <StatBPIcon />,
@@ -120,19 +126,22 @@ const StatList: FC<StatListProps> = (props) => {
   };
 
   let tallied = getStatTemplate();
-  for (const payload_data of props.payload) {
-    let stats = tallyStats(payload_data.stats);
-
-    for (const conditional of payload_data.conditionals) {
-      if (activeCondition[conditional.condition] === true) {
-        for (const con_stat of conditional.stats) {
-          stats = addStatToTemplate(con_stat, stats);
+  for (const { stats, conditionals } of props.payload) {
+    let tallied_stats = tallyStats(stats);
+    for (const { condition, stats: con_stats } of conditionals) {
+      if (conditions[condition] === true) {
+        for (const con_stat of con_stats) {
+          tallied_stats = addStatToStatObject(
+            con_stat,
+            tallied_stats,
+          );
         }
       }
     }
-    for (const key of Object.keys(stats)) {
-      tallied = addStatToTemplate(
-        makeStat(key as StatTypes, stats[key as StatTypes]),
+
+    for (const key of Object.keys(tallied_stats)) {
+      tallied = addStatToStatObject(
+        makeStat(key as StatTypes, tallied_stats[key as StatTypes]),
         tallied,
       );
     }
@@ -149,7 +158,6 @@ const StatList: FC<StatListProps> = (props) => {
     if (value === default_value) {
       continue;
     }
-
     stat_items.push(
       <StatItem
         key={_key}

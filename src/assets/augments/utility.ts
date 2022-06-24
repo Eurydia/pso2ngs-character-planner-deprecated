@@ -1,12 +1,25 @@
 import AUGMENTS from ".";
+import { ENHANCEMENT_MAX } from "../constants";
 import { typeguardAugmentDataSignature } from "./typeguard";
 import { AugmentData, AugmentDataSignature } from "./types";
 
+export const getActiveAugmentSlots = (
+  enhancement: number,
+): number => {
+  if (enhancement >= 50) {
+    return 5;
+  } else if (enhancement >= 40) {
+    return 4;
+  } else if (enhancement >= 20) {
+    return 3;
+  } else {
+    return 2;
+  }
+};
+
 export const getAugmentTemplate = (): (AugmentData | null)[] => {
   let res: (AugmentData | null)[] = [];
-
-  const slots = 5;
-  for (let i = 0; i < slots; i++) {
+  for (let i = 0; i < getActiveAugmentSlots(ENHANCEMENT_MAX); i++) {
     res.push(null);
   }
 

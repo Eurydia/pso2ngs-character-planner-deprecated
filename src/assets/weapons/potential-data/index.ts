@@ -94,7 +94,7 @@ export const DYNAMO_UNIT = makePotentialData(
   (pot_level: number) =>
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.16, 1.18, 1.21, 1.21];
-      const crit_change = index < 3 ? 1.15 : 1.8;
+      const crit_change = index < 3 ? 1.15 : 1.18;
       return makeStatPayload(
         [makeStat(StatShorthands.POT, POTENCY[index])],
         [

@@ -15,18 +15,18 @@ import {
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
 import { ENHANCEMENT_MAX } from "../../stores";
 import { getWeaponStatPayload, Weapon } from "../../assets/weapons";
+import { Stat, StatPayload, StatTypes } from "../../assets/stats";
+import { getActiveAugmentSlots, tallyStats } from "../../utility";
+import StatList from "../../components/StatList/StatList";
 import AugmentGroup from "./components/AugmentGroup";
 import WeaponSearch from "./components/WeaponSearch";
 import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import PotentialSelect from "./components/PotentialSelect";
-import StatList from "../../components/StatList/StatList";
-import { StatPayload } from "../../assets/stats";
-import { getActiveAugmentSlots } from "../../utility";
 
 interface WeaponFormProps {
-  isRealistic: boolean;
+  realistic: boolean;
   charLevel: number;
   label: string;
   getInitValue: () => Weapon;
@@ -34,53 +34,58 @@ interface WeaponFormProps {
 }
 const WeaponForm: FC<WeaponFormProps> = memo(
   (props) => {
+    const { getInitValue, onChange } = props;
     const {
       weapon: init_weapon,
       potential_level: init_pot_level,
       fixa: init_fixa,
       enhancement: init_enhacement,
       augments: init_augments,
-    } = props.getInitValue();
-
-    const [dialogOpen, setDialogOpen] = useState(false);
+    } = getInitValue();
     const [weapon, setWeapon] = useState(init_weapon);
     const [potLevel, setPotLevel] = useState(init_pot_level);
     const [enhancement, setEnhancement] = useState(init_enhacement);
     const [fixa, setFixa] = useState(init_fixa);
     const [augments, setAugments] = useState(init_augments);
     useEffect(() => {
-      props.onChange({
+      onChange({
         weapon,
         potential_level: potLevel,
         enhancement,
         fixa,
         augments,
       });
-    }, [weapon, potLevel, enhancement, fixa, augments, props]);
+    }, [weapon, potLevel, enhancement, fixa, augments, onChange]);
 
+    const [dialogOpen, setDialogOpen] = useState(false);
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    /**
-     * Don't include fixa stats when weapon is empty
-     */
-    const weaponIsNull = weapon === null;
     let payload: StatPayload[] = [];
+    let stats: Stat[] = [];
+    const acitve_aug_slots = getActiveAugmentSlots(
+      props.realistic ? enhancement : ENHANCEMENT_MAX,
+    );
+    for (let i = 0; i < acitve_aug_slots; i++) {
+      const augment = augments[i];
+      if (augment !== null) {
+        stats.push(...augment.payload.stats);
+        payload.push(augment.payload);
+      }
+    }
+    const weaponIsNull = weapon === null;
     if (!weaponIsNull) {
-      payload.push(
-        getWeaponStatPayload(weapon, enhancement, potLevel),
+      const tallied = tallyStats([...weapon.payload.stats, ...stats]);
+      payload.unshift(
+        getWeaponStatPayload(
+          weapon,
+          enhancement,
+          potLevel,
+          tallied[StatTypes.FLOOR_POT] / 2,
+        ),
       );
       if (fixa !== null) {
         payload.push(fixa.payload);
-      }
-    }
-    const active_slots = getActiveAugmentSlots(
-      props.isRealistic ? enhancement : ENHANCEMENT_MAX,
-    );
-    for (let i = 0; i < active_slots; i++) {
-      const augment = augments[i];
-      if (augment !== null) {
-        payload.push(augment.payload);
       }
     }
 
@@ -101,7 +106,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
             <EquipmentFormLayout
               equipmentSlot={
                 <WeaponSearch
-                  isRealistic={props.isRealistic}
+                  isRealistic={props.realistic}
                   charLevel={props.charLevel}
                   enhancement={enhancement}
                   value={weapon}
@@ -132,8 +137,8 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               }
               augmentsSlot={
                 <AugmentGroup
-                  disabled={weaponIsNull && props.isRealistic}
-                  activeSlots={active_slots}
+                  disabled={weaponIsNull && props.realistic}
+                  activeSlots={acitve_aug_slots}
                   getInitValues={() => augments}
                   onChange={setAugments}
                 />
@@ -176,7 +181,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     );
   },
   (prev, next) => {
-    if (prev.isRealistic !== next.isRealistic) {
+    if (prev.realistic !== next.realistic) {
       return false;
     }
 

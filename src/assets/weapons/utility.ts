@@ -98,10 +98,10 @@ export const loadWeaponFromLocal = (): Weapon => {
   res.fixa = fixaDataFromSignature(stored.fixa);
 
   if (Array.isArray(stored.augments)) {
-    let _temp = getAugmentTemplate();
-    for (let i = 0; i < stored.augments.length; i++) {
+    let _augs = getAugmentTemplate();
+    for (let i = 0; i < _augs.length; i++) {
       const aug_sig = stored.augments[i];
-      _temp[i] = augmentDataFromSignature(aug_sig);
+      _augs[i] = augmentDataFromSignature(aug_sig);
     }
   }
 

@@ -195,7 +195,7 @@ const CharacterPlanner = () => {
         </Grid>
         <Grid item md={6}>
           <WeaponForm
-            isRealistic={isRealistic}
+            realistic={isRealistic}
             charLevel={char_level}
             label="Weapon"
             getInitValue={loadWeaponFromLocal}
