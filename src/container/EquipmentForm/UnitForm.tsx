@@ -15,6 +15,7 @@ import {
 import { AutoAwesome, Shield } from "@mui/icons-material";
 import { StatPayload } from "../../assets/stats";
 import { getUnitStatPayload, Unit } from "../../assets/units";
+import { getActiveAugmentSlots } from "../../assets/augments";
 import { ENHANCEMENT_MAX } from "../../stores";
 import AugmentGroup from "./components/AugmentGroup";
 import UnitSearch from "./components/UnitSearch";
@@ -22,7 +23,6 @@ import FixaSearch from "./components/FixaSearch";
 import EquipmentFormLayout from "./layout/EquipmentFormLayout";
 import EnhancementSelect from "./components/EnhancementSelect";
 import StatList from "../../components/StatList/StatList";
-import { getActiveAugmentSlots } from "../../utility";
 
 interface UnitFormProps {
   isRealistic: boolean;

@@ -96,13 +96,14 @@ export const loadWeaponFromLocal = (): Weapon => {
   res.weapon = weaponDataFromSignature(stored.weapon);
   res.fixa = fixaDataFromSignature(stored.fixa);
 
+  let _augs = getAugmentTemplate();
   if (Array.isArray(stored.augments)) {
-    let _augs = getAugmentTemplate();
     for (let i = 0; i < _augs.length; i++) {
       const aug_sig = stored.augments[i];
       _augs[i] = augmentDataFromSignature(aug_sig);
     }
   }
+  res.augments = _augs;
 
   if (
     typeof stored.potential_level === "number" &&

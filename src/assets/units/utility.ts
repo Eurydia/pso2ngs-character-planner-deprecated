@@ -87,14 +87,14 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
   res.unit = unitDataFromSignature(stored.unit);
   res.fixa = fixaDataFromSignature(stored.fixa);
 
-  let _template = getAugmentTemplate();
+  let _augs = getAugmentTemplate();
   if (Array.isArray(stored.augments)) {
     for (let i = 0; i < stored.augments.length; i++) {
       const aug_sig = stored.augments[i];
-      _template[i] = augmentDataFromSignature(aug_sig);
+      _augs[i] = augmentDataFromSignature(aug_sig);
     }
   }
-  res.augments = _template;
+  res.augments = _augs;
 
   if (
     typeof stored.enhancement === "number" &&

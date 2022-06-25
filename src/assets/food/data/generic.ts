@@ -1,8 +1,8 @@
-import { FoodData, FoodAttribute, FoodCategory } from "../types";
-import { makeFoodItemData } from "../makeFoodItemData";
+import { FoodItemData, FoodAttribute, FoodCategory } from "../types";
+import { makeFoodItemData } from "../makeData";
 
 // ---------------------------
-let food: FoodData[] = [];
+let food: FoodItemData[] = [];
 // ---------------------------
 (() => {
   const attributes = [

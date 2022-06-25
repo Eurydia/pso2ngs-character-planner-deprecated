@@ -31,7 +31,7 @@ import {
 } from "../../../utility";
 
 const getLabel = (augment: AugmentData): string => {
-  const name = augment.s ? `${augment.name} s` : augment.name;
+  const name = augment.isSType ? `${augment.name} s` : augment.name;
 
   return `${name} ${convertToRoman(augment.level)}`.trim();
 };
@@ -186,7 +186,7 @@ const AugmentSearch: FC<AugmentSearchProps> = memo(
       next_val &&
       (prev_val.name !== next_val.name ||
         prev_val.level !== next_val.level ||
-        prev_val.s !== next_val.s)
+        prev_val.isSType !== next_val.isSType)
     ) {
       return false;
     }

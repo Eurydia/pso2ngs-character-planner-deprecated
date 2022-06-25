@@ -9,6 +9,16 @@ import {
   StatShorthands,
 } from "../../stats";
 
+const MEAT_EFFECT_REF = [
+  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
+];
+const SEAFOOD_EFFECT_REF = [
+  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
+];
+const VEGETABLE_EFFECT_REF = [
+  1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098, 1.1,
+];
+const FRUIT_EFFECT_REF = [10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 /**
  * Getter for stat amount.
  * Should be useful when we need the amount.
@@ -29,20 +39,21 @@ export const getCategoryStatAmount = (
   let ref: null | number[] = null;
   switch (category) {
     case FoodCategory.VEGETABLE:
+      ref = VEGETABLE_EFFECT_REF;
+      break;
     case FoodCategory.SEAFOOD:
+      ref = SEAFOOD_EFFECT_REF;
+      break;
     case FoodCategory.MEAT:
-      ref = [
-        1.05, 1.07, 1.08, 1.085, 1.088, 1.09, 1.092, 1.096, 1.098,
-        1.1,
-      ];
+      ref = MEAT_EFFECT_REF;
       break;
     case FoodCategory.FRUIT:
-      ref = [10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+      ref = FRUIT_EFFECT_REF;
       break;
   }
 
   if (ref === null) {
-    return 0;
+    return 1;
   }
   return ref[_level];
 };

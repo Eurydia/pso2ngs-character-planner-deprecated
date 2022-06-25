@@ -10,6 +10,12 @@ import {
   StatShorthands,
 } from "../../stats";
 
+const CRISPY_EFFECT_REF = [
+  1.01, 1.02, 1.03, 1.035, 1.04, 1.045, 1.05,
+];
+const ROBUST_EFFECT_REF = [1.1, 1.2, 1.3, 1.35, 1.4, 1.45, 1.5];
+const RICH_EFFECT_REF = [0.95, 0.945, 0.94, 0.935, 0.93, 0.925, 0.92];
+const LIGHT_EFFECT_REF = [1.1, 1.12, 1.14, 1.16, 1.18, 1.19, 1.2];
 /**
  * Getter for stat amount.
  * Should be useful when we need the amount.
@@ -30,16 +36,16 @@ export const getAttributeStatAmount = (
   let ref: null | number[] = null;
   switch (attribute) {
     case FoodAttribute.CRISPY:
-      ref = [1.01, 1.02, 1.03, 1.035, 1.04, 1.045, 1.05];
+      ref = CRISPY_EFFECT_REF;
       break;
     case FoodAttribute.LIGHT:
-      ref = [1.1, 1.12, 1.14, 1.16, 1.18, 1.19, 1.2];
+      ref = LIGHT_EFFECT_REF;
       break;
     case FoodAttribute.ROBUST:
-      ref = [1.1, 1.2, 1.3, 1.35, 1.4, 1.45, 1.5];
+      ref = ROBUST_EFFECT_REF;
       break;
     case FoodAttribute.RICH:
-      ref = [0.95, 0.945, 0.94, 0.935, 0.93, 0.925, 0.92];
+      ref = RICH_EFFECT_REF;
       break;
   }
 
