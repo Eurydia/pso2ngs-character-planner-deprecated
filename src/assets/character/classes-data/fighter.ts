@@ -1,4 +1,4 @@
-import { makeClassData } from "../makeClassData";
+import { makeClassData } from "../makeData";
 
 const CLASS_DATA = makeClassData("fighter", 280, 454, 301);
 

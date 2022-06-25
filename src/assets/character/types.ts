@@ -15,10 +15,10 @@ export type Character = {
   sub_sp: number;
 };
 
-export type CharacterSignature = {
-  level: number;
+export type CharacterSignature = Pick<
+  Character,
+  "level" | "main_sp" | "sub_sp"
+> & {
   main_class: ClassDataSignature;
-  main_sp: number;
   sub_class: ClassDataSignature;
-  sub_sp: number;
 };

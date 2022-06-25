@@ -12,7 +12,7 @@ export * from "./typeguard";
 export * from "./getStatPayload";
 export * from "./utility";
 
-const CHARACTER_CLASSES = Object.freeze([
+const CHARACTER_CLASSES = [
   hunter,
   fighter,
   ranger,
@@ -21,5 +21,5 @@ const CHARACTER_CLASSES = Object.freeze([
   techter,
   braver,
   bouncer,
-]);
+];
 export default CHARACTER_CLASSES;

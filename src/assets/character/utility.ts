@@ -12,7 +12,6 @@ import {
   CharacterSignature,
 } from "./types";
 import { typeguardClassDataSignature } from "./typeguard";
-import { CLASS_DATA } from "./classes-data";
 
 export const getCharacterTemplate = (): Character => {
   return {
@@ -36,7 +35,7 @@ export const classDataFromSignature = (
   if (!typeguardClassDataSignature(signature)) {
     return null;
   }
-  for (const data of CLASS_DATA) {
+  for (const data of CHARACTER_CLASSES) {
     if (data.name === signature.name) {
       return data;
     }

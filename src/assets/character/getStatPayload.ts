@@ -40,18 +40,20 @@ export const getCharacterStatPayload = ({
   sub_sp,
 }: Character): StatPayload => {
   const hp_amount = getCharHPAmount(main_class.base_hp, level);
+  const hp = makeStat(StatTypes.HP, hp_amount);
+
   const pp_amount = main_class.base_pp;
+  const pp = makeStat(StatTypes.PP, pp_amount);
+
   const atk_amount = getCharATKAmount(main_class.base_attack, level);
+  const atk = makeStat(StatTypes.ATK, atk_amount);
+
   const def_amount = getCharDEFAmount(main_class.base_defense, level);
+  const def = makeStat(StatTypes.DEF, def_amount);
 
   const bp_from_atk = atk_amount;
   const bp_from_def = Math.floor(def_amount / 2);
   const bp_from_sp = (main_sp + sub_sp) * 3;
-
-  const hp = makeStat(StatTypes.HP, hp_amount);
-  const pp = makeStat(StatTypes.PP, pp_amount);
-  const atk = makeStat(StatTypes.ATK, atk_amount);
-  const def = makeStat(StatTypes.DEF, def_amount);
   const bp = makeStat(
     StatTypes.BP,
     bp_from_atk + bp_from_def + bp_from_sp,
