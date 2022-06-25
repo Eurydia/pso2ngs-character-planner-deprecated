@@ -16,12 +16,11 @@ import {
 } from "./types";
 
 export const getUnitTemplate = (): Unit => {
-  const augments = getAugmentTemplate();
   return {
     unit: null,
     fixa: null,
     enhancement: ENHANCEMENT_MIN,
-    augments,
+    augments: getAugmentTemplate(),
   };
 };
 
@@ -60,7 +59,6 @@ export const saveUnitToLocal = (
   key: UnitKey,
 ) => {
   const unit_sig = unitDataToSignature(unit);
-
   const fixa_sig = fixaDataToSignature(fixa);
 
   let augment_sigs: (AugmentDataSignature | null)[] = [];
@@ -89,13 +87,14 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
   res.unit = unitDataFromSignature(stored.unit);
   res.fixa = fixaDataFromSignature(stored.fixa);
 
+  let _template = getAugmentTemplate();
   if (Array.isArray(stored.augments)) {
-    let _temp = getAugmentTemplate();
     for (let i = 0; i < stored.augments.length; i++) {
       const aug_sig = stored.augments[i];
-      _temp[i] = augmentDataFromSignature(aug_sig);
+      _template[i] = augmentDataFromSignature(aug_sig);
     }
   }
+  res.augments = _template;
 
   if (
     typeof stored.enhancement === "number" &&

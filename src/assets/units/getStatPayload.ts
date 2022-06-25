@@ -5,63 +5,48 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
+import { makeGrowthRate } from "./makeData";
 import { UnitData } from "./types";
 
-interface GrowthRate {
-  enhancement: number;
-  bonus: number;
-}
-const makeGrowthRate = (
-  enhancement: number,
-  bonus: number,
-): GrowthRate => {
-  return Object.freeze({
-    enhancement,
-    bonus,
-  });
-};
-const ONE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
-  [
-    makeGrowthRate(10, 10),
-    makeGrowthRate(20, 20),
-    makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 50),
-  ],
-);
-const TWO_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> = Object.freeze(
-  [
-    makeGrowthRate(10, 10),
-    makeGrowthRate(20, 20),
-    makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 50),
-  ],
-);
-const THREE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
-  Object.freeze([
-    makeGrowthRate(10, 10),
-    makeGrowthRate(20, 20),
-    makeGrowthRate(30, 30),
-    makeGrowthRate(40, 40),
-    makeGrowthRate(50, 50),
-  ]);
-const FOUR_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
-  Object.freeze([
-    makeGrowthRate(10, 10),
-    makeGrowthRate(20, 20),
-    makeGrowthRate(30, 30),
-    makeGrowthRate(40, 41),
-    makeGrowthRate(50, 51),
-  ]);
-const FIVE_STAR_GROWTH_RATE: ReadonlyArray<GrowthRate> =
-  Object.freeze([
-    makeGrowthRate(10, 10),
-    makeGrowthRate(20, 20),
-    makeGrowthRate(30, 30),
-    makeGrowthRate(40, 41),
-    makeGrowthRate(50, 51),
-  ]);
+const ONE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 40),
+  makeGrowthRate(50, 50),
+];
+
+const TWO_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 40),
+  makeGrowthRate(50, 50),
+];
+
+const THREE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 40),
+  makeGrowthRate(50, 50),
+];
+
+const FOUR_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 41),
+  makeGrowthRate(50, 51),
+];
+
+const FIVE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 41),
+  makeGrowthRate(50, 51),
+];
 
 export const getUnitDEFAmount = (
   base_def: number,
@@ -118,12 +103,12 @@ export const getUnitStatPayload = (
   const tallied = tallyStats(unit.payload.stats);
   const bp_from_hp = tallied[StatTypes.HP] / 10;
   const bp_from_pp = tallied[StatTypes.PP];
-  const bp_from_def = Math.floor(def_amount / 2);
+  const bp_from_def = def_amount / 2;
 
   const def = makeStat(StatTypes.DEF, def_amount);
   const bp = makeStat(
     StatTypes.BP,
-    bp_from_hp + bp_from_pp + bp_from_def,
+    Math.floor(bp_from_def) + bp_from_hp + bp_from_pp,
   );
 
   const stats = [bp, def, ...unit.payload.stats];

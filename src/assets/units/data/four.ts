@@ -1,5 +1,5 @@
 import { StatTypes, makeStat, StatShorthands } from "../../stats";
-import { makeUnitData } from "../makeUnitData";
+import { makeUnitData } from "../makeData";
 import { UnitData } from "../types";
 
 // -------------------------

@@ -35,7 +35,7 @@ export const augmentDataToSignature = (
   return {
     name: augment.name,
     level: augment.level,
-    isSType: augment.isSType,
+    s: augment.s,
   };
 };
 
@@ -53,7 +53,7 @@ export const augmentDataFromSignature = (
     if (
       data.name === signature.name &&
       data.level === signature.level &&
-      data.isSType === signature.isSType
+      data.s === signature.s
     ) {
       return data;
     }

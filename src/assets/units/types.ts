@@ -2,6 +2,11 @@ import { AugmentData, AugmentDataSignature } from "../augments";
 import { StatPayload } from "../stats";
 import { FixaData, FixaDataSignature } from "../fixas";
 
+export type GrowthRate = {
+  enhancement: number;
+  bonus: number;
+};
+
 export type UnitData = Readonly<{
   name: string;
   rarity: number;

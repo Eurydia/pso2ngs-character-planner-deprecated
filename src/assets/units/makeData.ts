@@ -1,5 +1,15 @@
 import { Conditional, makeStatPayload, Stat } from "../stats";
-import { UnitData } from "./types";
+import { UnitData, GrowthRate } from "./types";
+
+export const makeGrowthRate = (
+  enhancement: number,
+  bonus: number,
+): GrowthRate => {
+  return {
+    enhancement,
+    bonus,
+  };
+};
 
 export const makeUnitData = (
   name: string,

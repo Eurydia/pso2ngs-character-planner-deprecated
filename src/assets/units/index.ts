@@ -8,12 +8,6 @@ export * from "./types";
 export * from "./getStatPayload";
 export * from "./utility";
 
-const UNITS = Object.freeze([
-  ...one,
-  ...two,
-  ...three,
-  ...four,
-  ...five,
-]);
+const UNITS = [...one, ...two, ...three, ...four, ...five];
 
 export default UNITS;
