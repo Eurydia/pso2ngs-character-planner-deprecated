@@ -99,24 +99,22 @@ export const getWeaponStatPayload = (
   pot_level: number,
   avg_floor_pot: number,
 ): StatPayload => {
-  const crit_chance_amount = 1.05;
   const atk_amount = getWeaponATKAmount(
     weapon.base_attack,
     weapon.rarity,
     enhancement,
   );
-  const bp_from_pot_level = pot_level * 10;
-  const bp_from_atk = atk_amount * avg_floor_pot;
+  const atk = makeStat(StatTypes.ATK, atk_amount);
 
+  const crit_chance_amount = 1.05;
   const crit_chance = makeStat(
     StatTypes.CRIT_CHANCE,
     crit_chance_amount,
   );
-  const atk = makeStat(StatTypes.ATK, atk_amount);
-  const bp = makeStat(
-    StatTypes.BP,
-    Math.floor(bp_from_pot_level + bp_from_atk),
-  );
+
+  const bp_from_pot_level = pot_level * 10;
+  const bp_from_atk = Math.floor(atk_amount * avg_floor_pot);
+  const bp = makeStat(StatTypes.BP, bp_from_pot_level + bp_from_atk);
 
   const pot_payload = weapon.potential.getPayload(pot_level);
   const weapon_payload = weapon.payload;

@@ -100,15 +100,15 @@ export const getUnitStatPayload = (
     unit.rarity,
     enhancement,
   );
+  const def = makeStat(StatTypes.DEF, def_amount);
+
   const tallied = tallyStats(unit.payload.stats);
   const bp_from_hp = tallied[StatTypes.HP] / 10;
   const bp_from_pp = tallied[StatTypes.PP];
-  const bp_from_def = def_amount / 2;
-
-  const def = makeStat(StatTypes.DEF, def_amount);
+  const bp_from_def = Math.floor(def_amount / 2);
   const bp = makeStat(
     StatTypes.BP,
-    Math.floor(bp_from_def) + bp_from_hp + bp_from_pp,
+    bp_from_def + bp_from_hp + bp_from_pp,
   );
 
   const stats = [bp, def, ...unit.payload.stats];

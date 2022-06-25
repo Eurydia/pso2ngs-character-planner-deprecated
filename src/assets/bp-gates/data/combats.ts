@@ -1,5 +1,5 @@
 import { BPGateData, ContentTypes, ContentRegions } from "../types";
-import { makeBPGateData } from "../makeBPGateData";
+import { makeBPGateData } from "../makeData";
 
 // ---------------------------
 const content_type = ContentTypes.COMBAT;
