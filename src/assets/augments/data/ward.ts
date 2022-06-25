@@ -31,7 +31,7 @@ let augments: AugmentData[] = [];
   ];
   names.forEach((name, ail_type_index) => {
     bps.forEach((bp, level_index) => {
-      const level = ail_type_index + 1;
+      const level = level_index + 1;
       const stats = [
         makeStat(StatTypes.BP, bp),
         makeStat(ail_type[ail_type_index], ail_res[level_index]),

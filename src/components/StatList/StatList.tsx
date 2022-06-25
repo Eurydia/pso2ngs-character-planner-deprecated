@@ -1,7 +1,17 @@
-import { FC, memo, ReactNode, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  memo,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import {
   Box,
+  FormControlLabel,
+  FormGroup,
   Grid,
+  Switch,
   Typography,
   TypographyProps,
 } from "@mui/material";
@@ -82,30 +92,29 @@ const StatItem: FC<StatItemProps> = memo(
 interface StatListProps {
   payload: StatPayload[];
 }
-/**
- *
- * @param props
- * @returns
- */
 const StatList: FC<StatListProps> = (props) => {
   const [conditions, setConditions] = useState<{
     [key: string]: boolean;
-  }>({});
-  useEffect(() => {
-    setConditions((prev) => {
-      let next: { [keys: string]: boolean } = {};
-      for (const { conditionals } of props.payload) {
-        for (const { condition } of conditionals) {
-          if (prev[condition] !== undefined) {
-            next[condition] = prev[condition];
-          } else {
-            next[condition] = true;
-          }
-        }
+  }>(() => {
+    let init: { [keys: string]: boolean } = {};
+    for (const { conditionals } of props.payload) {
+      for (const { condition } of conditionals) {
+        init[condition] = true;
       }
+    }
+    return init;
+  });
+
+  const handleConditionChange = (
+    condition: string,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    setConditions((prev) => {
+      let next = { ...prev };
+      next[condition] = event.target.checked;
       return next;
     });
-  }, [props, setConditions]);
+  };
 
   const icon_lookup: Partial<{ [key in StatTypes]: ReactNode }> = {
     [StatTypes.BP]: <StatBPIcon />,
@@ -172,6 +181,26 @@ const StatList: FC<StatListProps> = (props) => {
 
   return (
     <Box>
+      <Typography>Your character:</Typography>
+      <FormGroup>
+        {Object.keys(conditions).map((condition) => {
+          const state = conditions[condition];
+          return (
+            <FormControlLabel
+              key={condition}
+              label={`${condition}.`}
+              control={
+                <Switch
+                  checked={state}
+                  onChange={(e) =>
+                    handleConditionChange(condition, e)
+                  }
+                />
+              }
+            />
+          );
+        })}
+      </FormGroup>
       <StatItem
         bold
         backgroundColor={grey["300"]}
