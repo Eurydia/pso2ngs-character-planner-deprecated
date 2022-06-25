@@ -1,5 +1,5 @@
 import { StatTypes, makeStat, makeConditional } from "../../stats";
-import { makeWeaponData } from "../makeWeaponData";
+import { makeWeaponData } from "../makeData";
 import {
   DEFENSIVE_FORMATION,
   OFFENSIVE_FORMATION,

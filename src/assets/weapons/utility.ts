@@ -55,7 +55,6 @@ export const weaponDataFromSignature = (
       return data;
     }
   }
-
   return null;
 };
 

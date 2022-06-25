@@ -1,5 +1,5 @@
 import { StatTypes, makeStat, makeConditional } from "../../stats";
-import { makeWeaponData } from "../makeWeaponData";
+import { makeWeaponData } from "../makeData";
 import {
   EXPLOSIVE_UNIT,
   FIGHTING_SPIRIT_UNIT,

@@ -6,21 +6,48 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
-import { WeaponData } from "./types";
+import { makeGrowthRate } from "./makeData";
+import { WeaponData, GrowthRate } from "./types";
 
-interface GrowthRate {
-  enhancement: number;
-  bonus: number;
-}
-const makeGrowthRate = (
-  enhancement: number,
-  bonus: number,
-): GrowthRate => {
-  return {
-    enhancement,
-    bonus,
-  };
-};
+const ONE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 22),
+  makeGrowthRate(20, 46),
+  makeGrowthRate(30, 63),
+  makeGrowthRate(40, 82),
+  makeGrowthRate(50, 161),
+];
+
+const TWO_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 16),
+  makeGrowthRate(20, 33),
+  makeGrowthRate(30, 50),
+  makeGrowthRate(40, 69),
+  makeGrowthRate(50, 143),
+];
+
+const THREE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 21),
+  makeGrowthRate(30, 32),
+  makeGrowthRate(40, 47),
+  makeGrowthRate(50, 115),
+];
+
+const FOUR_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 40),
+  makeGrowthRate(50, 108),
+];
+
+const FIVE_STAR_GROWTH_RATE = [
+  makeGrowthRate(10, 10),
+  makeGrowthRate(20, 20),
+  makeGrowthRate(30, 30),
+  makeGrowthRate(40, 40),
+  makeGrowthRate(50, 92),
+];
 
 export const getWeaponATKAmount = (
   base_atk: number,
@@ -28,53 +55,19 @@ export const getWeaponATKAmount = (
   enhancement: number,
 ): number => {
   // default growth rate is one star rarity
-  let growth_rate: GrowthRate[] = [
-    makeGrowthRate(10, 22),
-    makeGrowthRate(20, 46),
-    makeGrowthRate(30, 63),
-    makeGrowthRate(40, 82),
-    makeGrowthRate(50, 161),
-  ];
+  let growth_rate: GrowthRate[] = ONE_STAR_GROWTH_RATE;
   switch (rarity) {
     case 2:
-      // growth rate for two star rarity
-      growth_rate = [
-        makeGrowthRate(10, 16),
-        makeGrowthRate(20, 33),
-        makeGrowthRate(30, 50),
-        makeGrowthRate(40, 69),
-        makeGrowthRate(50, 143),
-      ];
+      growth_rate = TWO_STAR_GROWTH_RATE;
       break;
     case 3:
-      // growth rate for three star rarity
-      growth_rate = [
-        makeGrowthRate(10, 10),
-        makeGrowthRate(20, 21),
-        makeGrowthRate(30, 32),
-        makeGrowthRate(40, 47),
-        makeGrowthRate(50, 115),
-      ];
+      growth_rate = THREE_STAR_GROWTH_RATE;
       break;
     case 4:
-      // growth rate for four star rarity
-      growth_rate = [
-        makeGrowthRate(10, 10),
-        makeGrowthRate(20, 20),
-        makeGrowthRate(30, 30),
-        makeGrowthRate(40, 40),
-        makeGrowthRate(50, 108),
-      ];
+      growth_rate = FOUR_STAR_GROWTH_RATE;
       break;
     case 5:
-      // growth rate for five star rarity
-      growth_rate = [
-        makeGrowthRate(10, 10),
-        makeGrowthRate(20, 20),
-        makeGrowthRate(30, 30),
-        makeGrowthRate(40, 40),
-        makeGrowthRate(50, 92),
-      ];
+      growth_rate = FIVE_STAR_GROWTH_RATE;
       break;
   }
 
@@ -106,26 +99,28 @@ export const getWeaponStatPayload = (
   pot_level: number,
   avg_floor_pot: number,
 ): StatPayload => {
+  const crit_chance_amount = 1.05;
   const atk_amount = getWeaponATKAmount(
     weapon.base_attack,
     weapon.rarity,
     enhancement,
   );
-  const crit_chance_amount = 1.05;
   const bp_from_pot_level = pot_level * 10;
   const bp_from_atk = atk_amount * avg_floor_pot;
 
-  const atk = makeStat(StatTypes.ATK, atk_amount);
   const crit_chance = makeStat(
     StatTypes.CRIT_CHANCE,
     crit_chance_amount,
   );
+  const atk = makeStat(StatTypes.ATK, atk_amount);
   const bp = makeStat(
     StatTypes.BP,
     Math.floor(bp_from_pot_level + bp_from_atk),
   );
+
   const pot_payload = weapon.potential.getPayload(pot_level);
   const weapon_payload = weapon.payload;
+
   const stats: Stat[] = [
     bp,
     atk,

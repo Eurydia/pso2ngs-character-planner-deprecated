@@ -1,5 +1,5 @@
 import { StatTypes, makeStat } from "../../stats";
-import { makeWeaponData } from "../makeWeaponData";
+import { makeWeaponData } from "../makeData";
 import { INDOMITABLE_UNIT, RECYCLER_UNIT } from "../potential-data";
 import { WeaponData } from "../types";
 

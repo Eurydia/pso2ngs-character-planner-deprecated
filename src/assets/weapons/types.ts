@@ -31,6 +31,11 @@ export type PotentialData = {
   getPayload: (pot_level: number) => StatPayload;
 };
 
+export type GrowthRate = {
+  enhancement: number;
+  bonus: number;
+};
+
 /**
  * Store the actual data of each weapon.
  * Should be immutable.

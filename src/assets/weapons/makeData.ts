@@ -4,13 +4,23 @@ import {
   Stat,
   StatPayload,
 } from "../stats";
-import { PotentialData, WeaponData } from "./types";
+import { PotentialData, WeaponData, GrowthRate } from "./types";
 
 export const makePotentialData = (
   name: string,
   getPayload: (pot_level: number) => StatPayload,
 ): PotentialData => {
-  return Object.freeze({ name, getPayload });
+  return { name, getPayload };
+};
+
+export const makeGrowthRate = (
+  enhancement: number,
+  bonus: number,
+): GrowthRate => {
+  return {
+    enhancement,
+    bonus,
+  };
 };
 
 /**
@@ -34,12 +44,12 @@ export const makeWeaponData = (
   conditionals: Conditional[] = [],
 ): WeaponData => {
   const payload = makeStatPayload(stats, conditionals);
-  return Object.freeze({
+  return {
     name,
     rarity,
     level_required,
     potential,
     base_attack,
     payload,
-  });
+  };
 };
