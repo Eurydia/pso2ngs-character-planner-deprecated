@@ -3,10 +3,11 @@ import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../stores";
 import { typeguardFoodItemSignature } from "./typeguard";
 import { FoodItem, FoodItemSignature } from "./types";
 
-export const foodItemToSignature = (
-  item: FoodItem,
-): FoodItemSignature => {
-  return { name: item.name, amount: item.amount };
+export const foodItemToSignature = ({
+  name,
+  amount,
+}: FoodItem): FoodItemSignature => {
+  return { name, amount };
 };
 
 export const foodItemFromSignature = (
@@ -21,7 +22,6 @@ export const foodItemFromSignature = (
       return { ...data, amount: signature.amount };
     }
   }
-
   return null;
 };
 

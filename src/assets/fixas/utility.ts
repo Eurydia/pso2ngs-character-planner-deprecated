@@ -2,13 +2,11 @@ import FIXAS from ".";
 import { typeguardFixaDataSignature } from "./typeguard";
 import { FixaData, FixaDataSignature } from "./types";
 
-export const fixaDataToSignature = (
-  fixa: FixaData | null,
-): FixaDataSignature | null => {
-  if (fixa === null) {
-    return null;
-  }
-  return { name: fixa.name, level: fixa.level };
+export const fixaDataToSignature = ({
+  name,
+  level,
+}: FixaData): FixaDataSignature => {
+  return { name, level };
 };
 
 export const fixaDataFromSignature = (

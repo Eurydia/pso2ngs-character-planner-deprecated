@@ -6,7 +6,11 @@ import {
   augmentDataToSignature,
   getAugmentTemplate,
 } from "../augments";
-import { fixaDataFromSignature, fixaDataToSignature } from "../fixas";
+import {
+  FixaData,
+  fixaDataFromSignature,
+  fixaDataToSignature,
+} from "../fixas";
 import { typeguardUnitDataSignature } from "./typeguard";
 import {
   Unit,
@@ -24,13 +28,10 @@ export const getUnitTemplate = (): Unit => {
   };
 };
 
-export const unitDataToSignature = (
-  unit: UnitData | null,
-): UnitDataSignature | null => {
-  if (unit === null) {
-    return null;
-  }
-  return { name: unit.name };
+export const unitDataToSignature = ({
+  name,
+}: UnitData): UnitDataSignature => {
+  return { name };
 };
 
 export const unitDataFromSignature = (
@@ -58,8 +59,15 @@ export const saveUnitToLocal = (
   { unit, fixa, enhancement, augments }: Unit,
   key: UnitKey,
 ) => {
-  const unit_sig = unitDataToSignature(unit);
-  const fixa_sig = fixaDataToSignature(fixa);
+  let unit_sig: UnitDataSignature | null = null;
+  if (unit !== null) {
+    unit_sig = unitDataToSignature(unit);
+  }
+
+  const fixa_sig: FixaData | null = null;
+  if (fixa !== null) {
+    fixaDataToSignature(fixa);
+  }
 
   let augment_sigs: (AugmentDataSignature | null)[] = [];
   for (const augment of augments) {
@@ -87,14 +95,12 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
   res.unit = unitDataFromSignature(stored.unit);
   res.fixa = fixaDataFromSignature(stored.fixa);
 
-  let _augs = getAugmentTemplate();
   if (Array.isArray(stored.augments)) {
-    for (let i = 0; i < stored.augments.length; i++) {
+    for (let i = 0; i < res.augments.length; i++) {
       const aug_sig = stored.augments[i];
-      _augs[i] = augmentDataFromSignature(aug_sig);
+      res.augments[i] = augmentDataFromSignature(aug_sig);
     }
   }
-  res.augments = _augs;
 
   if (
     typeof stored.enhancement === "number" &&

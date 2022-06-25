@@ -11,7 +11,11 @@ import {
   augmentDataToSignature,
   getAugmentTemplate,
 } from "../augments";
-import { fixaDataFromSignature, fixaDataToSignature } from "../fixas";
+import {
+  FixaData,
+  fixaDataFromSignature,
+  fixaDataToSignature,
+} from "../fixas";
 import { typeguardWeaponDataSignature } from "./typeguard";
 import {
   Weapon,
@@ -31,13 +35,10 @@ export const getWeaponTemplate = (): Weapon => {
   };
 };
 
-export const weaponDataToSignature = (
-  weapon: WeaponData | null,
-): WeaponDataSignature | null => {
-  if (weapon === null) {
-    return null;
-  }
-  return { name: weapon.name };
+export const weaponDataToSignature = ({
+  name,
+}: WeaponData): WeaponDataSignature => {
+  return { name };
 };
 
 export const weaponDataFromSignature = (
@@ -65,9 +66,15 @@ export const saveWeaponToLocal = ({
   enhancement,
   augments,
 }: Weapon) => {
-  const weapon_sig = weaponDataToSignature(weapon);
+  let weapon_sig: WeaponDataSignature | null = null;
+  if (weapon !== null) {
+    weapon_sig = weaponDataToSignature(weapon);
+  }
 
-  const fixa_sig = fixaDataToSignature(fixa);
+  const fixa_sig: FixaData | null = null;
+  if (fixa !== null) {
+    fixaDataToSignature(fixa);
+  }
 
   let augment_sigs: (AugmentDataSignature | null)[] = [];
   for (const augment of augments) {
