@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode } from "react";
+import { FC, Fragment, memo, ReactNode } from "react";
 import {
   Grid,
   Typography,
@@ -137,30 +137,36 @@ const BuffList: FC<BuffListProps> = memo(
     const active_buffs = getFoodBuffsFromItems(props.items);
     return (
       <Box>
-        <BuffListRow
-          bold
-          backgroundColor={grey[300]}
-          itemUsedAmountSlot="# of items"
-          originSlot="origin"
-          nameSlot="effect"
-          parsedAmountSlot="amount"
-        />
-        {active_buffs.map(
-          (
-            { name, origin, item_used_amount, parsed_amount },
-            index,
-          ) => (
+        {active_buffs.length === 0 ? (
+          <Typography>No active buff.</Typography>
+        ) : (
+          <Fragment>
             <BuffListRow
-              key={name}
-              backgroundColor={
-                index % 2 === 1 ? grey[100] : undefined
-              }
-              itemUsedAmountSlot={item_used_amount}
-              originSlot={origin.toLowerCase()}
-              nameSlot={name}
-              parsedAmountSlot={parsed_amount}
+              bold
+              backgroundColor={grey[300]}
+              itemUsedAmountSlot="# of items"
+              originSlot="origin"
+              nameSlot="effect"
+              parsedAmountSlot="amount"
             />
-          ),
+            {active_buffs.map(
+              (
+                { name, origin, item_used_amount, parsed_amount },
+                index,
+              ) => (
+                <BuffListRow
+                  key={name}
+                  backgroundColor={
+                    index % 2 === 1 ? grey[100] : undefined
+                  }
+                  itemUsedAmountSlot={item_used_amount}
+                  originSlot={origin.toLowerCase()}
+                  nameSlot={name}
+                  parsedAmountSlot={parsed_amount}
+                />
+              ),
+            )}
+          </Fragment>
         )}
       </Box>
     );

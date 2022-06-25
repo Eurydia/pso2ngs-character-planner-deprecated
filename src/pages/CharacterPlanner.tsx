@@ -204,7 +204,7 @@ const CharacterPlanner = () => {
         </Grid>
         <Grid item md={6}>
           <UnitForm
-            isRealistic={isRealistic}
+            realistic={isRealistic}
             charLevel={char_level}
             label="Unit #1"
             getInitValue={() => loadUnitFromLocal("unita")}
@@ -213,7 +213,7 @@ const CharacterPlanner = () => {
         </Grid>
         <Grid item md={6}>
           <UnitForm
-            isRealistic={isRealistic}
+            realistic={isRealistic}
             charLevel={char_level}
             label="Unit #2"
             getInitValue={() => loadUnitFromLocal("unitb")}
@@ -222,7 +222,7 @@ const CharacterPlanner = () => {
         </Grid>
         <Grid item md={6}>
           <UnitForm
-            isRealistic={isRealistic}
+            realistic={isRealistic}
             charLevel={char_level}
             label="Unit #3"
             getInitValue={() => loadUnitFromLocal("unitc")}

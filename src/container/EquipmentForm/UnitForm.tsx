@@ -25,7 +25,7 @@ import EnhancementSelect from "./components/EnhancementSelect";
 import StatList from "../../components/StatList/StatList";
 
 interface UnitFormProps {
-  isRealistic: boolean;
+  realistic: boolean;
   charLevel: number;
   label: string;
   getInitValue: () => Unit;
@@ -33,46 +33,64 @@ interface UnitFormProps {
 }
 const UnitForm: FC<UnitFormProps> = memo(
   (props) => {
+    const { getInitValue, onChange, realistic } = props;
     const {
       unit: init_unit,
       fixa: init_fixa,
       enhancement: init_enhacement,
       augments: init_augments,
-    } = props.getInitValue();
-
-    const [dialogOpen, setDialogOpen] = useState(false);
+    } = getInitValue();
     const [unit, setUnit] = useState(init_unit);
     const [enhancement, setEnhancement] = useState(init_enhacement);
     const [fixa, setFixa] = useState(init_fixa);
     const [augments, setAugments] = useState(init_augments);
     useEffect(() => {
-      props.onChange({
+      onChange({
         unit,
         enhancement,
         fixa,
         augments,
       });
-    }, [unit, enhancement, fixa, augments, props]);
+    }, [unit, enhancement, fixa, augments, onChange]);
 
+    const [dialogOpen, setDialogOpen] = useState(false);
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
+    /**
+     * payload behavior:
+     * when realistic mode is ON
+     * - if unit is empty, add nothing to the payload.
+     * - if unit is not empty, add everything to the payload.
+     *    - using real enhancement level to find
+     *      active augment slots.
+     * when realistic mode is OFF
+     * - if unit is empty, add augments to payload.
+     *    - this is because in compare mode, the user
+     *      can select augments freely.
+     * - if unit is not empty, add it and augments to paylaod.
+     */
     const unitIsNull = unit === null;
 
     let payload: StatPayload[] = [];
+    let active_aug_slots = 0;
+    if (realistic) {
+      if (!unitIsNull) {
+        active_aug_slots = getActiveAugmentSlots(enhancement);
+      }
+    } else {
+      active_aug_slots = getActiveAugmentSlots(ENHANCEMENT_MAX);
+    }
+    for (let i = 0; i < active_aug_slots; i++) {
+      const augment = augments[i];
+      if (augment !== null) {
+        payload.push(augment.payload);
+      }
+    }
     if (!unitIsNull) {
       payload.push(getUnitStatPayload(unit, enhancement));
       if (fixa !== null) {
         payload.push(fixa.payload);
-      }
-    }
-    const active_slots = getActiveAugmentSlots(
-      props.isRealistic ? enhancement : ENHANCEMENT_MAX,
-    );
-    for (let i = 0; i < active_slots; i++) {
-      const augment = augments[i];
-      if (augment !== null) {
-        payload.push(augment.payload);
       }
     }
 
@@ -93,7 +111,7 @@ const UnitForm: FC<UnitFormProps> = memo(
             <EquipmentFormLayout
               equipmentSlot={
                 <UnitSearch
-                  isRealistic={props.isRealistic}
+                  isRealistic={props.realistic}
                   charLevel={props.charLevel}
                   enhancement={enhancement}
                   value={unit}
@@ -117,8 +135,8 @@ const UnitForm: FC<UnitFormProps> = memo(
               }
               augmentsSlot={
                 <AugmentGroup
-                  disabled={unitIsNull && props.isRealistic}
-                  activeSlots={active_slots}
+                  disabled={unitIsNull && props.realistic}
+                  activeSlots={active_aug_slots}
                   getInitValues={() => augments}
                   onChange={setAugments}
                 />
@@ -146,7 +164,7 @@ const UnitForm: FC<UnitFormProps> = memo(
             <Stack direction="row" spacing={1} alignItems="center">
               <AutoAwesome color="primary" />
               <Typography variant="h6" color="primary">
-                Weapon Stats
+                Unit Stats
               </Typography>
             </Stack>
           </DialogTitle>
@@ -161,7 +179,7 @@ const UnitForm: FC<UnitFormProps> = memo(
     );
   },
   (prev, next) => {
-    if (prev.isRealistic !== next.isRealistic) {
+    if (prev.realistic !== next.realistic) {
       return false;
     }
 

@@ -35,7 +35,7 @@ interface WeaponFormProps {
 }
 const WeaponForm: FC<WeaponFormProps> = memo(
   (props) => {
-    const { getInitValue, onChange } = props;
+    const { getInitValue, onChange, realistic } = props;
     const {
       weapon: init_weapon,
       potential_level: init_pot_level,
@@ -62,19 +62,38 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
-    let payload: StatPayload[] = [];
+    /**
+     * payload behavior:
+     * when realistic mode is ON
+     * - if weapon is empty, add nothing to the payload.
+     * - if weapon is not empty, add everything to the payload.
+     *    - using real enhancement level to find
+     *      active augment slots.
+     * when realistic mode is OFF
+     * - if weapon is empty, add augments to payload.
+     *    - this is because in compare mode, the user
+     *      can select augments freely.
+     * - if weapon is not empty, add it and augments to paylaod.
+     */
+    const weaponIsNull = weapon === null;
+
     let stats: Stat[] = [];
-    const acitve_aug_slots = getActiveAugmentSlots(
-      props.realistic ? enhancement : ENHANCEMENT_MAX,
-    );
-    for (let i = 0; i < acitve_aug_slots; i++) {
+    let payload: StatPayload[] = [];
+    let active_aug_slots = 0;
+    if (realistic) {
+      if (!weaponIsNull) {
+        active_aug_slots = getActiveAugmentSlots(enhancement);
+      }
+    } else {
+      active_aug_slots = getActiveAugmentSlots(ENHANCEMENT_MAX);
+    }
+    for (let i = 0; i < active_aug_slots; i++) {
       const augment = augments[i];
       if (augment !== null) {
         stats.push(...augment.payload.stats);
         payload.push(augment.payload);
       }
     }
-    const weaponIsNull = weapon === null;
     if (!weaponIsNull) {
       const tallied = tallyStats([...weapon.payload.stats, ...stats]);
       payload.unshift(
@@ -139,7 +158,7 @@ const WeaponForm: FC<WeaponFormProps> = memo(
               augmentsSlot={
                 <AugmentGroup
                   disabled={weaponIsNull && props.realistic}
-                  activeSlots={acitve_aug_slots}
+                  activeSlots={active_aug_slots}
                   getInitValues={() => augments}
                   onChange={setAugments}
                 />

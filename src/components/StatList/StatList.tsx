@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   FC,
+  Fragment,
   memo,
   ReactNode,
   useEffect,
@@ -181,33 +182,39 @@ const StatList: FC<StatListProps> = (props) => {
 
   return (
     <Box>
-      <Typography>Your character:</Typography>
-      <FormGroup>
-        {Object.keys(conditions).map((condition) => {
-          const state = conditions[condition];
-          return (
-            <FormControlLabel
-              key={condition}
-              label={`${condition}.`}
-              control={
-                <Switch
-                  checked={state}
-                  onChange={(e) =>
-                    handleConditionChange(condition, e)
+      {props.payload.length === 0 ? (
+        <Typography>No stat to display.</Typography>
+      ) : (
+        <Fragment>
+          <Typography>Your character:</Typography>
+          <FormGroup>
+            {Object.keys(conditions).map((condition) => {
+              const state = conditions[condition];
+              return (
+                <FormControlLabel
+                  key={condition}
+                  label={`${condition}.`}
+                  control={
+                    <Switch
+                      checked={state}
+                      onChange={(e) =>
+                        handleConditionChange(condition, e)
+                      }
+                    />
                   }
                 />
-              }
-            />
-          );
-        })}
-      </FormGroup>
-      <StatItem
-        bold
-        backgroundColor={grey["300"]}
-        nameSlot="Stat"
-        amountSlot="Amount"
-      />
-      {stat_items}
+              );
+            })}
+          </FormGroup>
+          <StatItem
+            bold
+            backgroundColor={grey["300"]}
+            nameSlot="Stat"
+            amountSlot="Amount"
+          />
+          {stat_items}
+        </Fragment>
+      )}
     </Box>
   );
 };
