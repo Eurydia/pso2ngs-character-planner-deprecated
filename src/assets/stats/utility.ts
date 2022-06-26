@@ -74,23 +74,33 @@ export const getStatTemplate = (): StatObject => {
   };
 };
 
+const STAT_TYPES_LOOKUP: Set<string> = new Set(
+  Object.values(StatTypes),
+);
+export const isStatTypes = (s: string): boolean => {
+  return STAT_TYPES_LOOKUP.has(s);
+};
+
+const ADD_STAT_TYPES_LOOKUP = new Set([
+  StatTypes.BP,
+  StatTypes.HP,
+  StatTypes.PP,
+  StatTypes.ATK,
+  StatTypes.DEF,
+]);
 export const isStatAddType = (
   stat_type: StatTypes | StatShorthands,
 ): boolean => {
-  const lookup = new Set([
-    StatTypes.BP,
-    StatTypes.HP,
-    StatTypes.PP,
-    StatTypes.ATK,
-    StatTypes.DEF,
-  ]);
-  if (Object.keys(StatShorthands).includes(stat_type)) {
-    const expanded = expandShorthand(stat_type as StatShorthands);
-    return lookup.has(expanded[0]);
+  if (isStatTypes(stat_type)) {
+    return ADD_STAT_TYPES_LOOKUP.has(stat_type as StatTypes);
   }
-  return lookup.has(stat_type as StatTypes);
+  const expanded = expandShorthand(stat_type as StatShorthands);
+  return ADD_STAT_TYPES_LOOKUP.has(expanded[0]);
 };
 
+const SPECIAL_MUL_STAT_TYPES_LOOKUP = new Set([
+  StatTypes.CRIT_CHANCE,
+]);
 /**
  * Basically checking for the crit chance and harsh envi resist
  * Stats that are displayed as percentage, but
@@ -101,11 +111,9 @@ export const isStatAddType = (
 export const isStatSpecialMulType = (
   stat_type: StatTypes | StatShorthands,
 ) => {
-  const lookup = new Set([StatTypes.CRIT_CHANCE]);
-
-  if (Object.keys(StatShorthands).includes(stat_type)) {
-    const expanded = expandShorthand(stat_type as StatShorthands);
-    return lookup.has(expanded[0]);
+  if (isStatTypes(stat_type)) {
+    return SPECIAL_MUL_STAT_TYPES_LOOKUP.has(stat_type as StatTypes);
   }
-  return lookup.has(stat_type as StatTypes);
+  const expanded = expandShorthand(stat_type as StatShorthands);
+  return SPECIAL_MUL_STAT_TYPES_LOOKUP.has(expanded[0]);
 };

@@ -16,31 +16,33 @@ import {
 } from "../../../assets/food";
 import { grey } from "@mui/material/colors";
 
+const CATEGORY_EFFECT_TOOLTIP: { [key: string]: string } = {
+  MEAT: "+ potency [meat]",
+  FRUIT: "+ PP [fruit]",
+  VEGETABLE: "+ DMG resist [vegetable]",
+  SEAFOOD: "+ HP [seafood]",
+};
+
+const ATTRIBUTE_EFFECT_TOOPTIP: { [key: string]: string } = {
+  CRISPY: "+ weak point DMG [crispy]",
+  LIGHT: "+ PP recovery [light]",
+  ROBUST: "+ HP recovery [robust]",
+  RICH: "- PP cost [rich]",
+};
+
 interface FoodListItemProps {
+  // static
+  attribute: FoodAttribute;
+  category: FoodCategory;
+  // dynamic
   backgroundColor?: string;
   isDisabled: boolean;
   name: string;
-  attribute: FoodAttribute;
-  category: FoodCategory;
   value: number;
   onChange: (value: number) => void;
 }
 const FoodListItem: FC<FoodListItemProps> = memo(
   (props) => {
-    const CATEGORY_EFFECT: { [key: string]: string } = {
-      MEAT: "+ potency [meat]",
-      FRUIT: "+ PP [fruit]",
-      VEGETABLE: "+ DMG resist [vegetable]",
-      SEAFOOD: "+ HP [seafood]",
-    };
-
-    const ATTRIBUTE_EFFECT: { [key: string]: string } = {
-      CRISPY: "+ weak point DMG [crispy]",
-      LIGHT: "+ PP recovery [light]",
-      ROBUST: "+ HP recovery [robust]",
-      RICH: "- PP cost [rich]",
-    };
-
     const handleChange = (
       event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
@@ -54,15 +56,14 @@ const FoodListItem: FC<FoodListItemProps> = memo(
       }
       props.onChange(amount);
     };
-
     return (
       <Grid
         container
         paddingY={1}
         paddingX={2}
         alignItems="center"
+        textTransform="capitalize"
         sx={{
-          textTransform: "capitalize",
           backgroundColor: props.backgroundColor,
         }}
       >
@@ -76,10 +77,10 @@ const FoodListItem: FC<FoodListItemProps> = memo(
                 }}
               >
                 <Typography>
-                  {CATEGORY_EFFECT[props.category]}
+                  {CATEGORY_EFFECT_TOOLTIP[props.category]}
                 </Typography>
                 <Typography>
-                  {ATTRIBUTE_EFFECT[props.attribute]}
+                  {ATTRIBUTE_EFFECT_TOOPTIP[props.attribute]}
                 </Typography>
               </Stack>
             }
@@ -109,18 +110,7 @@ const FoodListItem: FC<FoodListItemProps> = memo(
     );
   },
   (prev, next) => {
-    if (prev.name !== next.name) {
-      return false;
-    }
-
-    if (prev.value !== next.value) {
-      return false;
-    }
-
-    if (prev.isDisabled !== next.isDisabled) {
-      return false;
-    }
-    return true;
+    return false;
   },
 );
 
@@ -153,22 +143,19 @@ const FoodList: FC<FoodListProps> = memo(
     );
   },
   (prev, next) => {
-    // check `slotIsFull`
-    if (prev.isFull !== next.isFull) {
-      return false;
-    }
-
-    // check `items`
-    if (prev.items.length !== next.items.length) {
+    if (
+      prev.isFull !== next.isFull ||
+      prev.items.length !== next.items.length
+    ) {
       return false;
     }
     for (let i = 0; i < prev.items.length; i++) {
       const prev_val = prev.items[i];
       const next_val = next.items[i];
-      if (prev_val.amount !== next_val.amount) {
-        return false;
-      }
-      if (prev_val.name !== next_val.name) {
+      if (
+        prev_val.name !== next_val.name ||
+        prev_val.amount !== next_val.amount
+      ) {
         return false;
       }
     }

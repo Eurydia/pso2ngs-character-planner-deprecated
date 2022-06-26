@@ -4,7 +4,6 @@ import {
   Fragment,
   memo,
   ReactNode,
-  useEffect,
   useState,
 } from "react";
 import {
@@ -18,10 +17,14 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import {
+  expandShorthand,
   getStatTemplate,
   isStatAddType,
+  isStatSpecialMulType,
+  isStatTypes,
   makeStat,
   StatPayload,
+  StatShorthands,
   StatTypes,
 } from "../../assets/stats";
 import {
@@ -90,133 +93,149 @@ const StatItem: FC<StatItemProps> = memo(
   },
 );
 
+const DEFAULT_VALUE_LOOKUP = getStatTemplate();
+const STAT_ICON_LOOKUP: Partial<{ [key in StatTypes]: ReactNode }> = {
+  [StatTypes.BP]: <StatBPIcon />,
+  //   [StatTypes.HP]: hp_icon,
+  //   [StatTypes.PP]: pp_icon,
+  //   [StatTypes.ATK]: atk_icon,
+  //   [StatTypes.DEF]: def_icon,
+  [StatTypes.MEL_POT]: <PotMELIcon />,
+  [StatTypes.RNG_POT]: <PotRNGIcon />,
+  [StatTypes.TEC_POT]: <PotTECIcon />,
+  [StatTypes.BURN_RESIST]: <AilBurnIcon />,
+  [StatTypes.FREEZE_RESIST]: <AilFreezeIcon />,
+  [StatTypes.SHOCK_RESIST]: <AilShockIcon />,
+  [StatTypes.BLIND_RESIST]: <AilBlindIcon />,
+  [StatTypes.PANIC_RESIST]: <AilPanicIcon />,
+  [StatTypes.POISON_RESIST]: <AilPoisonIcon />,
+  [StatTypes.PHYDOWN_RESIST]: <AilPhyDownIcon />,
+};
+const STAT_TYPES_KEYS = Object.values(StatTypes) as StatTypes[];
 interface StatListProps {
   payload: StatPayload[];
 }
-const StatList: FC<StatListProps> = (props) => {
-  const [conditions, setConditions] = useState<{
-    [key: string]: boolean;
-  }>(() => {
-    let init: { [keys: string]: boolean } = {};
-    for (const { conditionals } of props.payload) {
-      for (const { condition } of conditionals) {
-        init[condition] = true;
-      }
-    }
-    return init;
-  });
-
-  const handleConditionChange = (
-    condition: string,
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setConditions((prev) => {
-      let next = { ...prev };
-      next[condition] = event.target.checked;
-      return next;
-    });
-  };
-
-  const icon_lookup: Partial<{ [key in StatTypes]: ReactNode }> = {
-    [StatTypes.BP]: <StatBPIcon />,
-    //   [StatTypes.HP]: hp_icon,
-    //   [StatTypes.PP]: pp_icon,
-    //   [StatTypes.ATK]: atk_icon,
-    //   [StatTypes.DEF]: def_icon,
-    [StatTypes.MEL_POT]: <PotMELIcon />,
-    [StatTypes.RNG_POT]: <PotRNGIcon />,
-    [StatTypes.TEC_POT]: <PotTECIcon />,
-    [StatTypes.BURN_RESIST]: <AilBurnIcon />,
-    [StatTypes.FREEZE_RESIST]: <AilFreezeIcon />,
-    [StatTypes.SHOCK_RESIST]: <AilShockIcon />,
-    [StatTypes.BLIND_RESIST]: <AilBlindIcon />,
-    [StatTypes.PANIC_RESIST]: <AilPanicIcon />,
-    [StatTypes.POISON_RESIST]: <AilPoisonIcon />,
-    [StatTypes.PHYDOWN_RESIST]: <AilPhyDownIcon />,
-  };
-
-  let tallied = getStatTemplate();
-  for (const { stats, conditionals } of props.payload) {
-    let tallied_stats = tallyStats(stats);
-    for (const { condition, stats: con_stats } of conditionals) {
-      if (conditions[condition] === true) {
-        for (const con_stat of con_stats) {
-          tallied_stats = addStatToStatObject(
-            con_stat,
-            tallied_stats,
-          );
+const StatList: FC<StatListProps> = memo(
+  (props) => {
+    const [conditions, setConditions] = useState<{
+      [key: string]: boolean;
+    }>(() => {
+      let init: { [keys: string]: boolean } = {};
+      for (const { conditionals } of props.payload) {
+        for (const { condition } of conditionals) {
+          init[condition] = true;
         }
       }
+      return init;
+    });
+
+    const handleConditionChange = (
+      condition: string,
+      event: ChangeEvent<HTMLInputElement>,
+    ) => {
+      setConditions((prev) => {
+        let next = { ...prev };
+        next[condition] = event.target.checked;
+        return next;
+      });
+    };
+
+    let tallied = getStatTemplate();
+    for (const { stats: base, conditionals } of props.payload) {
+      let scoped_tallied = tallyStats(base);
+      for (const {
+        condition,
+        stats: condition_stats,
+      } of conditionals) {
+        if (conditions[condition] === true) {
+          for (const { stat_type: st, amount } of condition_stats) {
+            if (isStatTypes(st)) {
+              if (isStatAddType(st)) {
+                scoped_tallied[st as StatTypes] += amount;
+              } else {
+                scoped_tallied[st as StatTypes] += amount - 1;
+              }
+            } else {
+              expandShorthand(st as StatShorthands).forEach((_st) => {
+                if (isStatAddType(_st)) {
+                  scoped_tallied[_st] += amount;
+                } else {
+                  scoped_tallied[_st] += amount - 1;
+                }
+              });
+            }
+          }
+        }
+      }
+      for (const key of STAT_TYPES_KEYS) {
+        tallied = addStatToStatObject(
+          makeStat(key, scoped_tallied[key]),
+          tallied,
+        );
+      }
     }
 
-    for (const key of Object.keys(tallied_stats)) {
-      tallied = addStatToStatObject(
-        makeStat(key as StatTypes, tallied_stats[key as StatTypes]),
-        tallied,
+    let index = 0;
+    let stat_items: JSX.Element[] = [];
+    for (const key of STAT_TYPES_KEYS) {
+      const value = tallied[key];
+      const default_value = DEFAULT_VALUE_LOOKUP[key];
+      if (value === default_value) {
+        continue;
+      }
+      stat_items.push(
+        <StatItem
+          key={key}
+          icon={STAT_ICON_LOOKUP[key]}
+          backgroundColor={index % 2 === 1 ? grey[100] : undefined}
+          nameSlot={key}
+          amountSlot={parseNumberToDisplay(value, isStatAddType(key))}
+        />,
       );
+      index++;
     }
-  }
 
-  const default_lookup = getStatTemplate();
-  let index = 0;
-  let stat_items: JSX.Element[] = [];
-  for (const key of Object.keys(tallied)) {
-    const _key = key as StatTypes;
-    const value = tallied[_key];
-    const default_value = default_lookup[_key];
-
-    if (value === default_value) {
-      continue;
-    }
-    stat_items.push(
-      <StatItem
-        key={_key}
-        icon={icon_lookup[_key]}
-        backgroundColor={index % 2 === 1 ? grey[100] : undefined}
-        nameSlot={_key}
-        amountSlot={parseNumberToDisplay(value, isStatAddType(_key))}
-      />,
+    return (
+      <Box>
+        {props.payload.length === 0 ? (
+          <Typography>No stat to display.</Typography>
+        ) : (
+          <Fragment>
+            <Typography>Your character:</Typography>
+            <FormGroup>
+              {Object.keys(conditions).map((condition) => {
+                const state = conditions[condition];
+                return (
+                  <FormControlLabel
+                    key={condition}
+                    label={`${condition}.`}
+                    control={
+                      <Switch
+                        checked={state}
+                        onChange={(e) =>
+                          handleConditionChange(condition, e)
+                        }
+                      />
+                    }
+                  />
+                );
+              })}
+            </FormGroup>
+            <StatItem
+              bold
+              backgroundColor={grey["300"]}
+              nameSlot="Stat"
+              amountSlot="Amount"
+            />
+            {stat_items}
+          </Fragment>
+        )}
+      </Box>
     );
-    index++;
-  }
-
-  return (
-    <Box>
-      {props.payload.length === 0 ? (
-        <Typography>No stat to display.</Typography>
-      ) : (
-        <Fragment>
-          <Typography>Your character:</Typography>
-          <FormGroup>
-            {Object.keys(conditions).map((condition) => {
-              const state = conditions[condition];
-              return (
-                <FormControlLabel
-                  key={condition}
-                  label={`${condition}.`}
-                  control={
-                    <Switch
-                      checked={state}
-                      onChange={(e) =>
-                        handleConditionChange(condition, e)
-                      }
-                    />
-                  }
-                />
-              );
-            })}
-          </FormGroup>
-          <StatItem
-            bold
-            backgroundColor={grey["300"]}
-            nameSlot="Stat"
-            amountSlot="Amount"
-          />
-          {stat_items}
-        </Fragment>
-      )}
-    </Box>
-  );
-};
+  },
+  (prev, next) => {
+    return false;
+  },
+);
 
 export default StatList;

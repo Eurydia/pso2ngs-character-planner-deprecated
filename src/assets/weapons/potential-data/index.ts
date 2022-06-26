@@ -84,10 +84,7 @@ export const VALOROUS_UNIT = makePotentialData(
     payloadGetterWrapper(pot_level, (index: number) => {
       const POTENCY = [1.08, 1.1, 1.13, 1.14];
 
-      const stats = [
-        makeStat(StatShorthands.POT, POTENCY[index]),
-        makeStat(StatTypes.DMG_BOOST, 1.1),
-      ];
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
       return makeStatPayload(stats);
     }),
 );

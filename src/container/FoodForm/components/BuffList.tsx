@@ -17,25 +17,26 @@ import { grey } from "@mui/material/colors";
 
 interface FoodBuff {
   name: string;
-  item_used_amount: number;
   origin: string;
+  item_used_amount: number;
   parsed_amount: string;
 }
+const categories = new Set(Object.keys(FoodCategory));
+const BUFF_NAME: {
+  [key: string]: string;
+} = {
+  MEAT: "potency",
+  FRUIT: "PP",
+  VEGETABLE: "DMG resist",
+  SEAFOOD: "HP",
+  CRISPY: "DMG against weak point",
+  LIGHT: "PP recovery",
+  ROBUST: "HP recovery",
+  RICH: "PP cost",
+};
 const getFoodBuffsFromItems = (
   food_items: FoodItem[],
 ): FoodBuff[] => {
-  const BUFF_NAME: {
-    [key: string]: string;
-  } = {
-    MEAT: "potency",
-    FRUIT: "PP",
-    VEGETABLE: "DMG resist",
-    SEAFOOD: "HP",
-    CRISPY: "DMG against weak point",
-    LIGHT: "PP recovery",
-    ROBUST: "HP recovery",
-    RICH: "PP cost",
-  };
   let template: { [key in FoodCategory | FoodAttribute]: number } = {
     // category
     MEAT: 0,
@@ -48,15 +49,11 @@ const getFoodBuffsFromItems = (
     ROBUST: -3,
     RICH: -3,
   };
-
   for (const food_item of food_items) {
     const { attribute, category, amount } = food_item;
     template[attribute] += amount;
     template[category] += amount;
   }
-
-  const categories = new Set(Object.keys(FoodCategory));
-
   let res: FoodBuff[] = [];
   for (const key of Object.keys(template)) {
     const _key = key as FoodCategory | FoodAttribute;
@@ -67,16 +64,21 @@ const getFoodBuffsFromItems = (
     let item_used_amount = level;
     let parsed_amount: string = "";
     if (categories.has(_key)) {
+      const amount = getCategoryStatAmount(
+        _key as FoodCategory,
+        level,
+      );
       parsed_amount = parseNumberToDisplay(
-        getCategoryStatAmount(_key as FoodCategory, level),
+        amount,
         _key === FoodCategory.FRUIT,
       );
     } else {
       item_used_amount += 3;
-      parsed_amount = parseNumberToDisplay(
-        getAttributeStatAmount(_key as FoodAttribute, level),
-        false,
+      const amount = getAttributeStatAmount(
+        _key as FoodAttribute,
+        level,
       );
+      parsed_amount = parseNumberToDisplay(amount, false);
     }
     res.push({
       name: BUFF_NAME[key],
@@ -85,49 +87,65 @@ const getFoodBuffsFromItems = (
       parsed_amount,
     });
   }
-
   return res;
 };
 
 interface BuffListRowProps {
+  // static props
   bold?: boolean;
+  // dynamic props
   backgroundColor?: string;
   itemUsedAmountSlot: ReactNode;
   originSlot: ReactNode;
   nameSlot: ReactNode;
   parsedAmountSlot: ReactNode;
 }
-const BuffListRow: FC<BuffListRowProps> = (props) => {
-  const typo_sx: TypographyProps = {
-    fontWeight: props.bold ? "500" : undefined,
-  };
-  return (
-    <Grid
-      container
-      padding={2}
-      alignItems="flex-end"
-      sx={{
-        backgroundColor: props.backgroundColor,
-        textTransform: "capitalize",
-      }}
-    >
-      <Grid item xs={3}>
-        <Typography {...typo_sx}>
-          {props.itemUsedAmountSlot}
-        </Typography>
+const BuffListRow: FC<BuffListRowProps> = memo(
+  (props) => {
+    const typo_sx: TypographyProps = {
+      fontWeight: props.bold ? "500" : undefined,
+    };
+    return (
+      <Grid
+        container
+        padding={2}
+        alignItems="flex-end"
+        sx={{
+          backgroundColor: props.backgroundColor,
+          textTransform: "capitalize",
+        }}
+      >
+        <Grid item xs={3}>
+          <Typography {...typo_sx}>
+            {props.itemUsedAmountSlot}
+          </Typography>
+        </Grid>
+        <Grid item xs={3}>
+          <Typography {...typo_sx}>{props.originSlot}</Typography>
+        </Grid>
+        <Grid item xs>
+          <Typography {...typo_sx}>{props.nameSlot}</Typography>
+        </Grid>
+        <Grid item xs={2} display="flex" justifyContent="flex-end">
+          <Typography {...typo_sx}>
+            {props.parsedAmountSlot}
+          </Typography>
+        </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <Typography {...typo_sx}>{props.originSlot}</Typography>
-      </Grid>
-      <Grid item xs>
-        <Typography {...typo_sx}>{props.nameSlot}</Typography>
-      </Grid>
-      <Grid item xs={2} display="flex" justifyContent="flex-end">
-        <Typography {...typo_sx}>{props.parsedAmountSlot}</Typography>
-      </Grid>
-    </Grid>
-  );
-};
+    );
+  },
+  (prev, next) => {
+    if (
+      prev.backgroundColor !== next.backgroundColor ||
+      prev.itemUsedAmountSlot !== next.itemUsedAmountSlot ||
+      prev.originSlot !== next.originSlot ||
+      prev.parsedAmountSlot !== next.parsedAmountSlot
+    ) {
+      return false;
+    }
+    return true;
+  },
+);
 
 interface BuffListProps {
   items: FoodItem[];
@@ -178,12 +196,10 @@ const BuffList: FC<BuffListProps> = memo(
     for (let i = 0; i < prev.items.length; i++) {
       const prev_item = prev.items[i];
       const next_item = next.items[i];
-
-      if (prev_item.name !== next_item.name) {
-        return false;
-      }
-
-      if (prev_item.amount !== next_item.amount) {
+      if (
+        prev_item.name !== next_item.name ||
+        prev_item.amount !== next_item.amount
+      ) {
         return false;
       }
     }
