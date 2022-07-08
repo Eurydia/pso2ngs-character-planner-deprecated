@@ -8,7 +8,6 @@ import {
 let gates: BPGateData[] = [];
 
 // ------------------------------------------
-// cocoon
 gates.push(
   makeBPGateData(
     "first step",

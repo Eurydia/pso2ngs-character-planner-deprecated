@@ -8,7 +8,6 @@ import {
 let gates: BPGateData[] = [];
 
 // ------------------------------------------
-// towers
 gates.push(
   makeBPGateData(
     "alters rush",

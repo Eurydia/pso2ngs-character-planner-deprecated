@@ -1,56 +1,56 @@
-import { makeBPGateData } from "../../makeData";
 import {
   BPGateData,
   ContentTypes,
   ContentLocation,
 } from "../../types";
+import { makeBPGateData } from "../../makeData";
 
 let gates: BPGateData[] = [];
 
-// ------------------------------------------
+// ---------------------------
 gates.push(
   makeBPGateData(
-    "central aelio",
-    [ContentLocation.AELIO],
+    "west retem",
+    [ContentLocation.RETEM],
     [ContentTypes.EXPLORATION],
-    800,
-    1,
+    1223,
+    17,
   ),
 );
 gates.push(
   makeBPGateData(
-    "south aelio",
-    [ContentLocation.AELIO],
+    "central retem",
+    [ContentLocation.RETEM],
     [ContentTypes.EXPLORATION],
-    835,
-    3,
+    1263,
+    19,
   ),
 );
 gates.push(
   makeBPGateData(
-    "west aelio",
-    [ContentLocation.AELIO],
+    "north retem",
+    [ContentLocation.RETEM],
     [ContentTypes.EXPLORATION],
-    933,
-    7,
+    1396,
+    21,
   ),
 );
 gates.push(
   makeBPGateData(
-    "north aelio",
-    [ContentLocation.AELIO],
+    "south retem",
+    [ContentLocation.RETEM],
     [ContentTypes.EXPLORATION],
-    987,
-    10,
+    1474,
+    23,
   ),
 );
 gates.push(
   makeBPGateData(
-    "halphia lake",
-    [ContentLocation.AELIO],
+    "rwh maqead",
+    [ContentLocation.RETEM],
     [ContentTypes.EXPLORATION],
-    2744,
-    60,
+    1513,
+    24,
   ),
 );
 

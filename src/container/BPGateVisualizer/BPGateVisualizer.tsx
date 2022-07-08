@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { FC, Fragment, ReactFragment } from "react";
 import BP_GATES, { ContentTypes } from "../../assets/bp-gates";
-import bp_gates from "../../assets/bp-gates/data/battledias";
+import gates from "../../assets/bp-gates/data/retem/battledias";
 
 const getBPGates = () => {
   return [...BP_GATES].sort((a, b) => a.bp_required - b.bp_required);

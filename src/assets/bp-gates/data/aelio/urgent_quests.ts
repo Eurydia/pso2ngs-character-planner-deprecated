@@ -8,12 +8,10 @@ import {
 let gates: BPGateData[] = [];
 
 // ------------------------------------------
-// urgent & seasonal quests
-
 // pettas vera
 gates.push(
   makeBPGateData(
-    "pettas vera suppression (rank 1)",
+    "command DOLLS suppression (rank 1)",
     [ContentLocation.AELIO],
     [ContentTypes.UQ],
     1184,
@@ -22,7 +20,7 @@ gates.push(
 );
 gates.push(
   makeBPGateData(
-    "pettas vera suppression (rank 2)",
+    "command DOLLS suppression (rank 2)",
     [ContentLocation.AELIO],
     [ContentTypes.UQ],
     1898,
@@ -30,6 +28,7 @@ gates.push(
   ),
 );
 
+// ------------------------------------------
 // nex vera
 gates.push(
   makeBPGateData(
@@ -50,6 +49,7 @@ gates.push(
   ),
 );
 
+// ------------------------------------------
 // mining rig
 gates.push(
   makeBPGateData(
@@ -70,7 +70,8 @@ gates.push(
   ),
 );
 
-// df
+// ------------------------------------------
+// dark falz
 gates.push(
   makeBPGateData(
     "dark falz interception (rank 1)",
@@ -81,6 +82,7 @@ gates.push(
   ),
 );
 
+// ------------------------------------------
 // spring event
 gates.push(
   makeBPGateData(

@@ -1,37 +1,37 @@
-import { makeBPGateData } from "../../makeData";
 import {
   BPGateData,
   ContentTypes,
   ContentLocation,
 } from "../../types";
+import { makeBPGateData } from "../../makeData";
 
 let gates: BPGateData[] = [];
 
-// ------------------------------------------
+// ---------------------------
 gates.push(
   makeBPGateData(
-    "the first mission",
-    [ContentLocation.AELIO],
+    "the corner stone of retem's revival",
+    [ContentLocation.RETEM],
     [ContentTypes.QUEST],
-    830,
+    1243,
     0,
   ),
 );
 gates.push(
   makeBPGateData(
-    "preparing for battle",
-    [ContentLocation.AELIO],
+    "the truth behind the song",
+    [ContentLocation.RETEM],
     [ContentTypes.QUEST],
-    950,
+    1474,
     0,
   ),
 );
 gates.push(
   makeBPGateData(
-    "an abundance of caution",
-    [ContentLocation.AELIO],
+    "retem's independent partisan squad",
+    [ContentLocation.RETEM],
     [ContentTypes.QUEST],
-    1100,
+    1633,
     0,
   ),
 );

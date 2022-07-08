@@ -5,28 +5,26 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-// ---------------------------
 let gates: BPGateData[] = [];
-// ---------------------------
 
 // ---------------------------
 // yellow
 gates.push(
   makeBPGateData(
-    "aelio yellow (rank 1)",
-    [ContentLocation.AELIO],
+    "retem yellow (rank 1)",
+    [ContentLocation.RETEM],
     [ContentTypes.BATTLEDIA],
-    1081,
-    16,
+    1474,
+    25,
   ),
 );
 gates.push(
   makeBPGateData(
-    "aelio yellow (rank 1)",
-    [ContentLocation.AELIO],
+    "retem yellow (rank 2)",
+    [ContentLocation.RETEM],
     [ContentTypes.BATTLEDIA],
-    1363,
-    24,
+    2049,
+    45,
   ),
 );
 
@@ -34,20 +32,20 @@ gates.push(
 // purple
 gates.push(
   makeBPGateData(
-    "aelio purple (rank 1)",
-    [ContentLocation.AELIO],
+    "retem purple (rank 1)",
+    [ContentLocation.RETEM],
     [ContentTypes.BATTLEDIA],
-    1363,
-    24,
+    1813,
+    39,
   ),
 );
 gates.push(
   makeBPGateData(
-    "aelio purple (rank 2)",
-    [ContentLocation.AELIO],
+    "retem purple (rank 2)",
+    [ContentLocation.RETEM],
     [ContentTypes.BATTLEDIA],
-    1957,
-    44,
+    2114,
+    49,
   ),
 );
 

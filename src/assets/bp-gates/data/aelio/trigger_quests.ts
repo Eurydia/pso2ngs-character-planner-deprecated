@@ -8,8 +8,7 @@ import {
 let gates: BPGateData[] = [];
 
 // ------------------------------------------
-// urgent & seasonal quests
-
+// dark falz rank 2 is only available as trigger quest
 gates.push(
   makeBPGateData(
     "dark falz interception (rank 2)",

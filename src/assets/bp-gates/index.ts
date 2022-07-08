@@ -1,4 +1,4 @@
-import { default as battledias } from "./data/battledias";
+import { default as battledias } from "./data/retem/battledias";
 import { default as cocoons } from "./data/cocoons";
 import { default as combats } from "./data/combats";
 import { default as explorations } from "./data/explorations";

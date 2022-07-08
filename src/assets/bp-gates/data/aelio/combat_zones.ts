@@ -8,8 +8,6 @@ import {
 let gates: BPGateData[] = [];
 
 // ------------------------------------------
-// combat zone
-
 // magnus
 gates.push(
   makeBPGateData(
@@ -39,6 +37,7 @@ gates.push(
   ),
 );
 
+// ------------------------------------------
 // lab
 gates.push(
   makeBPGateData(
@@ -68,6 +67,7 @@ gates.push(
   ),
 );
 
+// ------------------------------------------
 // resol
 gates.push(
   makeBPGateData(
