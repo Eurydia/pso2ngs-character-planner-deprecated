@@ -1,20 +1,8 @@
-import { default as battledias } from "./data/retem/battledias";
-import { default as cocoons } from "./data/cocoons";
-import { default as combats } from "./data/combats";
-import { default as explorations } from "./data/explorations";
-import { default as quests } from "./data/quests";
-import { default as towers } from "./data/towers";
-import { default as uqs } from "./data/uqs";
+import { BPGateData } from "./types";
+import aelio from "./data/aelio";
+import retem from "./data/retem";
+import kvaris from "./data/kvaris";
 
-export * from "./types";
+const BP_GATE_DATA: BPGateData[] = [...aelio, ...retem, ...kvaris];
 
-const BP_GATES = Object.freeze([
-  ...battledias,
-  ...cocoons,
-  ...combats,
-  ...explorations,
-  ...quests,
-  ...towers,
-  ...uqs,
-]);
-export default BP_GATES;
+export default BP_GATE_DATA;

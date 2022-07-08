@@ -7,11 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import { FC, Fragment, ReactFragment } from "react";
-import BP_GATES, { ContentTypes } from "../../assets/bp-gates";
+import BP_GATE_DATA, { ContentTypes } from "../../assets/bp-gates";
 import gates from "../../assets/bp-gates/data/retem/battledias";
 
 const getBPGates = () => {
-  return [...BP_GATES].sort((a, b) => a.bp_required - b.bp_required);
+  return [...BP_GATE_DATA].sort(
+    (a, b) => a.bp_required - b.bp_required,
+  );
 };
 
 interface BPGateItemProps {

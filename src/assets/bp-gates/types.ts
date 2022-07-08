@@ -8,6 +8,7 @@ export enum ContentTypes {
   TOWER = "tower",
   BATTLEDIA = "battledia",
   QUEST = "story quest",
+  TRINITAS = "trinitas",
 }
 
 export enum ContentLocation {
