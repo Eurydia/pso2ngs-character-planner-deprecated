@@ -6,8 +6,24 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
-import { makeGrowthRate } from "./makeData";
-import { WeaponData, GrowthRate } from "./types";
+import { WeaponData } from "./types";
+
+// TODO: Add growth rate for six and seven star weapons
+
+type GrowthRate = {
+  enhancement: number;
+  bonus: number;
+};
+
+const makeGrowthRate = (
+  enhancement: number,
+  bonus: number,
+): GrowthRate => {
+  return {
+    enhancement,
+    bonus,
+  };
+};
 
 const ONE_STAR_GROWTH_RATE = [
   makeGrowthRate(10, 22),

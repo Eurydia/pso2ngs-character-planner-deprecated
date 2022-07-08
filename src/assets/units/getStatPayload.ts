@@ -5,8 +5,24 @@ import {
   StatPayload,
   StatTypes,
 } from "../stats";
-import { makeGrowthRate } from "./makeData";
 import { UnitData } from "./types";
+
+export type GrowthRate = {
+  enhancement: number;
+  bonus: number;
+};
+
+export const makeGrowthRate = (
+  enhancement: number,
+  bonus: number,
+): GrowthRate => {
+  return {
+    enhancement,
+    bonus,
+  };
+};
+
+// TODO: Add growth rate for six star units
 
 const ONE_STAR_GROWTH_RATE = [
   makeGrowthRate(10, 10),

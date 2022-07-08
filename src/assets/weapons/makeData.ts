@@ -4,23 +4,13 @@ import {
   Stat,
   StatPayload,
 } from "../stats";
-import { PotentialData, WeaponData, GrowthRate } from "./types";
+import { PotentialData, WeaponData } from "./types";
 
 export const makePotentialData = (
   name: string,
   getPayload: (pot_level: number) => StatPayload,
 ): PotentialData => {
   return { name, getPayload };
-};
-
-export const makeGrowthRate = (
-  enhancement: number,
-  bonus: number,
-): GrowthRate => {
-  return {
-    enhancement,
-    bonus,
-  };
 };
 
 /**
