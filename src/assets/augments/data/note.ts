@@ -117,4 +117,60 @@ augments.push(
   ]),
 );
 
+// --------------------------------------
+// kvar
+// exploration
+// a
+augments.push(
+  makeAugmentData("kvar note a", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 5),
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 5),
+  ]),
+);
+// b
+augments.push(
+  makeAugmentData("kvar note b", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 4),
+    makeStat(StatTypes.MEL_POT, 1.02),
+    makeStat(StatTypes.RNG_POT, 1.02),
+    makeStat(StatTypes.DMG_RESIST, 0.98),
+  ]),
+);
+// c
+augments.push(
+  makeAugmentData("kvar note c", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 4),
+    makeStat(StatTypes.MEL_POT, 1.02),
+    makeStat(StatTypes.TEC_POT, 1.02),
+    makeStat(StatTypes.DMG_RESIST, 0.98),
+  ]),
+);
+// d
+augments.push(
+  makeAugmentData("kvar note d", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 4),
+    makeStat(StatTypes.RNG_POT, 1.02),
+    makeStat(StatTypes.TEC_POT, 1.02),
+    makeStat(StatTypes.DMG_RESIST, 0.98),
+  ]),
+);
+// combat
+// lostral
+augments.push(
+  makeAugmentData("lostral note", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 5),
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatShorthands.POT, 1.025),
+  ]),
+);
+// belgan
+augments.push(
+  makeAugmentData("lostral note", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 5),
+    makeStat(StatTypes.HP, 3),
+    makeStat(StatShorthands.POT, 1.025),
+  ]),
+);
+
 export default augments;

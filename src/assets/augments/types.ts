@@ -15,6 +15,7 @@ export enum AugmentGroups {
   FUSIA = "FUSIA",
   ADDI = "ADDI",
   TRIA = "TRIA",
+  DECOLD = "DECOLD",
   S = "S",
 }
 

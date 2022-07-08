@@ -38,4 +38,36 @@ let augments: AugmentData[] = [];
   });
 })();
 
+// --------------------------------------
+// aglai
+augments.push(
+  makeAugmentData("gigas aglai", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.RNG_POT, 1.025),
+  ]),
+);
+
+// --------------------------------------
+// euphroy
+augments.push(
+  makeAugmentData("gigas euphroy", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+
+// --------------------------------------
+// thali
+augments.push(
+  makeAugmentData("gigas thali", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.RNG_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
 export default augments;

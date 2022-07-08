@@ -165,4 +165,119 @@ let augments: AugmentData[] = [];
   });
 })();
 
+// --------------------------------------
+// frostyl | crocys | ams
+(() => {
+  const bps = [7, 8, 10];
+  const hp = [10, 10, 10];
+  const pp = [3, 3, 3];
+  const pot_type = expandPot();
+  const pot = [1.01, 1.02, 1.025];
+
+  const names = ["frostyl", "crocys", "ams"];
+  names.forEach((name, pot_type_index) => {
+    bps.forEach((bp, level_index) => {
+      const level = level_index + 1;
+      const stats = [
+        makeStat(StatTypes.BP, bp),
+        makeStat(StatTypes.HP, hp[level_index]),
+        makeStat(StatTypes.PP, pp[level_index]),
+        makeStat(pot_type[pot_type_index], pot[level_index]),
+      ];
+      augments.push(
+        makeAugmentData(
+          `${name} soul`,
+          level,
+          GROUP,
+          CONFLICT,
+          stats,
+        ),
+      );
+    });
+  });
+})();
+
+// --------------------------------------
+// aglai P | H | X
+augments.push(
+  makeAugmentData("aglai soul p", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.PP, 5),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.RNG_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("aglai soul h", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.RNG_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("aglai soul x", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 3),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.RNG_POT, 1.025),
+  ]),
+);
+
+// --------------------------------------
+// euphroy P | H | X
+augments.push(
+  makeAugmentData("euphroy soul p", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.PP, 5),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("euphroy soul h", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("euphroy soul x", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 3),
+    makeStat(StatTypes.MEL_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+
+// --------------------------------------
+// thali P | H | X
+augments.push(
+  makeAugmentData("thali soul p", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.PP, 5),
+    makeStat(StatTypes.RNG_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("thali soul h", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 15),
+    makeStat(StatTypes.RNG_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
+augments.push(
+  makeAugmentData("thali soul x", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 11),
+    makeStat(StatTypes.HP, 10),
+    makeStat(StatTypes.PP, 3),
+    makeStat(StatTypes.RNG_POT, 1.025),
+    makeStat(StatTypes.TEC_POT, 1.025),
+  ]),
+);
 export default augments;

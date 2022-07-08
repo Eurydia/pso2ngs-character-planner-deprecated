@@ -1,4 +1,4 @@
-import { makeStat, StatTypes } from "../../stats";
+import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeAugmentData";
 import { AugmentData, AugmentGroups } from "../types";
 
@@ -76,5 +76,14 @@ let augments: AugmentData[] = [];
     );
   });
 })();
+
+// --------------------------------------
+// triplble
+augments.push(
+  makeAugmentData("triplble", 0, GROUP, CONFLICT, [
+    makeStat(StatTypes.BP, 8),
+    makeStat(StatShorthands.POT, 1.02),
+  ]),
+);
 
 export default augments;

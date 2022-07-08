@@ -30,6 +30,8 @@ export enum StatTypes {
   POISON_RESIST = "poison resist",
   PHYDOWN_RESIST = "physical down resist",
   AILMENT_DURATION = "ailment duration",
+
+  LOW_TEMP_RESIST = "harsh enviroment resist",
 }
 
 /**

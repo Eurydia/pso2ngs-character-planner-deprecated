@@ -59,6 +59,7 @@ export const getStatTemplate = (): StatObject => {
     [StatTypes.PANIC_RESIST]: 1,
     [StatTypes.POISON_RESIST]: 1,
     [StatTypes.PHYDOWN_RESIST]: 1,
+    [StatTypes.LOW_TEMP_RESIST]: 1,
 
     // indepth stats
     [StatTypes.HP_RECOVERY_BOOST]: 1,
@@ -98,16 +99,15 @@ export const isStatAddType = (
   return ADD_STAT_TYPES_LOOKUP.has(expanded[0]);
 };
 
-const SPECIAL_MUL_STAT_TYPES_LOOKUP = new Set([
-  StatTypes.CRIT_CHANCE,
-]);
 /**
  * Basically checking for the crit chance and harsh envi resist
  * Stats that are displayed as percentage, but
  * stacked additively.
- * @param stat_type
- * @returns
  */
+const SPECIAL_MUL_STAT_TYPES_LOOKUP = new Set([
+  StatTypes.CRIT_CHANCE,
+  StatTypes.LOW_TEMP_RESIST,
+]);
 export const isStatSpecialMulType = (
   stat_type: StatTypes | StatShorthands,
 ) => {
