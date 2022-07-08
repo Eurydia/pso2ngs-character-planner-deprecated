@@ -11,6 +11,16 @@ export const makeGrowthRate = (
   };
 };
 
+/**
+ * make a unit
+ * @param name
+ * @param rarity
+ * @param level_required
+ * @param base_defense
+ * @param stats
+ * @param conditionals
+ * @returns a unit data
+ */
 export const makeUnitData = (
   name: string,
   rarity: number,
