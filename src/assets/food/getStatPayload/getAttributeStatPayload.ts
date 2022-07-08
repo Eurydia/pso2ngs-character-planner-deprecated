@@ -33,7 +33,7 @@ export const getAttributeStatAmount = (
   }
   const _level = level > 7 ? 6 : level - 1;
 
-  let ref: null | number[] = null;
+  let ref: null | number[];
   switch (attribute) {
     case FoodAttribute.CRISPY:
       ref = CRISPY_EFFECT_REF;
@@ -47,6 +47,8 @@ export const getAttributeStatAmount = (
     case FoodAttribute.RICH:
       ref = RICH_EFFECT_REF;
       break;
+    default:
+      ref = null;
   }
 
   if (ref === null) {
@@ -70,6 +72,7 @@ export const getAttributeStatPayload = (
 
   let stats: Stat[] = [];
   let conditionals: Conditional[] = [];
+
   switch (attribute) {
     case FoodAttribute.CRISPY:
       conditionals = [
@@ -88,6 +91,8 @@ export const getAttributeStatPayload = (
     case FoodAttribute.RICH:
       stats = [makeStat(StatTypes.PP_COST, amount)];
       break;
+    default:
+      return makeStatPayload([], []);
   }
 
   return makeStatPayload(stats, conditionals);

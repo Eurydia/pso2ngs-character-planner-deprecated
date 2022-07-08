@@ -36,7 +36,7 @@ export const getCategoryStatAmount = (
   }
   const _level = level > 10 ? 9 : level - 1;
 
-  let ref: null | number[] = null;
+  let ref: null | number[];
   switch (category) {
     case FoodCategory.VEGETABLE:
       ref = VEGETABLE_EFFECT_REF;
@@ -49,6 +49,9 @@ export const getCategoryStatAmount = (
       break;
     case FoodCategory.FRUIT:
       ref = FRUIT_EFFECT_REF;
+      break;
+    default:
+      ref = null;
       break;
   }
 
@@ -88,6 +91,8 @@ export const getCategoryStatPayload = (
     case FoodCategory.FRUIT:
       stats = [makeStat(StatTypes.PP, amount)];
       break;
+    default:
+      return makeStatPayload([], []);
   }
 
   return makeStatPayload(stats, conditionals);
