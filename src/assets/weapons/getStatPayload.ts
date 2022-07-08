@@ -70,9 +70,11 @@ export const getWeaponATKAmount = (
   rarity: number,
   enhancement: number,
 ): number => {
-  // default growth rate is one star rarity
-  let growth_rate: GrowthRate[] = ONE_STAR_GROWTH_RATE;
+  let growth_rate: GrowthRate[];
   switch (rarity) {
+    case 1:
+      growth_rate = ONE_STAR_GROWTH_RATE;
+      break;
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -84,6 +86,9 @@ export const getWeaponATKAmount = (
       break;
     case 5:
       growth_rate = FIVE_STAR_GROWTH_RATE;
+      break;
+    default:
+      growth_rate = ONE_STAR_GROWTH_RATE;
       break;
   }
 

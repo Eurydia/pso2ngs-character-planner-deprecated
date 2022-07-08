@@ -7,7 +7,7 @@ import {
 } from "../stats";
 import { UnitData } from "./types";
 
-export type GrowthRate = {
+type GrowthRate = {
   enhancement: number;
   bonus: number;
 };
@@ -69,8 +69,11 @@ export const getUnitDEFAmount = (
   rarity: number,
   enhancement: number,
 ): number => {
-  let growth_rate = ONE_STAR_GROWTH_RATE;
+  let growth_rate: GrowthRate[];
   switch (rarity) {
+    case 1:
+      growth_rate = ONE_STAR_GROWTH_RATE;
+      break;
     case 2:
       growth_rate = TWO_STAR_GROWTH_RATE;
       break;
@@ -82,6 +85,9 @@ export const getUnitDEFAmount = (
       break;
     case 5:
       growth_rate = FIVE_STAR_GROWTH_RATE;
+      break;
+    default:
+      growth_rate = ONE_STAR_GROWTH_RATE;
       break;
   }
 
