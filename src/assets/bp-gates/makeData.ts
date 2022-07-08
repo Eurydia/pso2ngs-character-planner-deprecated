@@ -1,17 +1,17 @@
-import { BPGateData, ContentRegions, ContentTypes } from "./types";
+import { BPGateData, ContentLocation, ContentTypes } from "./types";
 
 export const makeBPGateData = (
   name: string,
-  content_region: ContentRegions,
-  content_type: ContentTypes,
+  region: ContentLocation[],
+  content_type: (ContentTypes | string)[],
   bp_required: number,
   enemy_level: number,
 ): BPGateData => {
-  return Object.freeze({
+  return {
     name,
-    content_region,
+    region,
     content_type,
     bp_required,
     enemy_level,
-  });
+  };
 };

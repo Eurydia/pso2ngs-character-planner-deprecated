@@ -20,7 +20,6 @@ import {
   expandShorthand,
   getStatTemplate,
   isStatAddType,
-  isStatSpecialMulType,
   isStatTypes,
   makeStat,
   StatPayload,

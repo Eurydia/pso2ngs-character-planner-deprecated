@@ -22,10 +22,6 @@ interface BPGateItemProps {
   enemy_level: number;
 }
 const BPGateItem: FC<BPGateItemProps> = (props) => {
-  const marks: { value: number; label: string }[] = [
-    { value: 0, label: "0 BP" },
-    { value: props.bp_required, label: `${props.bp_required} BP` },
-  ];
   return (
     <Box>
       <Stack>

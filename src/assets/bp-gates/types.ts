@@ -2,14 +2,15 @@ export enum ContentTypes {
   EXPLORATION = "exploration zone",
   COMBAT = "combat zone",
   UQ = "urgent quest",
+  DRILL = "drill quest",
+  TRIGGER = "trigger quest",
   COCOON = "cocoon",
   TOWER = "tower",
   BATTLEDIA = "battledia",
   QUEST = "story quest",
 }
 
-export enum ContentRegions {
-  ALL = "all region",
+export enum ContentLocation {
   AELIO = "aelio",
   RETEM = "retem",
   KVARIS = "kvaris",
@@ -17,8 +18,8 @@ export enum ContentRegions {
 
 export type BPGateData = Readonly<{
   name: string;
-  content_region: ContentRegions;
-  content_type: ContentTypes | string;
+  region: ContentLocation[];
+  content_type: (ContentTypes | string)[];
   bp_required: number;
   enemy_level: number;
 }>;
