@@ -1,13 +1,20 @@
-import { default as one } from "./data/one";
-import { default as two } from "./data/two";
-import { default as three } from "./data/three";
-import { default as four } from "./data/four";
-import { default as five } from "./data/five";
+import { UnitData } from "./types";
+import one from "./data/one";
+import two from "./data/two";
+import three from "./data/three";
+import four from "./data/four";
+import five from "./data/five";
 
 export * from "./types";
 export * from "./getStatPayload";
 export * from "./utility";
 
-const UNITS = [...one, ...two, ...three, ...four, ...five];
+const UNITS: UnitData[] = [
+  ...one,
+  ...two,
+  ...three,
+  ...four,
+  ...five,
+];
 
 export default UNITS;

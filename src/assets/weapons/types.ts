@@ -53,6 +53,7 @@ export type WeaponData = Readonly<{
  * you should be able to know about everything else.
  */
 export type WeaponDataSignature = Pick<WeaponData, "name">;
+
 /**
  * What a weapon looks like when fully combined
  * with other aspects.

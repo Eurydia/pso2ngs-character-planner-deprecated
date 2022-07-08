@@ -1,11 +1,11 @@
-import { default as hunter } from "./classes-data/hunter";
-import { default as fighter } from "./classes-data/fighter";
-import { default as ranger } from "./classes-data/ranger";
-import { default as gunner } from "./classes-data/gunner";
-import { default as force } from "./classes-data/force";
-import { default as techter } from "./classes-data/techter";
-import { default as braver } from "./classes-data/braver";
-import { default as bouncer } from "./classes-data/bouncer";
+import hunter from "./classes-data/hunter";
+import fighter from "./classes-data/fighter";
+import ranger from "./classes-data/ranger";
+import gunner from "./classes-data/gunner";
+import force from "./classes-data/force";
+import techter from "./classes-data/techter";
+import braver from "./classes-data/braver";
+import bouncer from "./classes-data/bouncer";
 
 export * from "./types";
 export * from "./typeguard";

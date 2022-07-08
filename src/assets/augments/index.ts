@@ -1,23 +1,24 @@
-import { default as addi } from "./data/addi";
-import { default as basic } from "./data/basic";
-import { default as domina } from "./data/domina";
-import { default as dread } from "./data/dread";
-import { default as duable } from "./data/dualble";
-import { default as elemental } from "./data/elemental";
-import { default as fused } from "./data/fused";
-import { default as fusia } from "./data/fusia";
-import { default as gigas } from "./data/gigas";
-import { default as note } from "./data/note";
-import { default as secreata } from "./data/secreta";
-import { default as soul } from "./data/soul";
-import { default as tria } from "./data/tria";
-import { default as ward } from "./data/ward";
+import addi from "./data/addi";
+import basic from "./data/basic";
+import domina from "./data/domina";
+import dread from "./data/dread";
+import duable from "./data/dualble";
+import elemental from "./data/elemental";
+import fused from "./data/fused";
+import fusia from "./data/fusia";
+import gigas from "./data/gigas";
+import note from "./data/note";
+import secreata from "./data/secreta";
+import soul from "./data/soul";
+import tria from "./data/tria";
+import ward from "./data/ward";
+import { AugmentData } from "./types";
 
 export * from "./types";
 export * from "./typeguard";
 export * from "./utility";
 
-const AUGMENTS = Object.freeze([
+const AUGMENTS: AugmentData[] = [
   ...addi,
   ...basic,
   ...domina,
@@ -32,5 +33,5 @@ const AUGMENTS = Object.freeze([
   ...soul,
   ...tria,
   ...ward,
-]);
+];
 export default AUGMENTS;
