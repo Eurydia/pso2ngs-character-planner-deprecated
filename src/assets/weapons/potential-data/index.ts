@@ -101,7 +101,7 @@ export const DYNAMO_UNIT = makePotentialData(
       const conditionals = [
         makeConditional(
           [makeStat(StatTypes.CRIT_CHANCE, crit_chance)],
-          "has successfully sidestepped",
+          "has successfully side-stepped",
         ),
       ];
       return makeStatPayload(stats, conditionals);
@@ -352,5 +352,177 @@ export const UNASSAILABLE_UNIT = makePotentialData(
         ),
       ];
       return makeStatPayload(stats, conditionals);
+    }),
+);
+
+// -----------------------
+export const ELUSIVE_UNIT = makePotentialData(
+  PotentialSeries.ELUSIVE_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.16, 1.18, 1.21, 1.22];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.NATURAL_PP_RECOVERY, 2)],
+          "has successfully side-stepped",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const TRAMPLE_UNIT = makePotentialData(
+  PotentialSeries.TRAMPLE_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.15, 1.17, 1.2, 1.22];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatShorthands.POT, 1.06)],
+          "is attacking non-boss enemy",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const REVOLUTIONARY_UNIT = makePotentialData(
+  PotentialSeries.REVOLUTIONARY_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.18, 1.2, 1.23, 1.24];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      return makeStatPayload(stats);
+    }),
+);
+
+// -----------------------
+export const DESPERATION_UNIT = makePotentialData(
+  PotentialSeries.DESPERATION_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.12, 1.14, 1.17, 1.18];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.CRIT_CHANCE, 1.3)],
+          "has less than 50% PP",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const STACCATO_UNIT = makePotentialData(
+  PotentialSeries.STACCATO_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.18, 1.2, 1.22, 1.23];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.ACTIVE_PP_RECOVERY, 1.2)],
+          "has landed an attack",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const ILLUSORY_UNIT = makePotentialData(
+  PotentialSeries.ILLUSORY_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.18, 1.2, 1.23, 1.24];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.NATURAL_PP_RECOVERY, 2)],
+          "has successfully side-stepped",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const CITADEL_UNIT = makePotentialData(
+  PotentialSeries.CITADEL_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.18, 1.2, 1.23, 1.25];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.DMG_RESIST, 1.4)],
+          "has barrier active",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const PURSUIT_UNIT = makePotentialData(
+  PotentialSeries.PURSUIT_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.12, 1.14, 1.17, 1.19];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      return makeStatPayload(stats);
+    }),
+);
+
+// -----------------------
+export const GYRATING_UNIT = makePotentialData(
+  PotentialSeries.GYRATING_UNIT,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.18, 1.2, 1.23, 1.25];
+
+      const stats = [makeStat(StatShorthands.POT, POTENCY[index])];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.PP_COST, 0.7)],
+          "has consumed 300 PP",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
+    }),
+);
+
+// -----------------------
+export const TEMPERED_FORM = makePotentialData(
+  PotentialSeries.TEMPERED_FORM,
+  (pot_level: number) =>
+    payloadGetterWrapper(pot_level, (index: number) => {
+      const POTENCY = [1.12, 1.14, 1.16, 1.17];
+
+      const stats = [
+        makeStat(StatShorthands.POT, POTENCY[index]),
+        makeStat(StatTypes.CRIT_CHANCE, 1.1),
+        makeStat(StatTypes.PP_COST, 0.9),
+      ];
+      const conditional = [
+        makeConditional(
+          [makeStat(StatTypes.PB_GAUGE_CHARGE_RATE, 1.2)],
+          "is attacking",
+        ),
+      ];
+      return makeStatPayload(stats, conditional);
     }),
 );
