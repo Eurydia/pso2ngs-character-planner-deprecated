@@ -10,7 +10,7 @@ let gates: BPGateData[] = [];
 // ---------------------------
 gates.push(
   makeBPGateData(
-    "kvaris independent partisab squad",
+    "kvaris independent partisan squad",
     [ContentLocation.KVARIS],
     [ContentTypes.QUEST],
     2251,

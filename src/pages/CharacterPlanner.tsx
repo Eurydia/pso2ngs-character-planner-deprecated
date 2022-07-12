@@ -27,11 +27,12 @@ import {
   loadCharacterFromLocal,
   saveCharacterToLocal,
 } from "../assets/character";
+import { StatTypes } from "../assets/stats";
 import CharacterForm from "../container/CharacterForm/CharacterForm";
 import FoodForm from "../container/FoodForm/FoodForm";
 import WeaponForm from "../container/EquipmentForm/WeaponForm";
 import UnitForm from "../container/EquipmentForm/UnitForm";
-import { StatTypes } from "../assets/stats";
+import BPGate from "../container/BPGateVisualizer";
 
 const getTotalBP = (
   character: Character,
@@ -230,7 +231,7 @@ const CharacterPlanner = () => {
           />
         </Grid>
         <Grid item md={12}>
-          {/* <BPGateVisualizer character_bp={bp} /> */}
+          <BPGate bpCharacter={bp} />
         </Grid>
       </Grid>
     </Container>

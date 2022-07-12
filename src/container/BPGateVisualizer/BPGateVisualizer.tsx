@@ -1,54 +1,71 @@
 import {
   Box,
+  Card,
+  CardContent,
+  CardHeader,
   Grid,
   LinearProgress,
-  Slider,
   Stack,
   Typography,
 } from "@mui/material";
-import { FC, Fragment, ReactFragment } from "react";
-import BP_GATE_DATA, { ContentTypes } from "../../assets/bp-gates";
-import gates from "../../assets/bp-gates/data/retem/battledias";
-
-const getBPGates = () => {
-  return [...BP_GATE_DATA].sort(
-    (a, b) => a.bp_required - b.bp_required,
-  );
-};
+import { FC, Fragment } from "react";
+import GATE_DATA, { ContentTypes } from "../../assets/bp-gates";
 
 interface BPGateItemProps {
-  char_bp: number;
+  bpCharacter: number;
   name: string;
-  bp_required: number;
-  content_type: ContentTypes;
-  enemy_level: number;
+  bpRequired: number;
+  contentType: (ContentTypes | string)[];
+  enemyLevel: number;
 }
 const BPGateItem: FC<BPGateItemProps> = (props) => {
+  const value =
+    props.bpCharacter >= props.bpRequired
+      ? 100
+      : (props.bpCharacter / props.bpRequired) * 100;
+
   return (
-    <Box>
-      <Stack>
-        <LinearProgress
-          variant="determinate"
-          value={(500 / props.bp_required) * 100}
-        />
-        <Typography>{props.name}</Typography>
-      </Stack>
-    </Box>
+    <Card>
+      <CardContent>
+        <Typography>
+          {`${props.bpCharacter}/${props.bpRequired}`}
+        </Typography>
+        <LinearProgress variant="determinate" value={value} />
+        <Typography
+          textTransform="capitalize"
+          sx={{ wordBreak: "break-word" }}
+        >
+          {props.name}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 
-interface BPGateVisualizerProps {
-  character_bp: number;
+interface BPGateProps {
+  bpCharacter: number;
 }
-const BPGateVisualizer: FC<BPGateVisualizerProps> = (props) => {
+const BPGate: FC<BPGateProps> = (props) => {
   return (
-    <Grid container spacing={4} columns={16}>
-      {getBPGates().map((gate) => (
-        <Grid item md={4} key={gate.name}>
-          {/* <BPGateItem char_bp={props.character_bp} {...gate} /> */}
+    <Card variant="outlined">
+      <CardContent>
+        <Grid container spacing={1} columns={12}>
+          {GATE_DATA.map(
+            ({ name, bp_required, content_type, enemy_level }) => (
+              <Grid item md={4} key={name}>
+                <BPGateItem
+                  bpCharacter={props.bpCharacter}
+                  name={name}
+                  bpRequired={bp_required}
+                  contentType={content_type}
+                  enemyLevel={enemy_level}
+                />
+              </Grid>
+            ),
+          )}
         </Grid>
-      ))}
-    </Grid>
+      </CardContent>
+    </Card>
   );
 };
-export default BPGateVisualizer;
+export default BPGate;
