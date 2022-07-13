@@ -1,4 +1,11 @@
-import { FC, Fragment, memo, useEffect, useState } from "react";
+import {
+  ReactNode,
+  FC,
+  Fragment,
+  memo,
+  useEffect,
+  useState,
+} from "react";
 import {
   Button,
   Card,
@@ -20,6 +27,70 @@ import { FOOD_ITEM_MAX } from "../../stores";
 import FoodList from "./components/FoodList";
 import BuffList from "./components/BuffList";
 import FilterTextField from "./components/FilterTextField";
+
+interface CustomDialogInterface {
+  isOpen: boolean;
+  onClose: () => void;
+  content: ReactNode;
+}
+const CustomDialog: FC<CustomDialogInterface> = ({
+  isOpen,
+  onClose,
+  content,
+}) => {
+  return (
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      fullWidth
+      maxWidth="sm"
+      scroll="body"
+    >
+      <DialogTitle>
+        <Stack spacing={1} direction="row" alignItems="center">
+          <AutoAwesome color="primary" />
+          <Typography
+            variant="h6"
+            color="primary"
+            textTransform="capitalize"
+          >
+            active buffs
+          </Typography>
+        </Stack>
+      </DialogTitle>
+      <DialogContent>{content}</DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>close</Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+interface CustomCardInterface {
+  content: ReactNode;
+  actions: ReactNode;
+}
+const CustomCard: FC<CustomCardInterface> = ({
+  content,
+  actions,
+}) => {
+  return (
+    <Card variant="outlined">
+      <CardHeader
+        title={
+          <Stack spacing={1} direction="row" alignItems="center">
+            <Fastfood color="primary" />
+            <Typography variant="h6" color="primary">
+              Food Buff
+            </Typography>
+          </Stack>
+        }
+      />
+      <CardContent>{content}</CardContent>
+      <CardActions>{actions}</CardActions>
+    </Card>
+  );
+};
 
 const filterItems = (
   filter_string: string,
@@ -82,13 +153,14 @@ const FoodForm: FC<FoodFormProps> = memo(
       }
       return init;
     });
+
     useEffect(() => {
       props.onChange(items.filter((item) => item.amount > 0));
     }, [props, items]);
 
     const handleAmountChange = (value: number, item_name: string) => {
       setItems((prev) => {
-        let target_index = -1;
+        let target_index = 0;
         let usable = FOOD_ITEM_MAX;
         prev.forEach(({ name, amount }, index) => {
           if (name === item_name) {
@@ -105,6 +177,7 @@ const FoodForm: FC<FoodFormProps> = memo(
         return next;
       });
     };
+
     const openDialog = () => setDialogOpen(true);
     const closeDialog = () => setDialogOpen(false);
 
@@ -115,18 +188,8 @@ const FoodForm: FC<FoodFormProps> = memo(
 
     return (
       <Fragment>
-        <Card variant="outlined">
-          <CardHeader
-            title={
-              <Stack spacing={1} direction="row" alignItems="center">
-                <Fastfood color="primary" />
-                <Typography variant="h6" color="primary">
-                  Food Buff
-                </Typography>
-              </Stack>
-            }
-          />
-          <CardContent>
+        <CustomCard
+          content={
             <Stack spacing={4}>
               <FilterTextField
                 value={filterString}
@@ -138,8 +201,8 @@ const FoodForm: FC<FoodFormProps> = memo(
                 onChange={handleAmountChange}
               />
             </Stack>
-          </CardContent>
-          <CardActions>
+          }
+          actions={
             <Button
               onClick={openDialog}
               startIcon={<AutoAwesome />}
@@ -147,32 +210,17 @@ const FoodForm: FC<FoodFormProps> = memo(
             >
               active buffs
             </Button>
-          </CardActions>
-        </Card>
-        <Dialog
-          open={dialogOpen}
+          }
+        />
+        <CustomDialog
+          isOpen={dialogOpen}
           onClose={closeDialog}
-          fullWidth
-          maxWidth="sm"
-          scroll="body"
-        >
-          <DialogTitle>
-            <Stack spacing={1} direction="row" alignItems="center">
-              <AutoAwesome color="primary" />
-              <Typography variant="h6" color="primary">
-                Active Buffs
-              </Typography>
-            </Stack>
-          </DialogTitle>
-          <DialogContent>
+          content={
             <BuffList
               items={items.filter((item) => item.amount > 0)}
             />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={closeDialog}>close</Button>
-          </DialogActions>
-        </Dialog>
+          }
+        />
       </Fragment>
     );
   },
