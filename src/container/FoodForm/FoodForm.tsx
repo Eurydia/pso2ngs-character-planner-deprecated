@@ -22,7 +22,6 @@ import {
 import { AutoAwesome, Fastfood } from "@mui/icons-material";
 import { matchSorter } from "match-sorter";
 import FOOD, { FoodItem } from "../../assets/food";
-import { sortByAlphabet } from "../../utility";
 import { FOOD_ITEM_MAX } from "../../stores";
 import FoodList from "./components/FoodList";
 import BuffList from "./components/BuffList";
@@ -96,35 +95,26 @@ const filterItems = (
   filter_string: string,
   food_items: FoodItem[],
 ): FoodItem[] => {
-  if (!filter_string) {
-    return food_items
-      .filter((item) => item.amount > 0)
-      .sort((a, b) => sortByAlphabet(a.name, b.name));
-  }
-
   const terms = filter_string
     .split(" ")
     .map((term) => term.trim())
     .filter((term) => Boolean(term));
+
   if (terms.length === 0) {
-    return food_items
-      .filter((item) => item.amount > 0)
-      .sort((a, b) => sortByAlphabet(a.name, b.name));
+    return food_items.filter((item) => item.amount > 0);
   }
 
-  const result = terms
-    .reduceRight(
-      (res, term) =>
-        matchSorter(res, term, {
-          keys: [
-            (item) => item.name,
-            (item) => item.attribute,
-            (item) => item.category,
-          ],
-        }),
-      food_items,
-    )
-    .sort((a, b) => sortByAlphabet(a.name, b.name));
+  const result = terms.reduceRight(
+    (res, term) =>
+      matchSorter(res, term, {
+        keys: [
+          (item) => item.name,
+          (item) => item.attribute,
+          (item) => item.category,
+        ],
+      }),
+    food_items,
+  );
   return result;
 };
 
@@ -133,30 +123,17 @@ interface FoodFormProps {
   onChange: (values: FoodItem[]) => void;
 }
 const FoodForm: FC<FoodFormProps> = memo(
-  (props) => {
+  ({ getInitValues, onChange }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [filterString, setFilterString] = useState("");
-    const [items, setItems] = useState<FoodItem[]>(() => {
-      let from_local = props.getInitValues();
-
-      let init: FoodItem[] = [];
-      for (const item of FOOD) {
-        let amount = 0;
-        for (let i = 0; i < from_local.length; i++) {
-          if (item.name === from_local[i].name) {
-            amount = from_local[i].amount;
-            from_local.splice(i, 1);
-            break;
-          }
-        }
-        init.push({ ...item, amount });
-      }
-      return init;
-    });
+    const [items, setItems] = useState(getInitValues);
 
     useEffect(() => {
-      props.onChange(items.filter((item) => item.amount > 0));
-    }, [props, items]);
+      onChange(items.filter((item) => item.amount > 0));
+    }, [onChange, items]);
+
+    const openDialog = () => setDialogOpen(true);
+    const closeDialog = () => setDialogOpen(false);
 
     const handleAmountChange = (value: number, item_name: string) => {
       setItems((prev) => {
@@ -177,9 +154,6 @@ const FoodForm: FC<FoodFormProps> = memo(
         return next;
       });
     };
-
-    const openDialog = () => setDialogOpen(true);
-    const closeDialog = () => setDialogOpen(false);
 
     let leftover = FOOD_ITEM_MAX;
     for (const item of items) {
