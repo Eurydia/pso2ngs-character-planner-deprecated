@@ -1,6 +1,27 @@
-import FIXAS from ".";
+import FIXA_DATA from "./data";
 import { typeguardFixaDataSignature } from "./typeguard";
 import { FixaData, FixaDataSignature } from "./types";
+
+const FIXA_LOOKUP: { [key: string]: FixaData } = {};
+
+/**
+ * Take a fixa signature and make a string
+ * which can be used to a lookup key.
+ * @param signature signature to turn into lookup key.
+ * @returns
+ */
+const makeLookupKey = ({
+  name,
+  level,
+}: FixaDataSignature): string => {
+  return `${name}-${level}`;
+};
+
+// populate lookup table
+for (const data of FIXA_DATA) {
+  const lookup_key = makeLookupKey(data);
+  FIXA_LOOKUP[lookup_key] = data;
+}
 
 export const fixaDataToSignature = ({
   name,
@@ -10,22 +31,18 @@ export const fixaDataToSignature = ({
 };
 
 export const fixaDataFromSignature = (
-  signature: FixaDataSignature | null,
+  signature: FixaDataSignature,
 ): FixaData | null => {
-  if (
-    signature === null ||
-    (signature && !typeguardFixaDataSignature(signature))
-  ) {
+  if (!typeguardFixaDataSignature(signature)) {
     return null;
   }
 
-  for (const data of FIXAS) {
-    if (
-      data.name === signature.name &&
-      data.level === signature.level
-    ) {
-      return data;
-    }
+  const lookup_key = makeLookupKey(signature);
+  const data: undefined | FixaData = FIXA_LOOKUP[lookup_key];
+
+  if (Boolean(data)) {
+    return data;
   }
+
   return null;
 };

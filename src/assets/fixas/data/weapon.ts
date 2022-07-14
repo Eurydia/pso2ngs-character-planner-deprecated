@@ -15,6 +15,7 @@ let fixa: FixaData[] = [];
   dmg_boost.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.DMG_BOOST, amount)];
+
     fixa.push(makeFixaData("attack", level, FIXA_TYPE, stats));
   });
 })();
@@ -27,6 +28,7 @@ let fixa: FixaData[] = [];
   crit_chance.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.CRIT_CHANCE, amount)];
+
     fixa.push(makeFixaData("fatale", level, FIXA_TYPE, stats));
   });
 })();
@@ -39,6 +41,7 @@ let fixa: FixaData[] = [];
   crit_dmg.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.CRIT_DMG, amount)];
+
     fixa.push(makeFixaData("termina", level, FIXA_TYPE, stats));
   });
 })();

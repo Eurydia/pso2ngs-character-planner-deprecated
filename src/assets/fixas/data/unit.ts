@@ -15,6 +15,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
   dmg_res.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.DMG_RESIST, amount)];
+
     fixa.push(makeFixaData("guard", level, FIXA_TYPE, stats));
   });
 })();
@@ -27,6 +28,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
   pp_usage.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.PP_COST, amount)];
+
     fixa.push(makeFixaData("performa", level, FIXA_TYPE, stats));
   });
 })();
@@ -39,6 +41,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
   passive_pp_gain.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.NATURAL_PP_RECOVERY, amount)];
+
     fixa.push(makeFixaData("natura", level, FIXA_TYPE, stats));
   });
 })();
@@ -51,6 +54,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
   active_pp_gain.forEach((amount, level_index) => {
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.ACTIVE_PP_RECOVERY, amount)];
+
     fixa.push(makeFixaData("enthusia", level, FIXA_TYPE, stats));
   });
 })();

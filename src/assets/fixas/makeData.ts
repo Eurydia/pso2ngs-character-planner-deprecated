@@ -2,7 +2,7 @@ import { Conditional, makeStatPayload, Stat } from "../stats";
 import { FixaData, FixaTypes } from "./types";
 
 /**
- * Make a `FixaData`
+ * Make a `FixaData
  * @param name
  * @param level
  * @param stats

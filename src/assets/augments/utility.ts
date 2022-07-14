@@ -1,4 +1,4 @@
-import AUGMENTS from "./data";
+import AUGMENT_DATA from "./data";
 import { ENHANCEMENT_MAX } from "../constants";
 import { typeguardAugmentDataSignature } from "./typeguard";
 import { AugmentData, AugmentDataSignature } from "./types";
@@ -8,16 +8,19 @@ const AUGMENT_LOOKUP: { [key: string]: AugmentData } = {};
 /**
  * Take an augment signature and return a string
  * which can be used as a lookup key.
- * @param signature
+ * @param signature signature to turn into lookup key.
  * @returns
  */
-const getLookupkey = (signature: AugmentDataSignature): string => {
-  const { name, level, isSType } = signature;
+const makeLookupkey = ({
+  name,
+  level,
+  isSType,
+}: AugmentDataSignature): string => {
   return `${name}-${level}-${isSType}`;
 };
-
-for (const data of AUGMENTS) {
-  const key = getLookupkey(data);
+// populate lookup table
+for (const data of AUGMENT_DATA) {
+  const key = makeLookupkey(data);
   AUGMENT_LOOKUP[key] = data;
 }
 
@@ -63,7 +66,7 @@ export const augmentDataFromSignature = (
   }
 
   // create lookup key from the signature
-  const lookup_key: string = getLookupkey(signature);
+  const lookup_key: string = makeLookupkey(signature);
   const data: undefined | AugmentData = AUGMENT_LOOKUP[lookup_key];
   if (Boolean(data)) {
     return data;
