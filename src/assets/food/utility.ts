@@ -4,14 +4,13 @@ import { typeguardFoodItemSignature } from "./typeguard";
 import { FoodItem, FoodItemData, FoodItemSignature } from "./types";
 
 const FOOD_ITEM_LOCAL_STORAGE_KEY = "food";
+const FOOD_ORDER: string[] = FOOD.map((f) => f.name);
 
 const FOOD_LOOKUP: { [key: string]: FoodItemData } = {};
 
 for (const data of FOOD) {
   FOOD_LOOKUP[data.name] = data;
 }
-
-const FOOD_ORDER: string[] = FOOD.map((f) => f.name);
 
 /**
  * Reduce `FoodItem` to its signature.

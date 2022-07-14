@@ -39,15 +39,15 @@ const getFoodBuffsFromItems = (
 ): FoodBuff[] => {
   let template: { [key in FoodCategory | FoodAttribute]: number } = {
     // category
-    MEAT: 0,
-    FRUIT: 0,
-    VEGETABLE: 0,
-    SEAFOOD: 0,
+    [FoodCategory.MEAT]: 0,
+    [FoodCategory.SEAFOOD]: 0,
+    [FoodCategory.VEGETABLE]: 0,
+    [FoodCategory.FRUIT]: 0,
     // attribute
-    CRISPY: -3,
-    LIGHT: -3,
-    ROBUST: -3,
-    RICH: -3,
+    [FoodAttribute.CRISPY]: -3,
+    [FoodAttribute.LIGHT]: -3,
+    [FoodAttribute.ROBUST]: -3,
+    [FoodAttribute.RICH]: -3,
   };
   for (const food_item of food_items) {
     const { attribute, category, amount } = food_item;

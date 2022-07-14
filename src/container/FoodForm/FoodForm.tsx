@@ -20,12 +20,10 @@ import {
   Typography,
 } from "@mui/material";
 import { AutoAwesome, Fastfood } from "@mui/icons-material";
-import { matchSorter } from "match-sorter";
-import FOOD, { FoodItem } from "../../assets/food";
-import { FOOD_ITEM_MAX } from "../../stores";
+import { FoodItem } from "../../assets/food";
+import { FOOD_ITEM_MAX } from "../../assets/constants";
 import FoodList from "./components/FoodList";
 import BuffList from "./components/BuffList";
-import FilterTextField from "./components/FilterTextField";
 
 interface CustomDialogInterface {
   isOpen: boolean;
@@ -91,33 +89,6 @@ const CustomCard: FC<CustomCardInterface> = ({
   );
 };
 
-const filterItems = (
-  filter_string: string,
-  food_items: FoodItem[],
-): FoodItem[] => {
-  const terms = filter_string
-    .split(" ")
-    .map((term) => term.trim())
-    .filter((term) => Boolean(term));
-
-  if (terms.length === 0) {
-    return food_items.filter((item) => item.amount > 0);
-  }
-
-  const result = terms.reduceRight(
-    (res, term) =>
-      matchSorter(res, term, {
-        keys: [
-          (item) => item.name,
-          (item) => item.attribute,
-          (item) => item.category,
-        ],
-      }),
-    food_items,
-  );
-  return result;
-};
-
 interface FoodFormProps {
   getInitValues: () => FoodItem[];
   onChange: (values: FoodItem[]) => void;
@@ -125,7 +96,6 @@ interface FoodFormProps {
 const FoodForm: FC<FoodFormProps> = memo(
   ({ getInitValues, onChange }) => {
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [filterString, setFilterString] = useState("");
     const [items, setItems] = useState(getInitValues);
 
     useEffect(() => {
@@ -155,26 +125,11 @@ const FoodForm: FC<FoodFormProps> = memo(
       });
     };
 
-    let leftover = FOOD_ITEM_MAX;
-    for (const item of items) {
-      leftover -= item.amount;
-    }
-
     return (
       <Fragment>
         <CustomCard
           content={
-            <Stack spacing={4}>
-              <FilterTextField
-                value={filterString}
-                onChange={setFilterString}
-              />
-              <FoodList
-                isFull={leftover === 0}
-                items={filterItems(filterString, items)}
-                onChange={handleAmountChange}
-              />
-            </Stack>
+            <FoodList items={items} onChange={handleAmountChange} />
           }
           actions={
             <Button

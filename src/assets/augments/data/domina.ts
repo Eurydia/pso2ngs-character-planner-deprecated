@@ -1,5 +1,5 @@
 import { makeStat, StatShorthands, StatTypes } from "../../stats";
-import { makeAugmentData } from "../makeAugmentData";
+import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
 // --------------------------------------

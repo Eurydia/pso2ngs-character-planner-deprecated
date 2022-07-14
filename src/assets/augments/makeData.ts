@@ -9,7 +9,7 @@ import { AugmentData, AugmentGroups } from "./types";
  * @param conflict augment groups that can't be used with this augment.
  * @param stats stats of the augment.
  * @param conditionals
- * @param [isSType] is the augment an "s" variant. Default to `false`.
+ * @param [isSType] is the augment an "s" variant. Defaults to `false`.
  * @returns an augment data
  */
 export const makeAugmentData = (

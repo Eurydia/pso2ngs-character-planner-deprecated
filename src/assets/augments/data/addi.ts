@@ -4,7 +4,7 @@ import {
   expandPot,
   StatShorthands,
 } from "../../stats";
-import { makeAugmentData } from "../makeAugmentData";
+import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 // --------------------------------------
 const GROUP = AugmentGroups.ADDI;
