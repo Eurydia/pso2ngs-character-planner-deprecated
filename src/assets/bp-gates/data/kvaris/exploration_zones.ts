@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "central kvaris",
     [ContentLocation.KVARIS],
@@ -17,7 +17,7 @@ gates.push(
     37,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "south kvaris",
     [ContentLocation.KVARIS],
@@ -26,7 +26,7 @@ gates.push(
     39,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "north kvaris",
     [ContentLocation.KVARIS],
@@ -35,7 +35,7 @@ gates.push(
     42,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "west kvaris",
     [ContentLocation.KVARIS],
@@ -44,7 +44,7 @@ gates.push(
     45,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "rayjord groge",
     [ContentLocation.KVARIS],
@@ -54,4 +54,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

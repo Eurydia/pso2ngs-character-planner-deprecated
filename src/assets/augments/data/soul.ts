@@ -7,14 +7,13 @@ import {
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.SOUL;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.SOUL];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
-// alt soul
+// alt
 (() => {
   const bps = [5, 7, 9];
   const hp = [5, 10, 15];
@@ -27,14 +26,14 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.HP, hp[level_index]),
       makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("alts soul", level, GROUP, CONFLICT, stats),
     );
   });
 })();
 
 // --------------------------------------
-// dolz soul
+// dolz
 (() => {
   const bps = [5, 6, 7];
   const pp = [5, 5, 5];
@@ -47,14 +46,14 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.PP, pp[level_index]),
       makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("dolz soul", level, GROUP, CONFLICT, stats),
     );
   });
 })();
 
 // --------------------------------------
-// form | form machini | form sand soul
+// form | form machini | form sand
 (() => {
   const bps = [6, 8, 9];
   const pot_type = expandPot();
@@ -70,7 +69,7 @@ let augments: AugmentData[] = [];
         makeStat(pot_type[pot_type_index], pot[level_index]),
         makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `${name} soul`,
           level,
@@ -84,7 +83,7 @@ let augments: AugmentData[] = [];
 })();
 
 // --------------------------------------
-// daityl | pettas | nex soul
+// daityl | pettas | nex
 (() => {
   const bps = [7, 8, 10];
   const pp = [5, 5, 5];
@@ -100,7 +99,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.PP, pp[level_index]),
         makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `${name} soul`,
           level,
@@ -114,7 +113,7 @@ let augments: AugmentData[] = [];
 })();
 
 // --------------------------------------
-// dust | ragras | renus soul
+// dust | ragras | renus
 (() => {
   const bps = [7, 8, 10];
   const hp = [15, 15, 15];
@@ -130,7 +129,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.HP, hp[level_index]),
         makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `${name} soul`,
           level,
@@ -144,7 +143,7 @@ let augments: AugmentData[] = [];
 })();
 
 // --------------------------------------
-// eradi soul
+// eradi
 (() => {
   const bps = [7, 8, 10];
   const hp = [10, 10, 10];
@@ -159,7 +158,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.PP, pp[level_index]),
       makeStat(StatShorthands.POT, pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("eradi soul", level, GROUP, CONFLICT, stats),
     );
   });
@@ -184,7 +183,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.PP, pp[level_index]),
         makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `${name} soul`,
           level,
@@ -199,7 +198,7 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // aglai P | H | X
-augments.push(
+data.push(
   makeAugmentData("aglai soul p", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.PP, 5),
@@ -207,7 +206,7 @@ augments.push(
     makeStat(StatTypes.RNG_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("aglai soul h", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -215,7 +214,7 @@ augments.push(
     makeStat(StatTypes.RNG_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("aglai soul x", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 10),
@@ -227,7 +226,7 @@ augments.push(
 
 // --------------------------------------
 // euphroy P | H | X
-augments.push(
+data.push(
   makeAugmentData("euphroy soul p", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.PP, 5),
@@ -235,7 +234,7 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("euphroy soul h", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -243,7 +242,7 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("euphroy soul x", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 10),
@@ -255,7 +254,7 @@ augments.push(
 
 // --------------------------------------
 // thali P | H | X
-augments.push(
+data.push(
   makeAugmentData("thali soul p", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.PP, 5),
@@ -263,7 +262,7 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("thali soul h", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -271,7 +270,7 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-augments.push(
+data.push(
   makeAugmentData("thali soul x", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 10),
@@ -280,4 +279,4 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-export default augments;
+export default data;

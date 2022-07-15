@@ -1,15 +1,32 @@
-import FOOD from ".";
+import FOOD_DATA from "./data";
 import { FOOD_ITEM_MAX, FOOD_ITEM_MIN } from "../../stores";
 import { typeguardFoodItemSignature } from "./typeguard";
-import { FoodItem, FoodItemData, FoodItemSignature } from "./types";
+import {
+  FoodData,
+  FoodDataSignature,
+  FoodItem,
+  FoodItemSignature,
+} from "./types";
 
 const FOOD_ITEM_LOCAL_STORAGE_KEY = "food";
-const FOOD_ORDER: string[] = FOOD.map((f) => f.name);
+const FOOD_ORDER: string[] = FOOD_DATA.map((f) => f.name);
 
-const FOOD_LOOKUP: { [key: string]: FoodItemData } = {};
+const FOOD_LOOKUP: { [key: string]: FoodData } = {};
 
-for (const data of FOOD) {
-  FOOD_LOOKUP[data.name] = data;
+/**
+ * Take a food data signature and return a string
+ * which can be used as a key for the lookup table.
+ * @param signature
+ * @returns
+ */
+const makeLookupKey = ({ name }: FoodDataSignature): string => {
+  return name;
+};
+
+// populate lookup table
+for (const data of FOOD_DATA) {
+  const lookup_key = makeLookupKey(data);
+  FOOD_LOOKUP[lookup_key] = data;
 }
 
 /**
@@ -32,11 +49,12 @@ export const foodItemToSignature = ({
 export const foodItemFromSignature = (
   signature: FoodItemSignature,
 ): FoodItem | null => {
-  if (signature && !typeguardFoodItemSignature(signature)) {
+  if (!typeguardFoodItemSignature(signature)) {
     return null;
   }
 
-  const data: undefined | FoodItemData = FOOD_LOOKUP[signature.name];
+  const lookup_key = makeLookupKey(signature);
+  const data: undefined | FoodData = FOOD_LOOKUP[lookup_key];
   if (Boolean(data)) {
     return { ...data, amount: signature.amount };
   }
@@ -56,8 +74,13 @@ export const saveFoodItemToLocal = (items: FoodItem[]) => {
   );
 };
 
-export const loadFoodItemsFromLocal = (): FoodItem[] => {
-  const json_string = localStorage.getItem(
+/**
+ * Load data from local storage.
+ * As well as perform some safe-guarding.
+ * @returns
+ */
+const loadLocal = (): FoodItemSignature[] => {
+  const json_string: null | string = localStorage.getItem(
     FOOD_ITEM_LOCAL_STORAGE_KEY,
   );
   // if nothing is stored in local storage,
@@ -66,13 +89,24 @@ export const loadFoodItemsFromLocal = (): FoodItem[] => {
     return [];
   }
 
-  const signatures: FoodItemSignature[] = JSON.parse(json_string!);
+  const item_signatures: FoodItemSignature[] = JSON.parse(
+    json_string!,
+  );
   // if something happens and cause the "array" of signatures
   // to no longer be an array, then return an empty array
-  // as a failsafe mechanism.
-  if (!Array.isArray(signatures)) {
+  // as a failsafe.
+  if (!Array.isArray(item_signatures)) {
     return [];
   }
+  return item_signatures;
+};
+
+/**
+ * Load signatures from local storage and populate it with data.
+ * @returns
+ */
+export const loadFoodItemsFromLocal = (): FoodItem[] => {
+  const signatures = loadLocal();
 
   let food_count = FOOD_ITEM_MIN;
   let food_items: FoodItem[] = [];
@@ -83,7 +117,7 @@ export const loadFoodItemsFromLocal = (): FoodItem[] => {
       break;
     }
 
-    const data = foodItemFromSignature(signature);
+    const data: null | FoodItem = foodItemFromSignature(signature);
     if (Boolean(data)) {
       const { amount, ...item_data } = data!;
       const available = FOOD_ITEM_MAX - food_count;
@@ -98,7 +132,7 @@ export const loadFoodItemsFromLocal = (): FoodItem[] => {
     }
   }
 
-  // fill in the gap with the rest of the food items.
+  // populate the rest of the array zero-amount food items.
   for (let i = 0; i < FOOD_ORDER.length; i++) {
     if (food_items[i].name !== FOOD_ORDER[i]) {
       const item: FoodItem = {

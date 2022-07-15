@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "dyna assult",
     [ContentLocation.RETEM],
@@ -17,7 +17,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "parkour master",
     [ContentLocation.RETEM],
@@ -26,7 +26,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "runway II",
     [ContentLocation.RETEM],
@@ -35,7 +35,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "narrow cage",
     [ContentLocation.RETEM],
@@ -44,7 +44,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "buddy attack",
     [ContentLocation.RETEM],
@@ -53,7 +53,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "vanishing path",
     [ContentLocation.RETEM],
@@ -63,4 +63,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

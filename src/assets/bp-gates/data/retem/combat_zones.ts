@@ -5,11 +5,11 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
 // alnothe
-gates.push(
+data.push(
   makeBPGateData(
     "retem alnothe (rank 1)",
     [ContentLocation.RETEM],
@@ -18,7 +18,7 @@ gates.push(
     20,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "retem alnothe (rank 2)",
     [ContentLocation.RETEM],
@@ -27,7 +27,7 @@ gates.push(
     30,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "retem alnothe (rank 3)",
     [ContentLocation.RETEM],
@@ -39,7 +39,7 @@ gates.push(
 
 // ---------------------------
 // maqead lower
-gates.push(
+data.push(
   makeBPGateData(
     "maqead lower level (rank 1)",
     [ContentLocation.RETEM],
@@ -48,7 +48,7 @@ gates.push(
     25,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "maqead lower level (rank 2)",
     [ContentLocation.RETEM],
@@ -57,7 +57,7 @@ gates.push(
     30,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "maqead lower level (rank 3)",
     [ContentLocation.RETEM],
@@ -67,4 +67,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

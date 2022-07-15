@@ -1,8 +1,8 @@
 import { StatPayload } from "../stats";
 
 export enum FixaTypes {
-  WEAPON = "WEAPON",
-  UNIT = "UNIT",
+  WEAPON = "weapon",
+  UNIT = "unit",
 }
 
 export type FixaData = Readonly<{

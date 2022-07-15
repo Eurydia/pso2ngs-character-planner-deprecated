@@ -2,11 +2,10 @@ import { makeStat, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.DREAD;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.DREAD];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // dread keeper
@@ -26,10 +25,10 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
       makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("dread keeper", level, GROUP, CONFLICT, stats),
     );
   });
 })();
 
-export default augments;
+export default data;

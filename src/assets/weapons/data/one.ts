@@ -3,16 +3,15 @@ import { makeWeaponData } from "../makeData";
 import { RECYCLER_UNIT } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 1;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("primm weapons", RARITY, 1, RECYCLER_UNIT, 177, [
     makeStat(StatTypes.FLOOR_POT, 1.7),
   ]),
 );
 
-export default weapons;
+export default data;

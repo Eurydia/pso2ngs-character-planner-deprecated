@@ -5,10 +5,10 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "the first mission",
     [ContentLocation.AELIO],
@@ -17,7 +17,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "preparing for battle",
     [ContentLocation.AELIO],
@@ -26,7 +26,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "an abundance of caution",
     [ContentLocation.AELIO],
@@ -36,4 +36,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

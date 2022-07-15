@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "deepwell",
     [ContentLocation.KVARIS],
@@ -18,4 +18,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

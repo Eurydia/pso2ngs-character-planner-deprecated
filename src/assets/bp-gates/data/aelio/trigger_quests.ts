@@ -5,11 +5,11 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
 // dark falz rank 2 is only available as trigger quest
-gates.push(
+data.push(
   makeBPGateData(
     "dark falz interception (rank 2)",
     [ContentLocation.AELIO],
@@ -19,4 +19,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

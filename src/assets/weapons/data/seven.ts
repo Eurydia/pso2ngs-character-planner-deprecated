@@ -3,13 +3,12 @@ import { makeWeaponData } from "../makeData";
 import { CITADEL_UNIT, TEMPERED_FORM } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 7;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rugged weapons (citadel)",
     RARITY,
@@ -21,7 +20,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rugged weapons (pursuit)",
     RARITY,
@@ -33,7 +32,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rugged weapons (gyrating)",
     RARITY,
@@ -45,10 +44,10 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("kaizaar weapons", RARITY, 60, TEMPERED_FORM, 485, [
     makeStat(StatTypes.FLOOR_POT, 1.5),
   ]),
 );
 
-export default weapons;
+export default data;

@@ -5,11 +5,11 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
 // pettas vera
-gates.push(
+data.push(
   makeBPGateData(
     "command DOLLS suppression (rank 1)",
     [ContentLocation.AELIO],
@@ -18,7 +18,7 @@ gates.push(
     17,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "command DOLLS suppression (rank 2)",
     [ContentLocation.AELIO],
@@ -30,7 +30,7 @@ gates.push(
 
 // ------------------------------------------
 // nex vera
-gates.push(
+data.push(
   makeBPGateData(
     "nex vera suppression (rank 1)",
     [ContentLocation.AELIO],
@@ -39,7 +39,7 @@ gates.push(
     40,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "nex vera suppression (rank 2)",
     [ContentLocation.AELIO],
@@ -51,7 +51,7 @@ gates.push(
 
 // ------------------------------------------
 // mining rig
-gates.push(
+data.push(
   makeBPGateData(
     "mining rig defense: aelio (rank 1)",
     [ContentLocation.AELIO],
@@ -60,7 +60,7 @@ gates.push(
     20,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "mining rig defense: aelio (rank 2)",
     [ContentLocation.AELIO],
@@ -72,7 +72,7 @@ gates.push(
 
 // ------------------------------------------
 // dark falz
-gates.push(
+data.push(
   makeBPGateData(
     "dark falz interception (rank 1)",
     [ContentLocation.AELIO],
@@ -84,7 +84,7 @@ gates.push(
 
 // ------------------------------------------
 // spring event
-gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 1)",
     [ContentLocation.AELIO],
@@ -93,7 +93,7 @@ gates.push(
     25,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 2)",
     [ContentLocation.AELIO],
@@ -102,7 +102,7 @@ gates.push(
     32,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 3)",
     [ContentLocation.AELIO],
@@ -112,4 +112,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

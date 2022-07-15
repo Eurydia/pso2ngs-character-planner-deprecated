@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "west retem",
     [ContentLocation.RETEM],
@@ -17,7 +17,7 @@ gates.push(
     17,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "central retem",
     [ContentLocation.RETEM],
@@ -26,7 +26,7 @@ gates.push(
     19,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "north retem",
     [ContentLocation.RETEM],
@@ -35,7 +35,7 @@ gates.push(
     21,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "south retem",
     [ContentLocation.RETEM],
@@ -44,7 +44,7 @@ gates.push(
     23,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "rwh maqead",
     [ContentLocation.RETEM],
@@ -54,4 +54,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

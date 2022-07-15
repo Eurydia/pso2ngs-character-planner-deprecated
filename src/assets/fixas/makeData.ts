@@ -2,11 +2,12 @@ import { Conditional, makeStatPayload, Stat } from "../stats";
 import { FixaData, FixaTypes } from "./types";
 
 /**
- * Make a `FixaData
- * @param name
- * @param level
- * @param stats
- * @param conditionals
+ * Make a `FixaData`
+ * @param name name of fixa
+ * @param level level of fixa
+ * @param fixa_type either weapon or unit.
+ * @param stats stats the fixa gives.
+ * @param conditionals conditional stats if any.
  * @returns
  */
 export const makeFixaData = (

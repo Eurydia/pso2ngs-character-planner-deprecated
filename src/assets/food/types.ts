@@ -1,24 +1,26 @@
 export enum FoodCategory {
-  MEAT = "MEAT",
-  FRUIT = "FRUIT",
-  VEGETABLE = "VEGETABLE",
-  SEAFOOD = "SEAFOOD",
+  MEAT = "meat",
+  FRUIT = "fruit",
+  VEGETABLE = "vegetable",
+  SEAFOOD = "seafood",
 }
 
 export enum FoodAttribute {
-  CRISPY = "CRISPY",
-  LIGHT = "LIGHT",
-  ROBUST = "ROBUST",
-  RICH = "RICH",
+  CRISPY = "crispy",
+  LIGHT = "light",
+  ROBUST = "robust",
+  RICH = "rich",
 }
 
-export type FoodItemData = Readonly<{
+export type FoodData = Readonly<{
   name: string;
   category: FoodCategory;
   attribute: FoodAttribute;
 }>;
 
-export type FoodItem = FoodItemData & {
+export type FoodDataSignature = Pick<FoodData, "name">;
+
+export type FoodItem = FoodData & {
   amount: number;
 };
 

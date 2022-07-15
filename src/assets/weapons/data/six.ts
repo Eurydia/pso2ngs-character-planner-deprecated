@@ -8,13 +8,12 @@ import {
 } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 6;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "evoleclipse weapons",
     RARITY,
@@ -26,14 +25,14 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("sechetyl weapons", RARITY, 45, TRAMPLE_UNIT, 350, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rokz weapons (roughewn)",
     RARITY,
@@ -45,7 +44,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rokz weapons (sixiemes)",
     RARITY,
@@ -57,7 +56,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "rokz weapons (curva)",
     RARITY,
@@ -69,7 +68,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "evolorbit weapons",
     RARITY,
@@ -80,4 +79,4 @@ weapons.push(
   ),
 );
 
-export default weapons;
+export default data;

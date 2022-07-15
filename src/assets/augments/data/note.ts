@@ -7,17 +7,16 @@ import {
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.NOTE;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.NOTE];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // ael
 // exploration
 // a
-augments.push(
+data.push(
   makeAugmentData("ael note a", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 5),
@@ -25,7 +24,7 @@ augments.push(
   ]),
 );
 // b
-augments.push(
+data.push(
   makeAugmentData("ael note b", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.01),
@@ -33,7 +32,7 @@ augments.push(
   ]),
 );
 // c
-augments.push(
+data.push(
   makeAugmentData("ael note c", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.0075),
@@ -41,7 +40,7 @@ augments.push(
   ]),
 );
 // d
-augments.push(
+data.push(
   makeAugmentData("ael note d", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.RNG_POT, 1.0075),
@@ -59,7 +58,7 @@ augments.push(
       makeStat(StatTypes.BP, 5),
       makeStat(pot_type[i], 1.015),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(`${name} note`, 0, GROUP, CONFLICT, stats),
     );
   });
@@ -69,14 +68,14 @@ augments.push(
 // ret
 // exploration
 // a
-augments.push(
+data.push(
   makeAugmentData("ret note a", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
   ]),
 );
 // b
-augments.push(
+data.push(
   makeAugmentData("ret note b", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.0075),
@@ -84,7 +83,7 @@ augments.push(
   ]),
 );
 // c
-augments.push(
+data.push(
   makeAugmentData("ret note c", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.0075),
@@ -92,7 +91,7 @@ augments.push(
   ]),
 );
 // d
-augments.push(
+data.push(
   makeAugmentData("ret note d", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.RNG_POT, 1.0075),
@@ -101,7 +100,7 @@ augments.push(
 );
 // combat
 // alno
-augments.push(
+data.push(
   makeAugmentData(`alno note`, 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
@@ -110,7 +109,7 @@ augments.push(
   ]),
 );
 // maqea
-augments.push(
+data.push(
   makeAugmentData(`maqea note`, 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatShorthands.POT, 1.0125),
@@ -121,7 +120,7 @@ augments.push(
 // kvar
 // exploration
 // a
-augments.push(
+data.push(
   makeAugmentData("kvar note a", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
@@ -129,7 +128,7 @@ augments.push(
   ]),
 );
 // b
-augments.push(
+data.push(
   makeAugmentData("kvar note b", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.02),
@@ -138,7 +137,7 @@ augments.push(
   ]),
 );
 // c
-augments.push(
+data.push(
   makeAugmentData("kvar note c", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.MEL_POT, 1.02),
@@ -147,7 +146,7 @@ augments.push(
   ]),
 );
 // d
-augments.push(
+data.push(
   makeAugmentData("kvar note d", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 4),
     makeStat(StatTypes.RNG_POT, 1.02),
@@ -157,7 +156,7 @@ augments.push(
 );
 // combat
 // lostral
-augments.push(
+data.push(
   makeAugmentData("lostral note", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 10),
@@ -165,7 +164,7 @@ augments.push(
   ]),
 );
 // belgan
-augments.push(
+data.push(
   makeAugmentData("lostral note", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 5),
     makeStat(StatTypes.HP, 3),
@@ -173,4 +172,4 @@ augments.push(
   ]),
 );
 
-export default augments;
+export default data;

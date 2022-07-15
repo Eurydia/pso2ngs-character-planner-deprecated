@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "crazy tail",
     [ContentLocation.KVARIS],
@@ -17,7 +17,7 @@ gates.push(
     42,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "slope style",
     [ContentLocation.KVARIS],
@@ -26,7 +26,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "clockwork prison",
     [ContentLocation.KVARIS],
@@ -35,7 +35,7 @@ gates.push(
     44,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "horrible flapping",
     [ContentLocation.KVARIS],
@@ -44,7 +44,7 @@ gates.push(
     44,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "wild avalanche",
     [ContentLocation.KVARIS],
@@ -53,7 +53,7 @@ gates.push(
     47,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "vanishing path II",
     [ContentLocation.KVARIS],
@@ -63,4 +63,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

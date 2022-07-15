@@ -5,10 +5,10 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "central aelio",
     [ContentLocation.AELIO],
@@ -17,7 +17,7 @@ gates.push(
     1,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "south aelio",
     [ContentLocation.AELIO],
@@ -26,7 +26,7 @@ gates.push(
     3,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "west aelio",
     [ContentLocation.AELIO],
@@ -35,7 +35,7 @@ gates.push(
     7,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "north aelio",
     [ContentLocation.AELIO],
@@ -44,7 +44,7 @@ gates.push(
     10,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "halphia lake",
     [ContentLocation.AELIO],
@@ -54,4 +54,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

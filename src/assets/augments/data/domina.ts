@@ -2,15 +2,14 @@ import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.DOMINA;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.DOMINA];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // ael
-augments.push(
+data.push(
   makeAugmentData("ael domina", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 8),
     makeStat(StatTypes.HP, 5),
@@ -21,7 +20,7 @@ augments.push(
 
 // --------------------------------------
 // ret
-augments.push(
+data.push(
   makeAugmentData("ret domina", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 10),
     makeStat(StatTypes.HP, 15),
@@ -31,7 +30,7 @@ augments.push(
 
 // --------------------------------------
 // kvar
-augments.push(
+data.push(
   makeAugmentData("kvar domina", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 10),
     makeStat(StatTypes.PP, 5),
@@ -40,4 +39,4 @@ augments.push(
   ]),
 );
 
-export default augments;
+export default data;

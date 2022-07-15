@@ -2,11 +2,10 @@ import { StatTypes, expandPot, makeStat } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.GIGAS;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.GIGAS];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // might | precicion | technique
@@ -25,7 +24,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.HP, hp[level_index]),
         makeStat(pot_type[pot_type_index], pot[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `gigas ${name}`,
           level,
@@ -40,7 +39,7 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // aglai
-augments.push(
+data.push(
   makeAugmentData("gigas aglai", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -51,7 +50,7 @@ augments.push(
 
 // --------------------------------------
 // euphroy
-augments.push(
+data.push(
   makeAugmentData("gigas euphroy", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -62,7 +61,7 @@ augments.push(
 
 // --------------------------------------
 // thali
-augments.push(
+data.push(
   makeAugmentData("gigas thali", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 11),
     makeStat(StatTypes.HP, 15),
@@ -70,4 +69,4 @@ augments.push(
     makeStat(StatTypes.TEC_POT, 1.025),
   ]),
 );
-export default augments;
+export default data;

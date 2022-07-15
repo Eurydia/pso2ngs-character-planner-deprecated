@@ -5,11 +5,11 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let bp_gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
 // dustyl vera
-bp_gates.push(
+data.push(
   makeBPGateData(
     "dustyl vera suppression (rank 1)",
     [ContentLocation.RETEM],
@@ -18,7 +18,7 @@ bp_gates.push(
     32,
   ),
 );
-bp_gates.push(
+data.push(
   makeBPGateData(
     "dustyl vera suppression (rank 2)",
     [ContentLocation.RETEM],
@@ -30,7 +30,7 @@ bp_gates.push(
 
 // ---------------------------
 // renus vera
-bp_gates.push(
+data.push(
   makeBPGateData(
     "renus vera suppression (rank 1)",
     [ContentLocation.RETEM],
@@ -39,7 +39,7 @@ bp_gates.push(
     32,
   ),
 );
-bp_gates.push(
+data.push(
   makeBPGateData(
     "renus vera suppression (rank 2)",
     [ContentLocation.RETEM],
@@ -51,7 +51,7 @@ bp_gates.push(
 
 // ---------------------------
 // mining rig
-bp_gates.push(
+data.push(
   makeBPGateData(
     "mining rig defense: retem",
     [ContentLocation.RETEM],
@@ -63,7 +63,7 @@ bp_gates.push(
 
 // ---------------------------
 // 1st anniversary event
-bp_gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 1)",
     [ContentLocation.RETEM],
@@ -72,7 +72,7 @@ bp_gates.push(
     25,
   ),
 );
-bp_gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 2)",
     [ContentLocation.RETEM],
@@ -81,7 +81,7 @@ bp_gates.push(
     32,
   ),
 );
-bp_gates.push(
+data.push(
   makeBPGateData(
     "dazzling chaos suppression (rank 3)",
     [ContentLocation.RETEM],
@@ -91,4 +91,4 @@ bp_gates.push(
   ),
 );
 
-export default bp_gates;
+export default data;

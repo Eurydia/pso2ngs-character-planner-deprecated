@@ -5,11 +5,11 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
 // magnus
-gates.push(
+data.push(
   makeBPGateData(
     "mt. magnus (rank 1)",
     [ContentLocation.AELIO],
@@ -18,7 +18,7 @@ gates.push(
     5,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "mt. magnus (rank 2)",
     [ContentLocation.AELIO],
@@ -27,7 +27,7 @@ gates.push(
     15,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "mt. magnus (rank 3)",
     [ContentLocation.AELIO],
@@ -39,7 +39,7 @@ gates.push(
 
 // ------------------------------------------
 // lab
-gates.push(
+data.push(
   makeBPGateData(
     "vanford lab ruins (rank 1)",
     [ContentLocation.AELIO],
@@ -48,7 +48,7 @@ gates.push(
     10,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "vanford lab ruins (rank 2)",
     [ContentLocation.AELIO],
@@ -57,7 +57,7 @@ gates.push(
     15,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "vanford lab ruins (rank 3)",
     [ContentLocation.AELIO],
@@ -69,7 +69,7 @@ gates.push(
 
 // ------------------------------------------
 // resol
-gates.push(
+data.push(
   makeBPGateData(
     "resol forest (rank 1)",
     [ContentLocation.AELIO],
@@ -78,7 +78,7 @@ gates.push(
     15,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "resol forest (rank 2)",
     [ContentLocation.AELIO],
@@ -88,4 +88,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

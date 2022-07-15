@@ -2,11 +2,10 @@ import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.SECRETA;
 const CONFLICT = [AugmentGroups.SECRETA];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // alt
@@ -26,10 +25,10 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
       makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("alts secreata", level, GROUP, CONFLICT, stats),
     );
   });
 })();
 
-export default augments;
+export default data;

@@ -15,20 +15,19 @@ import {
 } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 5;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("quintel weapons", RARITY, 21, FORTRESS_UNIT, 277, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "gothica weapons",
     RARITY,
@@ -40,14 +39,14 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("fivla weapons", RARITY, 21, FOCUSED_UNIT, 277, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "greaga weapons",
     RARITY,
@@ -59,7 +58,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "kukuhroziat  weapons",
     RARITY,
@@ -71,7 +70,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "relik weapons (vigorous)",
     RARITY,
@@ -83,7 +82,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "relik weapons (explosive)",
     RARITY,
@@ -95,7 +94,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "relik weapons (harmonious)",
     RARITY,
@@ -107,7 +106,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "relik weapons (imbued)",
     RARITY,
@@ -119,14 +118,14 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("cinquem weapons", RARITY, 36, VIRTUOSO_UNIT, 293, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "tempesta weapons",
     RARITY,
@@ -147,7 +146,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "lumiere weapons",
     RARITY,
@@ -168,7 +167,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "obscura weapons",
     RARITY,
@@ -188,4 +187,4 @@ weapons.push(
   ),
 );
 
-export default weapons;
+export default data;

@@ -11,20 +11,19 @@ import {
 } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 4;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("resurgia weapons", RARITY, 11, DYNAMO_UNIT, 240, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "cattleya weapons",
     RARITY,
@@ -36,28 +35,28 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("foursis weapons", RARITY, 14, BASTION_UNIT, 242, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("vialto weapons", RARITY, 14, MEDITATION_UNIT, 242, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("straga weapons", RARITY, 15, BERSERK_UNIT, 243, [
     makeStat(StatTypes.FLOOR_POT, 1.75),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "evolcoat weapons",
     RARITY,
@@ -69,7 +68,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "flamel weapons",
     RARITY,
@@ -89,4 +88,4 @@ weapons.push(
   ),
 );
 
-export default weapons;
+export default data;

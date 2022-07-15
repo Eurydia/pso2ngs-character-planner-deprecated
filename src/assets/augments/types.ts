@@ -1,22 +1,23 @@
 import { StatPayload } from "../stats";
 
 export enum AugmentGroups {
-  BASIC = "BASIC",
-  FUSED = "FUSED",
-  DUALBLE = "DUALBLE",
-  WARD = "WARD",
-  SOUL = "SOUL",
-  NOTE = "NOTE",
-  DOMINA = "DOMINA",
-  SECRETA = "SECRETA",
-  DREAD = "DREAD",
-  GIGAS = "GIGAS",
-  ELEMENTAL = "ELEMENTAL",
-  FUSIA = "FUSIA",
-  ADDI = "ADDI",
-  TRIA = "TRIA",
-  DECOLD = "DECOLD",
-  S = "S",
+  BASIC = "basic",
+  FUSED = "fused",
+  DUALBLE = "dualble",
+  WARD = "ward",
+  SOUL = "soul",
+  NOTE = "note",
+  DOMINA = "domina",
+  SECRETA = "secreta",
+  DREAD = "dread",
+  GIGAS = "gigas",
+  EXPLOIT = "exploit",
+  FUSIA = "fusia",
+  ADDI = "addi",
+  TRIA = "tria",
+  DECOLD = "decold",
+  // unused
+  S = "s",
 }
 
 export type AugmentData = Readonly<{

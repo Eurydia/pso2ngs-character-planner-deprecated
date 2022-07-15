@@ -1,4 +1,4 @@
-import { FoodItemData, FoodAttribute, FoodCategory } from "./types";
+import { FoodData, FoodAttribute, FoodCategory } from "./types";
 
 /**
  * The name of the item, if not overridden,
@@ -9,15 +9,16 @@ import { FoodItemData, FoodAttribute, FoodCategory } from "./types";
  * @param name_override
  * @returns
  */
-export const makeFoodItemData = (
+export const makeFoodData = (
   category: FoodCategory,
   attribute: FoodAttribute,
   name_override: string = "",
-): FoodItemData => {
-  let name = name_override
-    ? name_override
-    : `${attribute} ${category}`;
-  name = name.toLowerCase();
+): FoodData => {
+  let name = `${attribute} ${category}`;
+
+  if (Boolean(name_override)) {
+    name = name_override;
+  }
 
   return Object.freeze({
     name,

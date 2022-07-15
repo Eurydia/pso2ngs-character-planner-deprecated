@@ -63,14 +63,15 @@ export type WeaponDataSignature = Pick<WeaponData, "name">;
  * What a weapon looks like when fully combined
  * with other aspects.
  */
-export type Weapon = {
+export type WeaponItem = {
   weapon: WeaponData | null;
   enhancement: number;
   fixa: FixaData | null;
   potential_level: number;
   augments: (AugmentData | null)[];
 };
-export type WeaponSignature = {
+
+export type WeaponItemSignature = {
   weapon: WeaponDataSignature | null;
   enhancement: number;
   fixa: FixaDataSignature | null;

@@ -2,10 +2,9 @@ import { StatTypes, makeStat } from "../../stats";
 import { makeFixaData } from "../makeData";
 import { FixaData, FixaTypes } from "../types";
 
-// ---------------------
-let fixa: FixaData[] = [];
 const FIXA_TYPE = FixaTypes.UNIT;
-// ---------------------
+
+let data: FixaData[] = [];
 
 // ---------------------
 // guard
@@ -16,7 +15,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.DMG_RESIST, amount)];
 
-    fixa.push(makeFixaData("guard", level, FIXA_TYPE, stats));
+    data.push(makeFixaData("guard", level, FIXA_TYPE, stats));
   });
 })();
 
@@ -29,7 +28,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.PP_COST, amount)];
 
-    fixa.push(makeFixaData("performa", level, FIXA_TYPE, stats));
+    data.push(makeFixaData("performa", level, FIXA_TYPE, stats));
   });
 })();
 
@@ -42,7 +41,7 @@ const FIXA_TYPE = FixaTypes.UNIT;
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.NATURAL_PP_RECOVERY, amount)];
 
-    fixa.push(makeFixaData("natura", level, FIXA_TYPE, stats));
+    data.push(makeFixaData("natura", level, FIXA_TYPE, stats));
   });
 })();
 
@@ -55,8 +54,8 @@ const FIXA_TYPE = FixaTypes.UNIT;
     const level = level_index + 1;
     const stats = [makeStat(StatTypes.ACTIVE_PP_RECOVERY, amount)];
 
-    fixa.push(makeFixaData("enthusia", level, FIXA_TYPE, stats));
+    data.push(makeFixaData("enthusia", level, FIXA_TYPE, stats));
   });
 })();
 
-export default fixa;
+export default data;

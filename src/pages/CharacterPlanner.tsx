@@ -6,9 +6,9 @@ import {
   saveFoodItemToLocal,
 } from "../assets/food";
 import {
-  Weapon,
-  getWeaponTemplate,
-  saveWeaponToLocal,
+  WeaponItem,
+  getWeaponItemTemplate,
+  saveWeaponItemToLocal,
   loadWeaponFromLocal,
   getWeaponATKAmount,
 } from "../assets/weapons";
@@ -36,7 +36,7 @@ import BPGate from "../container/BPGateVisualizer";
 
 const getTotalBP = (
   character: Character,
-  weapon: Weapon,
+  weapon: WeaponItem,
   units: Unit[],
   realistic: boolean,
 ): number => {
@@ -141,9 +141,11 @@ const CharacterPlanner = () => {
     saveFoodItemToLocal(foodItems);
   }, [foodItems]);
 
-  const [weapon, setWeapon] = useState<Weapon>(getWeaponTemplate);
+  const [weapon, setWeapon] = useState<WeaponItem>(
+    getWeaponItemTemplate,
+  );
   useEffect(() => {
-    saveWeaponToLocal(weapon);
+    saveWeaponItemToLocal(weapon);
   }, [weapon]);
 
   const [unitA, setUnitA] = useState<Unit>(getUnitTemplate);

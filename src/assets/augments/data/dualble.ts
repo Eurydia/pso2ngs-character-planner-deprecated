@@ -2,11 +2,10 @@ import { makeStat, StatShorthands, StatTypes } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.DUALBLE;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.DUALBLE];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // melra
@@ -21,7 +20,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.MEL_POT, pot[level_index]),
       makeStat(StatTypes.RNG_POT, pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("melra dualble", level, GROUP, CONFLICT, stats),
     );
   });
@@ -40,7 +39,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.MEL_POT, pot[level_index]),
       makeStat(StatTypes.TEC_POT, pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(
         "meltech dualble",
         level,
@@ -65,7 +64,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.RNG_POT, pot[level_index]),
       makeStat(StatTypes.TEC_POT, pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(
         "ratech dualble",
         level,
@@ -79,11 +78,11 @@ let augments: AugmentData[] = [];
 
 // --------------------------------------
 // triplble
-augments.push(
+data.push(
   makeAugmentData("triplble", 0, GROUP, CONFLICT, [
     makeStat(StatTypes.BP, 8),
     makeStat(StatShorthands.POT, 1.02),
   ]),
 );
 
-export default augments;
+export default data;

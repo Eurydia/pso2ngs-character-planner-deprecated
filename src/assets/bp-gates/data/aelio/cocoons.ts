@@ -5,10 +5,10 @@ import {
   ContentLocation,
 } from "../../types";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ------------------------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "first step",
     [ContentLocation.AELIO],
@@ -17,7 +17,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "test flight",
     [ContentLocation.AELIO],
@@ -26,7 +26,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "enhanced enemy",
     [ContentLocation.AELIO],
@@ -35,7 +35,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "wild rush",
     [ContentLocation.AELIO],
@@ -44,7 +44,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "swift jump",
     [ContentLocation.AELIO],
@@ -53,7 +53,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "runway",
     [ContentLocation.AELIO],
@@ -62,7 +62,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "roaring rush",
     [ContentLocation.AELIO],
@@ -71,7 +71,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "fleeting flight",
     [ContentLocation.AELIO],
@@ -81,4 +81,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

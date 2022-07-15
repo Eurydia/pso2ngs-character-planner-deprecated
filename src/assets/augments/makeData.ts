@@ -8,8 +8,8 @@ import { AugmentData, AugmentGroups } from "./types";
  * @param group the group that this augment belongs to.
  * @param conflict augment groups that can't be used with this augment.
  * @param stats stats of the augment.
- * @param conditionals
- * @param [isSType] is the augment an "s" variant. Defaults to `false`.
+ * @param conditionals conditional stats, if any.
+ * @param isSType is the augment an "s" variant. Defaults to `false`.
  * @returns an augment data
  */
 export const makeAugmentData = (

@@ -7,11 +7,11 @@ export const makeBPGateData = (
   bp_required: number,
   enemy_level: number,
 ): BPGateData => {
-  return {
+  return Object.freeze({
     name,
     region,
     content_type,
     bp_required,
     enemy_level,
-  };
+  });
 };

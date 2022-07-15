@@ -5,11 +5,11 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
 // belugana ruins
-gates.push(
+data.push(
   makeBPGateData(
     "belugana ruins (rank 1)",
     [ContentLocation.KVARIS],
@@ -18,7 +18,7 @@ gates.push(
     40,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "belugana ruins (rank 2)",
     [ContentLocation.KVARIS],
@@ -30,7 +30,7 @@ gates.push(
 
 // ---------------------------
 // lost central
-gates.push(
+data.push(
   makeBPGateData(
     "lost central (rank 1)",
     [ContentLocation.KVARIS],
@@ -39,7 +39,7 @@ gates.push(
     45,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "lost central (rank 2)",
     [ContentLocation.RETEM],
@@ -49,4 +49,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

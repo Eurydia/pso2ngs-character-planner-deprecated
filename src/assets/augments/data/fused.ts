@@ -2,12 +2,13 @@ import { makeStat, StatTypes, expandPot } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.FUSED;
 const CONFLICT = [AugmentGroups.FUSED, AugmentGroups.BASIC];
-let augments: AugmentData[] = [];
-// --------------------------------------
 
+let data: AugmentData[] = [];
+
+// --------------------------------------
+// fused
 (() => {
   const pot_type = expandPot();
 
@@ -16,7 +17,7 @@ let augments: AugmentData[] = [];
     const pot = makeStat(pot_type[pot_type_index], 1.02);
 
     // sta
-    augments.push(
+    data.push(
       makeAugmentData(`sta ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         makeStat(StatTypes.HP, 15),
@@ -25,7 +26,7 @@ let augments: AugmentData[] = [];
     );
 
     // spi
-    augments.push(
+    data.push(
       makeAugmentData(`spi ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         makeStat(StatTypes.PP, 5),
@@ -34,7 +35,7 @@ let augments: AugmentData[] = [];
     );
 
     // deft
-    augments.push(
+    data.push(
       makeAugmentData(`deft ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         pot,
@@ -43,7 +44,7 @@ let augments: AugmentData[] = [];
     );
 
     // gua
-    augments.push(
+    data.push(
       makeAugmentData(`gua ${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 8),
         pot,
@@ -53,4 +54,4 @@ let augments: AugmentData[] = [];
   });
 })();
 
-export default augments;
+export default data;

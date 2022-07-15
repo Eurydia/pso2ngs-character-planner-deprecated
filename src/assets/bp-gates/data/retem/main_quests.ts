@@ -5,10 +5,10 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
-gates.push(
+data.push(
   makeBPGateData(
     "the corner stone of retem's revival",
     [ContentLocation.RETEM],
@@ -17,7 +17,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "the truth behind the song",
     [ContentLocation.RETEM],
@@ -26,7 +26,7 @@ gates.push(
     0,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "retem's independent partisan squad",
     [ContentLocation.RETEM],
@@ -36,4 +36,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

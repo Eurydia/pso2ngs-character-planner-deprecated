@@ -1,8 +1,8 @@
-import { FoodItemData, FoodAttribute, FoodCategory } from "../types";
-import { makeFoodItemData } from "../makeData";
+import { FoodData, FoodAttribute, FoodCategory } from "../types";
+import { makeFoodData } from "../makeData";
 
 // ---------------------------
-let food: FoodItemData[] = [];
+let data: FoodData[] = [];
 // ---------------------------
 
 const attributes = [
@@ -18,10 +18,10 @@ const categories = [
   FoodCategory.SEAFOOD,
 ];
 
-attributes.forEach((attribute) => {
-  categories.forEach((category) => {
-    food.push(makeFoodItemData(category, attribute));
-  });
-});
+for (const attr of attributes) {
+  for (const cate of categories) {
+    data.push(makeFoodData(cate, attr));
+  }
+}
 
-export default food;
+export default data;

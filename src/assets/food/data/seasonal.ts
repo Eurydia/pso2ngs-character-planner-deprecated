@@ -1,42 +1,48 @@
-import { makeFoodItemData } from "../makeData";
-import { FoodItemData, FoodAttribute, FoodCategory } from "../types";
+import { makeFoodData } from "../makeData";
+import { FoodData, FoodAttribute, FoodCategory } from "../types";
 
 // ---------------------------
-let food: FoodItemData[] = [];
+let data: FoodData[] = [];
 // ---------------------------
 
 // ---------------------------
 // fall event
-food.push(
-  makeFoodItemData(
+data.push(
+  makeFoodData(
     FoodCategory.VEGETABLE,
     FoodAttribute.CRISPY,
     "autumn vampkin",
   ),
 );
+
+// --------------------------
 // winter event
-food.push(
-  makeFoodItemData(
+data.push(
+  makeFoodData(
     FoodCategory.VEGETABLE,
     FoodAttribute.RICH,
     "winter cozylion",
   ),
 );
+
+// --------------------------
 // spring event
-food.push(
-  makeFoodItemData(
+data.push(
+  makeFoodData(
     FoodCategory.FRUIT,
     FoodAttribute.LIGHT,
     "spring ballooni",
   ),
 );
+
+// --------------------------
 // 1st anniversary event
-food.push(
-  makeFoodItemData(
+data.push(
+  makeFoodData(
     FoodCategory.VEGETABLE,
     FoodAttribute.ROBUST,
     "anniversartichoke",
   ),
 );
 
-export default food;
+export default data;

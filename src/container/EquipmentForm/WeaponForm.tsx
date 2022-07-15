@@ -14,7 +14,10 @@ import {
 } from "@mui/material";
 import { AutoAwesome, Carpenter } from "@mui/icons-material";
 import { ENHANCEMENT_MAX } from "../../stores";
-import { getWeaponStatPayload, Weapon } from "../../assets/weapons";
+import {
+  getWeaponStatPayload,
+  WeaponItem,
+} from "../../assets/weapons";
 import { Stat, StatPayload, StatTypes } from "../../assets/stats";
 import { getActiveAugmentSlots } from "../../assets/augments";
 import { tallyStats } from "../../utility";
@@ -30,8 +33,8 @@ interface WeaponFormProps {
   realistic: boolean;
   charLevel: number;
   label: string;
-  getInitValue: () => Weapon;
-  onChange: (value: Weapon) => void;
+  getInitValue: () => WeaponItem;
+  onChange: (value: WeaponItem) => void;
 }
 const WeaponForm: FC<WeaponFormProps> = memo(
   (props) => {

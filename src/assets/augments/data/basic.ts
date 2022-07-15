@@ -7,11 +7,10 @@ import {
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.BASIC;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.FUSED];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // stamina
@@ -25,7 +24,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.HP, hp[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("stamina", level, GROUP, CONFLICT, stats),
     );
   });
@@ -43,7 +42,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.PP, pp[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("spirit", level, GROUP, CONFLICT, stats),
     );
   });
@@ -64,9 +63,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.BP, bp),
         makeStat(pot_type[pot_index], pot[level_index]),
       ];
-      augments.push(
-        makeAugmentData(name, level, GROUP, CONFLICT, stats),
-      );
+      data.push(makeAugmentData(name, level, GROUP, CONFLICT, stats));
     });
   });
 })();
@@ -83,7 +80,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("deftness", level, GROUP, CONFLICT, stats),
     );
   });
@@ -101,7 +98,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("guard", level, GROUP, CONFLICT, stats),
     );
   });
@@ -123,10 +120,10 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.FLOOR_POT, floor_pot[level_index]),
       makeStat(StatTypes.DMG_RESIST, dmg_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData("mastery", level, GROUP, CONFLICT, stats),
     );
   });
 })();
 
-export default augments;
+export default data;

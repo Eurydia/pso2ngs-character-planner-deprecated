@@ -6,12 +6,14 @@ import {
 } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
-// --------------------------------------
+
 const GROUP = AugmentGroups.ADDI;
 const CONFLICT = [AugmentGroups.ADDI];
-let augments: AugmentData[] = [];
-// --------------------------------------
 
+let data: AugmentData[] = [];
+
+// --------------------------------------
+// addi
 (() => {
   const pot_type = expandPot();
 
@@ -20,7 +22,7 @@ let augments: AugmentData[] = [];
     const pot = makeStat(pot_type[pot_type_index], 1.025);
 
     // sta
-    augments.push(
+    data.push(
       makeAugmentData(`addi sta${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         makeStat(StatTypes.HP, 20),
@@ -29,7 +31,7 @@ let augments: AugmentData[] = [];
     );
 
     // spi
-    augments.push(
+    data.push(
       makeAugmentData(`addi spi${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         pot,
@@ -38,7 +40,7 @@ let augments: AugmentData[] = [];
     );
 
     // deft
-    augments.push(
+    data.push(
       makeAugmentData(`addi deft${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         makeStat(StatTypes.PP, 6),
@@ -47,7 +49,7 @@ let augments: AugmentData[] = [];
     );
 
     // gua
-    augments.push(
+    data.push(
       makeAugmentData(`addi guard${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         pot,
@@ -56,7 +58,7 @@ let augments: AugmentData[] = [];
     );
 
     // staspi
-    augments.push(
+    data.push(
       makeAugmentData(`add staspi${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         makeStat(StatTypes.HP, 10),
@@ -66,7 +68,7 @@ let augments: AugmentData[] = [];
     );
 
     // ward
-    augments.push(
+    data.push(
       makeAugmentData(`addi ward${name}`, 0, GROUP, CONFLICT, [
         makeStat(StatTypes.BP, 10),
         pot,
@@ -76,4 +78,4 @@ let augments: AugmentData[] = [];
   });
 })();
 
-export default augments;
+export default data;

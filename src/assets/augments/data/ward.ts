@@ -7,11 +7,10 @@ import {
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.WARD;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.WARD];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // ward
@@ -36,7 +35,7 @@ let augments: AugmentData[] = [];
         makeStat(StatTypes.BP, bp),
         makeStat(ail_type[ail_type_index], ail_res[level_index]),
       ];
-      augments.push(
+      data.push(
         makeAugmentData(
           `${name} ward`,
           level,
@@ -61,7 +60,7 @@ let augments: AugmentData[] = [];
       makeStat(StatTypes.BP, bp),
       makeStat(StatShorthands.AILMENT_RES, ailemnt_res[level_index]),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(
         "sovereign ward",
         level,
@@ -73,4 +72,4 @@ let augments: AugmentData[] = [];
   });
 })();
 
-export default augments;
+export default data;

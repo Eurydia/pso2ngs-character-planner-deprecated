@@ -5,48 +5,58 @@ import {
   StatPayload,
 } from "../../stats";
 import { FoodAttribute, FoodCategory, FoodItem } from "../types";
-import { getAttributeStatPayload } from "./getAttributeStatPayload";
-import { getCategoryStatPayload } from "./getCategoryStatPayload";
+import { getStatPayloadFromAttribute } from "./attributes";
+import { getStatPayloadFromCategory } from "./categories";
 
-export * from "./getCategoryStatPayload";
-export * from "./getAttributeStatPayload";
+export * from "./categories";
+export * from "./attributes";
 
+const ATTRIBUTE_KEYS = Object.values(FoodAttribute);
+const CATEGORY_KEYS = Object.values(FoodCategory);
+
+/**
+ * Create StatPayload object from array of food items.
+ * @param items food items to use
+ * @returns
+ */
 export const getStatPayload = (items: FoodItem[]): StatPayload => {
-  let attribute: { [key in FoodAttribute]: number } = {
-    CRISPY: 0,
-    LIGHT: 0,
-    RICH: 0,
-    ROBUST: 0,
-  };
-  let category: { [key in FoodCategory]: number } = {
-    MEAT: 0,
-    VEGETABLE: 0,
-    FRUIT: 0,
-    SEAFOOD: 0,
+  let template: { [key in FoodAttribute | FoodCategory]: number } = {
+    [FoodAttribute.CRISPY]: 0,
+    [FoodAttribute.LIGHT]: 0,
+    [FoodAttribute.RICH]: 0,
+    [FoodAttribute.ROBUST]: 0,
+    [FoodCategory.MEAT]: 0,
+    [FoodCategory.VEGETABLE]: 0,
+    [FoodCategory.FRUIT]: 0,
+    [FoodCategory.SEAFOOD]: 0,
   };
 
   for (const item of items) {
-    attribute[item.attribute] += item.amount;
-    category[item.category] += item.amount;
+    template[item.attribute] += item.amount;
+    template[item.category] += item.amount;
   }
 
   let stats: Stat[] = [];
   let conditionals: Conditional[] = [];
-  for (const key of Object.keys(attribute)) {
-    const payload = getAttributeStatPayload(
+
+  // create StatPayload objects from attributes
+  for (const key of ATTRIBUTE_KEYS) {
+    const { stats, conditionals } = getStatPayloadFromAttribute(
       key as FoodAttribute,
-      attribute[key as FoodAttribute],
+      template[key as FoodAttribute],
     );
-    stats.push(...payload.stats);
-    conditionals.push(...payload.conditionals);
+    stats.push(...stats);
+    conditionals.push(...conditionals);
   }
-  for (const key of Object.keys(category)) {
-    const payload = getCategoryStatPayload(
+
+  // create StatPayload objects from categories
+  for (const key of CATEGORY_KEYS) {
+    const { stats, conditionals } = getStatPayloadFromCategory(
       key as FoodCategory,
-      category[key as FoodCategory],
+      template[key as FoodCategory],
     );
-    stats.push(...payload.stats);
-    conditionals.push(...payload.conditionals);
+    stats.push(...stats);
+    conditionals.push(...conditionals);
   }
 
   return makeStatPayload(stats, conditionals);

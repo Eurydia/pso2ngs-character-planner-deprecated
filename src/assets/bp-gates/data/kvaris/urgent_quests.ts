@@ -5,11 +5,11 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let bp_gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
 // ams vera
-bp_gates.push(
+data.push(
   makeBPGateData(
     "ams vera suppression",
     [ContentLocation.RETEM],
@@ -21,7 +21,7 @@ bp_gates.push(
 
 // ---------------------------
 // croc vera
-bp_gates.push(
+data.push(
   makeBPGateData(
     "crocodylis vera suppression",
     [ContentLocation.RETEM],
@@ -31,4 +31,4 @@ bp_gates.push(
   ),
 );
 
-export default bp_gates;
+export default data;

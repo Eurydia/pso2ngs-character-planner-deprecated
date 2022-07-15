@@ -2,11 +2,10 @@ import { StatTypes, expandPot, makeStat } from "../../stats";
 import { makeAugmentData } from "../makeData";
 import { AugmentData, AugmentGroups } from "../types";
 
-// --------------------------------------
 const GROUP = AugmentGroups.DECOLD;
 const CONFLICT: AugmentGroups[] = [AugmentGroups.DECOLD];
-let augments: AugmentData[] = [];
-// --------------------------------------
+
+let data: AugmentData[] = [];
 
 // --------------------------------------
 // standard
@@ -23,7 +22,7 @@ let augments: AugmentData[] = [];
         low_temp_resist[level_index],
       ),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(
         "decold standard",
         level,
@@ -47,10 +46,10 @@ let augments: AugmentData[] = [];
       makeStat(pot_type[pot_type_index], 1.025),
       makeStat(StatTypes.LOW_TEMP_RESIST, 1.025),
     ];
-    augments.push(
+    data.push(
       makeAugmentData(`decold ${name}`, 0, GROUP, CONFLICT, stats),
     );
   });
 })();
 
-export default augments;
+export default data;

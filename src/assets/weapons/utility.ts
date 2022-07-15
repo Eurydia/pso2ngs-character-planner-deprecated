@@ -1,4 +1,4 @@
-import WEAPONS from ".";
+import WEAPON_DATA from "./data";
 import {
   ENHANCEMENT_MAX,
   ENHANCEMENT_MIN,
@@ -14,103 +14,166 @@ import {
 import {
   FixaData,
   fixaDataFromSignature,
+  FixaDataSignature,
   fixaDataToSignature,
 } from "../fixas";
 import { typeguardWeaponDataSignature } from "./typeguard";
 import {
-  Weapon,
+  WeaponItem,
   WeaponData,
   WeaponDataSignature,
-  WeaponSignature,
+  WeaponItemSignature,
 } from "./types";
 
-export const getWeaponTemplate = (): Weapon => {
-  const augments = getAugmentTemplate();
+const WEAPON_LOCAL_STORAGE_KEY = "weapon";
+
+const WEAPON_LOOKUP: { [key: string]: WeaponData } = {};
+
+/**
+ * Take a food data signature and return a string
+ * which can be used as a key for the lookup table.
+ * @param signature
+ * @returns
+ */
+const makeLookupKey = (signature: WeaponDataSignature): string => {
+  const { name } = signature;
+
+  return name;
+};
+// populate lookup table
+for (const data of WEAPON_DATA) {
+  const lookup_key = makeLookupKey(data);
+  WEAPON_LOOKUP[lookup_key] = data;
+}
+
+/**
+ * Create an empty `WeaponItem`.
+ * @returns
+ */
+export const getWeaponItemTemplate = (): WeaponItem => {
   return {
     weapon: null,
     fixa: null,
     enhancement: ENHANCEMENT_MIN,
     potential_level: POTENTIAL_MIN,
-    augments,
+    augments: getAugmentTemplate(),
   };
 };
 
-export const weaponDataToSignature = ({
-  name,
-}: WeaponData): WeaponDataSignature => {
+/**
+ * Reduce `WeaponData` to its signature.
+ * @param data
+ * @returns
+ */
+export const weaponDataToSignature = (
+  data: WeaponData,
+): WeaponDataSignature => {
+  const { name } = data;
   return { name };
 };
 
+/**
+ * Generate `WeaponData` from a signature.
+ * Return `null` if failed to generate.
+ * @param signature
+ * @returns
+ */
 export const weaponDataFromSignature = (
-  signature: WeaponDataSignature | null,
+  signature: WeaponDataSignature,
 ): WeaponData | null => {
-  if (
-    signature === null ||
-    (signature && !typeguardWeaponDataSignature(signature))
-  ) {
+  if (!typeguardWeaponDataSignature(signature)) {
     return null;
   }
 
-  for (const data of WEAPONS) {
-    if (data.name === signature.name) {
-      return data;
-    }
+  const lookup_key = makeLookupKey(signature);
+  const data: undefined | WeaponData = WEAPON_LOOKUP[lookup_key];
+  if (Boolean(data)) {
+    return data;
   }
   return null;
 };
 
-export const saveWeaponToLocal = ({
-  weapon,
-  fixa,
-  potential_level,
-  enhancement,
-  augments,
-}: Weapon) => {
-  let weapon_sig: WeaponDataSignature | null = null;
-  if (weapon !== null) {
-    weapon_sig = weaponDataToSignature(weapon);
-  }
+/**
+ * Save `WeaponItem` to local storage.
+ * @param item `WeaponItem` to save.
+ */
+export const saveWeaponItemToLocal = (item: WeaponItem) => {
+  const { weapon, fixa, potential_level, enhancement, augments } =
+    item;
 
-  const fixa_sig: FixaData | null = null;
-  if (fixa !== null) {
-    fixaDataToSignature(fixa);
-  }
+  const weapon_signature: null | WeaponDataSignature = Boolean(weapon)
+    ? weaponDataToSignature(weapon!)
+    : null;
 
-  let augment_sigs: (AugmentDataSignature | null)[] = [];
+  const fixa_signature: null | FixaDataSignature = Boolean(fixa)
+    ? fixaDataToSignature(fixa!)
+    : null;
+
+  const augment_signatures: (null | AugmentDataSignature)[] = [];
   for (const augment of augments) {
-    augment_sigs.push(augmentDataToSignature(augment));
+    const augment_signature: null | AugmentDataSignature = Boolean(
+      augment,
+    )
+      ? augmentDataToSignature(augment!)
+      : null;
+    augment_signatures.push(augment_signature);
   }
 
-  const signature: WeaponSignature = {
-    weapon: weapon_sig,
-    fixa: fixa_sig,
+  // combine signatures into a signature object
+  const signature: WeaponItemSignature = {
+    weapon: weapon_signature,
+    fixa: fixa_signature,
     potential_level,
     enhancement,
-    augments: augment_sigs,
+    augments: augment_signatures,
   };
-  localStorage.setItem("weapon", JSON.stringify(signature));
+
+  // save signature to local storage
+  localStorage.setItem(
+    WEAPON_LOCAL_STORAGE_KEY,
+    JSON.stringify(signature),
+  );
 };
 
-export const loadWeaponFromLocal = (): Weapon => {
-  const as_string = localStorage.getItem("weapon");
+/**
+ * Load `WeaponItemSignature` from local storage.
+ * @returns
+ */
+const loadLocal = (): WeaponItemSignature => {
+  const json_string = localStorage.getItem(WEAPON_LOCAL_STORAGE_KEY);
 
-  if (!as_string) {
-    return getWeaponTemplate();
+  if (!Boolean(json_string)) {
+    return getWeaponItemTemplate();
   }
 
-  const stored: WeaponSignature = JSON.parse(as_string);
-  let res: Weapon = getWeaponTemplate();
-  res.weapon = weaponDataFromSignature(stored.weapon);
-  res.fixa = fixaDataFromSignature(stored.fixa);
+  let signature: WeaponItemSignature = JSON.parse(json_string!);
+
+  if (!Array.isArray(signature.augments)) {
+    signature.augments = [];
+  }
+
+  return signature;
+};
+
+export const loadWeaponFromLocal = (): WeaponItem => {
+  const signature: WeaponItemSignature = loadLocal();
+
+  const weapon: null | WeaponData = Boolean(signature.weapon)
+    ? weaponDataFromSignature(signature.weapon!)
+    : null;
+
+  const fixa: null | FixaData = Boolean(signature.fixa)
+    ? fixaDataFromSignature(signature.fixa!)
+    : null;
 
   if (Array.isArray(stored.augments)) {
     const arr_length = Math.min(
-      res.augments.length,
+      item.augments.length,
       stored.augments.length,
     );
     for (let i = 0; i < arr_length; i++) {
       const aug_sig = stored.augments[i];
-      res.augments[i] = augmentDataFromSignature(aug_sig);
+      item.augments[i] = augmentDataFromSignature(aug_sig);
     }
   }
 
@@ -119,7 +182,7 @@ export const loadWeaponFromLocal = (): Weapon => {
     stored.potential_level >= POTENTIAL_MIN &&
     stored.potential_level <= POTENTIAL_MAX
   ) {
-    res.potential_level = stored.potential_level;
+    item.potential_level = stored.potential_level;
   }
 
   if (
@@ -127,8 +190,8 @@ export const loadWeaponFromLocal = (): Weapon => {
     stored.enhancement >= ENHANCEMENT_MIN &&
     stored.enhancement <= ENHANCEMENT_MAX
   ) {
-    res.enhancement = stored.enhancement;
+    item.enhancement = stored.enhancement;
   }
 
-  return res;
+  return item;
 };

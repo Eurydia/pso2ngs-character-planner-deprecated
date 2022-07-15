@@ -6,12 +6,12 @@ import {
 import { makeBPGateData } from "../../makeData";
 
 // ---------------------------
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 // ---------------------------
 
 // ---------------------------
 // yellow
-gates.push(
+data.push(
   makeBPGateData(
     "aelio yellow (rank 1)",
     [ContentLocation.AELIO],
@@ -20,7 +20,7 @@ gates.push(
     16,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "aelio yellow (rank 1)",
     [ContentLocation.AELIO],
@@ -32,7 +32,7 @@ gates.push(
 
 // ---------------------------
 // purple
-gates.push(
+data.push(
   makeBPGateData(
     "aelio purple (rank 1)",
     [ContentLocation.AELIO],
@@ -41,7 +41,7 @@ gates.push(
     24,
   ),
 );
-gates.push(
+data.push(
   makeBPGateData(
     "aelio purple (rank 2)",
     [ContentLocation.AELIO],
@@ -51,4 +51,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

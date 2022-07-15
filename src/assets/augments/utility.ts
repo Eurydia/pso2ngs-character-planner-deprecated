@@ -46,6 +46,11 @@ export const getAugmentTemplate = (): (AugmentData | null)[] => {
   return template;
 };
 
+/**
+ * Turn an `AugmentData` into its signature form.
+ * @param data data to turn into signature.
+ * @returns
+ */
 export const augmentDataToSignature = ({
   name,
   level,
@@ -58,6 +63,13 @@ export const augmentDataToSignature = ({
   };
 };
 
+/**
+ * Rebuild an `AugmentData` from its signature.
+ * Return `null` if cannot rebuild or
+ * failed type guard check.
+ * @param signature
+ * @returns
+ */
 export const augmentDataFromSignature = (
   signature: AugmentDataSignature,
 ): AugmentData | null => {

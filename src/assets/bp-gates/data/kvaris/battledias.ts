@@ -5,11 +5,11 @@ import {
 } from "../../types";
 import { makeBPGateData } from "../../makeData";
 
-let gates: BPGateData[] = [];
+let data: BPGateData[] = [];
 
 // ---------------------------
 // yellow
-gates.push(
+data.push(
   makeBPGateData(
     "kvaris yellow",
     [ContentLocation.KVARIS],
@@ -21,7 +21,7 @@ gates.push(
 
 // ---------------------------
 // purple
-gates.push(
+data.push(
   makeBPGateData(
     "kvaris purple",
     [ContentLocation.KVARIS],
@@ -31,4 +31,4 @@ gates.push(
   ),
 );
 
-export default gates;
+export default data;

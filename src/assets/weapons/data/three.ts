@@ -8,13 +8,12 @@ import {
 } from "../potential-data";
 import { WeaponData } from "../types";
 
-// -----------------------
 const RARITY = 3;
-let weapons: WeaponData[] = [];
-// -----------------------
+
+let data: WeaponData[] = [];
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "theseus weapons",
     RARITY,
@@ -26,7 +25,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "trois de weapons",
     RARITY,
@@ -38,14 +37,14 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData("gold primm sword", RARITY, 10, RECYCLER_UNIT, 223, [
     makeStat(StatTypes.FLOOR_POT, 1.7),
   ]),
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "glissen weapons",
     RARITY,
@@ -66,7 +65,7 @@ weapons.push(
 );
 
 // -----------------------
-weapons.push(
+data.push(
   makeWeaponData(
     "frostel weapons",
     RARITY,
@@ -86,4 +85,4 @@ weapons.push(
   ),
 );
 
-export default weapons;
+export default data;
