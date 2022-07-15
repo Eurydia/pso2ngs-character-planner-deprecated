@@ -14,7 +14,7 @@ export const makePotentialData = (
 };
 
 /**
- * Make a weapon
+ * Make a `WeaponData`
  * @param name
  * @param rarity
  * @param level_required
@@ -34,12 +34,12 @@ export const makeWeaponData = (
   conditionals: Conditional[] = [],
 ): WeaponData => {
   const payload = makeStatPayload(stats, conditionals);
-  return {
+  return Object.freeze({
     name,
     rarity,
     level_required,
     potential,
     base_attack,
     payload,
-  };
+  });
 };

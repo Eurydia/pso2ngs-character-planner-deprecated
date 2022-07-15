@@ -37,7 +37,6 @@ const WEAPON_LOOKUP: { [key: string]: WeaponData } = {};
  */
 const makeLookupKey = (signature: WeaponDataSignature): string => {
   const { name } = signature;
-
   return name;
 };
 // populate lookup table
@@ -148,15 +147,13 @@ const loadLocal = (): WeaponItemSignature => {
 
   let signature: WeaponItemSignature = JSON.parse(json_string!);
 
-  if (!Array.isArray(signature.augments)) {
-    signature.augments = [];
-  }
-
   return signature;
 };
 
 export const loadWeaponFromLocal = (): WeaponItem => {
   const signature: WeaponItemSignature = loadLocal();
+
+  const template: WeaponItem = getWeaponItemTemplate();
 
   const weapon: null | WeaponData = Boolean(signature.weapon)
     ? weaponDataFromSignature(signature.weapon!)
