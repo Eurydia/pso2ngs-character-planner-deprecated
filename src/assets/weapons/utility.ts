@@ -7,15 +7,15 @@ import {
 } from "../../stores";
 import {
   AugmentDataSignature,
-  augmentDataFromSignature,
-  augmentDataToSignature,
-  getAugmentTemplate,
+  rebuildAugmentData,
+  reduceAugmentData,
+  getEmptyAugment,
 } from "../augments";
 import {
   FixaData,
-  fixaDataFromSignature,
+  rebuildFixaData,
   FixaDataSignature,
-  fixaDataToSignature,
+  reduceFixaData,
 } from "../fixas";
 import { typeguardWeaponDataSignature } from "./typeguard";
 import {
@@ -46,25 +46,11 @@ for (const data of WEAPON_DATA) {
 }
 
 /**
- * Create an empty `WeaponItem`.
- * @returns
- */
-export const getWeaponItemTemplate = (): WeaponItem => {
-  return {
-    weapon: null,
-    fixa: null,
-    enhancement: ENHANCEMENT_MIN,
-    potential_level: POTENTIAL_MIN,
-    augments: getAugmentTemplate(),
-  };
-};
-
-/**
- * Reduce `WeaponData` to its signature.
+ * Strip `WeaponData` to its signature.
  * @param data
  * @returns
  */
-export const weaponDataToSignature = (
+export const reduceWeaponData = (
   data: WeaponData,
 ): WeaponDataSignature => {
   const { name } = data;
@@ -72,12 +58,12 @@ export const weaponDataToSignature = (
 };
 
 /**
- * Generate `WeaponData` from a signature.
- * Return `null` if failed to generate.
+ * rebuild a `WeaponData` from a signature.
+ * Return `null` when failed.
  * @param signature
  * @returns
  */
-export const weaponDataFromSignature = (
+export const rebuildWeaponData = (
   signature: WeaponDataSignature,
 ): WeaponData | null => {
   if (!typeguardWeaponDataSignature(signature)) {
@@ -96,16 +82,16 @@ export const weaponDataFromSignature = (
  * Save `WeaponItem` to local storage.
  * @param item `WeaponItem` to save.
  */
-export const saveWeaponItemToLocal = (item: WeaponItem) => {
+export const saveWeaponItem = (item: WeaponItem) => {
   const { weapon, fixa, potential_level, enhancement, augments } =
     item;
 
   const weapon_signature: null | WeaponDataSignature = Boolean(weapon)
-    ? weaponDataToSignature(weapon!)
+    ? reduceWeaponData(weapon!)
     : null;
 
   const fixa_signature: null | FixaDataSignature = Boolean(fixa)
-    ? fixaDataToSignature(fixa!)
+    ? reduceFixaData(fixa!)
     : null;
 
   const augment_signatures: (null | AugmentDataSignature)[] = [];
@@ -113,7 +99,7 @@ export const saveWeaponItemToLocal = (item: WeaponItem) => {
     const augment_signature: null | AugmentDataSignature = Boolean(
       augment,
     )
-      ? augmentDataToSignature(augment!)
+      ? reduceAugmentData(augment!)
       : null;
     augment_signatures.push(augment_signature);
   }
@@ -150,17 +136,17 @@ const loadLocal = (): WeaponItemSignature => {
   return signature;
 };
 
-export const loadWeaponFromLocal = (): WeaponItem => {
+export const loadWeaponItem = (): WeaponItem => {
   const signature: WeaponItemSignature = loadLocal();
 
   const template: WeaponItem = getWeaponItemTemplate();
 
   const weapon: null | WeaponData = Boolean(signature.weapon)
-    ? weaponDataFromSignature(signature.weapon!)
+    ? rebuildWeaponData(signature.weapon!)
     : null;
 
   const fixa: null | FixaData = Boolean(signature.fixa)
-    ? fixaDataFromSignature(signature.fixa!)
+    ? rebuildFixaData(signature.fixa!)
     : null;
 
   if (Array.isArray(stored.augments)) {
@@ -170,7 +156,7 @@ export const loadWeaponFromLocal = (): WeaponItem => {
     );
     for (let i = 0; i < arr_length; i++) {
       const aug_sig = stored.augments[i];
-      item.augments[i] = augmentDataFromSignature(aug_sig);
+      item.augments[i] = rebuildAugmentData(aug_sig);
     }
   }
 

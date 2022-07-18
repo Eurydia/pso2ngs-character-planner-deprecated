@@ -15,7 +15,7 @@ import {
 import { AutoAwesome, Shield } from "@mui/icons-material";
 import { StatPayload } from "../../assets/stats";
 import { getUnitStatPayload, Unit } from "../../assets/units";
-import { getActiveAugmentSlots } from "../../assets/augments";
+import { getAugmentSlots } from "../../assets/augments";
 import { ENHANCEMENT_MAX } from "../../stores";
 import AugmentGroup from "./components/AugmentGroup";
 import UnitSearch from "./components/UnitSearch";
@@ -76,10 +76,10 @@ const UnitForm: FC<UnitFormProps> = memo(
     let active_aug_slots = 0;
     if (realistic) {
       if (!unitIsNull) {
-        active_aug_slots = getActiveAugmentSlots(enhancement);
+        active_aug_slots = getAugmentSlots(enhancement);
       }
     } else {
-      active_aug_slots = getActiveAugmentSlots(ENHANCEMENT_MAX);
+      active_aug_slots = getAugmentSlots(ENHANCEMENT_MAX);
     }
     for (let i = 0; i < active_aug_slots; i++) {
       const augment = augments[i];

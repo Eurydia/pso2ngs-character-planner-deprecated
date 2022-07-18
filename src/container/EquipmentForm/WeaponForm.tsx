@@ -19,7 +19,7 @@ import {
   WeaponItem,
 } from "../../assets/weapons";
 import { Stat, StatPayload, StatTypes } from "../../assets/stats";
-import { getActiveAugmentSlots } from "../../assets/augments";
+import { getAugmentSlots } from "../../assets/augments";
 import { tallyStats } from "../../utility";
 import StatList from "../../components/StatList/StatList";
 import AugmentGroup from "./components/AugmentGroup";
@@ -85,10 +85,10 @@ const WeaponForm: FC<WeaponFormProps> = memo(
     let active_aug_slots = 0;
     if (realistic) {
       if (!weaponIsNull) {
-        active_aug_slots = getActiveAugmentSlots(enhancement);
+        active_aug_slots = getAugmentSlots(enhancement);
       }
     } else {
-      active_aug_slots = getActiveAugmentSlots(ENHANCEMENT_MAX);
+      active_aug_slots = getAugmentSlots(ENHANCEMENT_MAX);
     }
     for (let i = 0; i < active_aug_slots; i++) {
       const augment = augments[i];

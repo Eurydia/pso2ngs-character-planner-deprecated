@@ -8,8 +8,8 @@ import {
 import {
   WeaponItem,
   getWeaponItemTemplate,
-  saveWeaponItemToLocal,
-  loadWeaponFromLocal,
+  saveWeaponItem,
+  loadWeaponItem,
   getWeaponATKAmount,
 } from "../assets/weapons";
 import {
@@ -145,7 +145,7 @@ const CharacterPlanner = () => {
     getWeaponItemTemplate,
   );
   useEffect(() => {
-    saveWeaponItemToLocal(weapon);
+    saveWeaponItem(weapon);
   }, [weapon]);
 
   const [unitA, setUnitA] = useState<Unit>(getUnitTemplate);
@@ -201,7 +201,7 @@ const CharacterPlanner = () => {
             realistic={isRealistic}
             charLevel={char_level}
             label="Weapon"
-            getInitValue={loadWeaponFromLocal}
+            getInitValue={loadWeaponItem}
             onChange={setWeapon}
           />
         </Grid>

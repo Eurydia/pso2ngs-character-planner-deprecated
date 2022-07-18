@@ -20,16 +20,14 @@ export enum AugmentGroups {
   S = "s",
 }
 
-export type AugmentData = Readonly<{
+export interface AugmentDataSignature {
   name: string;
   level: number;
   isSType: boolean;
+}
+
+export interface AugmentData extends AugmentDataSignature {
   group: AugmentGroups;
   conflict: AugmentGroups[];
   payload: StatPayload;
-}>;
-
-export type AugmentDataSignature = Pick<
-  AugmentData,
-  "name" | "level" | "isSType"
->;
+}

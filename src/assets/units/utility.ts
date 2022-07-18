@@ -2,15 +2,11 @@ import UNITS from ".";
 import { ENHANCEMENT_MAX, ENHANCEMENT_MIN } from "../../stores";
 import {
   AugmentDataSignature,
-  augmentDataFromSignature,
-  augmentDataToSignature,
-  getAugmentTemplate,
+  rebuildAugmentData,
+  reduceAugmentData,
+  getEmptyAugment,
 } from "../augments";
-import {
-  FixaData,
-  fixaDataFromSignature,
-  fixaDataToSignature,
-} from "../fixas";
+import { FixaData, rebuildFixaData, reduceFixaData } from "../fixas";
 import { typeguardUnitDataSignature } from "./typeguard";
 import {
   Unit,
@@ -24,7 +20,7 @@ export const getUnitTemplate = (): Unit => {
     unit: null,
     fixa: null,
     enhancement: ENHANCEMENT_MIN,
-    augments: getAugmentTemplate(),
+    augments: getEmptyAugment(),
   };
 };
 
@@ -66,12 +62,12 @@ export const saveUnitToLocal = (
 
   const fixa_sig: FixaData | null = null;
   if (fixa !== null) {
-    fixaDataToSignature(fixa);
+    reduceFixaData(fixa);
   }
 
   let augment_sigs: (AugmentDataSignature | null)[] = [];
   for (const augment of augments) {
-    augment_sigs.push(augmentDataToSignature(augment));
+    augment_sigs.push(reduceAugmentData(augment));
   }
 
   const signature: UnitSignature = {
@@ -93,7 +89,7 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
   const stored: UnitSignature = JSON.parse(as_string);
   let res: Unit = getUnitTemplate();
   res.unit = unitDataFromSignature(stored.unit);
-  res.fixa = fixaDataFromSignature(stored.fixa);
+  res.fixa = rebuildFixaData(stored.fixa);
 
   if (Array.isArray(stored.augments)) {
     const arr_length = Math.min(
@@ -102,7 +98,7 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
     );
     for (let i = 0; i < arr_length; i++) {
       const aug_sig = stored.augments[i];
-      res.augments[i] = augmentDataFromSignature(aug_sig);
+      res.augments[i] = rebuildAugmentData(aug_sig);
     }
   }
 
