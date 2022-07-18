@@ -1,4 +1,4 @@
-import DATA from "./data";
+import DATA_ARR from "./data";
 import { ENHANCEMENT_MAX } from "../constants";
 import { isAugmentDataSignature } from "./typeguard";
 import { AugmentData, AugmentDataSignature } from "./types";
@@ -8,39 +8,41 @@ const AUGMENT_STORAGE_KEY = "augments";
 const DATA_LOOKUP: { [key: string]: AugmentData } = {};
 
 /**
- * Take an augment signature and return a string
- * which can be used as a lookup key.
- * @param signature signature to turn into lookup key.
- * @returns
+ * Using `Map` as a hash table is more convoluted
+ * than I originally thought, so I decided
+ * to not use it at all.
+ *
+ * Instead of using `AugmentDataSignature` as key
+ * and corresponding `AugmentData` as value in a `Map`,
+ * I used a normal object with the key being a string.
+ *
+ * This function take an `AugmentDataSignature`-like object,
+ * and return a string which is used solely for the purpose
+ * of indexing the lookup table.
+ *
+ * @function
+ * @param {AugmentDataSignature} signature Signature to turn into lookup key.
+ * @returns A string which can be used to index items in lookup table.
  */
 const makeLookupkey = (signature: AugmentDataSignature): string => {
   const { name, level, isSType } = signature;
-  return `${name}-${level}-${isSType}`;
+  return `${name}~${level}~${isSType}`;
 };
-// populate lookup table
-for (const d of DATA) {
-  const key = makeLookupkey(d);
-  DATA_LOOKUP[key] = d;
+
+/**
+ * This code populate the lookup table.
+ * It should help rebuild augments from signature
+ * faster.
+ */
+for (const data of DATA_ARR) {
+  const key = makeLookupkey(data);
+  DATA_LOOKUP[key] = data;
 }
 
 /**
- * Return an array of `null` which number of elements
- * equal to the number of wactive augment slots.
+ *
  * @function
- * @param n number of elements.
- * @returns
- */
-const getNullArray = (n: number): null[] => {
-  const arr: null[] = new Array(n).fill(null);
-
-  return arr;
-};
-
-/**
- * Using the given level of enhancment,
- * return the appropriate number of augment slots
- * that are active.
- * @param enhancement
+ * @param {number} enhancement
  * @returns
  */
 export const getAugmentSlots = (enhancement: number): number => {
@@ -57,6 +59,32 @@ export const getAugmentSlots = (enhancement: number): number => {
     return 3;
   }
   return 2;
+};
+
+/**
+ * An array is used to represent augments.
+ * Each index represent an augment slot
+ * which can either be an `AugmentData` or `null`,
+ *
+ * The length of the array is dictated
+ * by the maxmimum active slots. (5 slots at enhancement 50
+ * as of Kvaris update)
+ *
+ * This function simply returns an augment array
+ * at its "ground state" where every element
+ * is null.
+ * @function
+ * @returns Array of `null`,
+ */
+const getGroudState = (): null[] => {
+  const n: number = getAugmentSlots(ENHANCEMENT_MAX);
+
+  const arr: null[] = [];
+  for (let i = 0; i < n; i++) {
+    arr.push(null);
+  }
+
+  return arr;
 };
 
 /**
@@ -141,14 +169,14 @@ const loadLocal = (
   const json_string: null | string = localStorage.getItem(key);
 
   if (!Boolean(json_string)) {
-    return getNullArray();
+    return getGroudState();
   }
 
   const signature_arr: (null | AugmentDataSignature)[] = JSON.parse(
     json_string!,
   );
   if (!Array.isArray(signature_arr)) {
-    return getNullArray();
+    return getGroudState();
   }
 
   const max_slots: number = getAugmentSlots(ENHANCEMENT_MAX);
