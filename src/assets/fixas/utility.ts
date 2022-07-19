@@ -1,112 +1,136 @@
-import FIXA_DATA from "./data";
-import { isFixaDataSignature } from "./typeguard";
+import DATA_ARR from "./data";
 import { FixaData, FixaDataSignature } from "./types";
 
-const FIXA_LOCAL_STORAGE_KEY = "fixa";
+const LOCAL_STORAGE_KEY = "fixa";
 
-const FIXA_LOOKUP: { [key: string]: FixaData } = {};
+const LOOKUP_TABLE: { [key: string]: FixaData } = {};
 
 /**
- * Take a fixa signature and make a string
- * which can be used to a lookup key.
- * @param signature signature to turn into lookup key.
- * @returns
+ * Using `Map` as a hash table is more convoluted
+ * than I originally thought, so I decided
+ * to not use it at all.
+ *
+ * Instead of using `FixaDataSignature` as key
+ * and corresponding `FixaData` as value in a `Map`,
+ * I used a normal object with the key being a string.
+ *
+ * This function take an `FixaDataSignature`-like object,
+ * and return a string which is used solely for the purpose
+ * of indexing the lookup table.
+ *
+ * @function
+ * @param {FixaDataSignature} signature A signature-like object to turn into key.
+ * @returns {string} A string which can be used to index items in lookup table.
  */
-const makeLookupKey = (signature: FixaDataSignature): string => {
+const makeSignatureString = (
+  signature: FixaDataSignature,
+): string => {
   const { name, level } = signature;
-  return `${name}-${level}`;
+  return `${name}~${level}`;
 };
-// populate lookup table
-for (const data of FIXA_DATA) {
-  const lookup_key = makeLookupKey(data);
-  FIXA_LOOKUP[lookup_key] = data;
+
+/**
+ * This code populate the lookup table.
+ * It should help rebuild augments from signature
+ * faster.
+ */
+for (const data of DATA_ARR) {
+  const key = makeSignatureString(data);
+  LOOKUP_TABLE[key] = data;
 }
 
 /**
- * Reduce `FixaData` to its signature.
- * @param data
- * @returns a `FixaDataSignature`.
+ * This function is responsible for looking up `FixaData`
+ * in the lookup table.
+ *
+ * If it found the signature's counterpart, it will return it.
+ * If it cannot, return `null` instead.
+ *
+ * @function
+ * @param {string} signature_string Lookup key to use.
+ * @returns {null | FixaData} An `AugmentData`.
+ * `null` when can't find any match.
  */
-export const reduceFixaData = (data: FixaData): FixaDataSignature => {
-  const { name, level } = data;
-  return { name, level };
-};
-
-/**
- * Rebuild a `FixaData` from a signature.
- * @param signature
- * @returns
- */
-export const rebuildFixaData = (
-  signature: FixaDataSignature,
+const lookupFixaData = (
+  signature_string: string,
 ): FixaData | null => {
-  if (!isFixaDataSignature(signature)) {
-    return null;
-  }
-
-  const lookup_key = makeLookupKey(signature);
-  const data: undefined | FixaData = FIXA_LOOKUP[lookup_key];
-  if (Boolean(data)) {
-    return data;
-  }
-  return null;
+  const value: undefined | FixaData = LOOKUP_TABLE[signature_string];
+  const data: null | FixaData = Boolean(value) ? value : null;
+  return data;
 };
 
 /**
- * Prefix local storage key with given string.
- * @param key_prefix
- * @returns
+ * Prefix storage key with the given string.
+ *
+ * @function
+ * @param {string} key_prefix A string to prefix the storage key.
+ * @returns {string} A prefixed storage key.
  */
 const prefixStorageKey = (key_prefix: string): string => {
-  return `${key_prefix}-${FIXA_LOCAL_STORAGE_KEY}`;
+  return `${key_prefix}->${LOCAL_STORAGE_KEY}`;
 };
 
 /**
- * Save a `FixaData` to local storage.
- * @param key_prefix
- * @param data
+ * This function turns a `FixaData`
+ * into a signature string, then save it to local storage.
+ *
+ * @function
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @param {null | FixaData } data A `FixaData` to save.
  */
 export const saveFixaData = (
-  key_prefix: string,
+  prefix_string: string,
   data: null | FixaData,
 ): void => {
-  const signature: null | FixaDataSignature = Boolean(data)
-    ? reduceFixaData(data!)
+  const signature_string: null | string = Boolean(data)
+    ? makeSignatureString(data!)
     : null;
 
-  const key = prefixStorageKey(key_prefix);
-  const json_string = JSON.stringify(signature);
+  const key: string = prefixStorageKey(prefix_string);
+  const json_string: string = JSON.stringify(signature_string);
   localStorage.setItem(key, json_string);
 };
 
 /**
- * Load `FixaDataSignature` from local storage.
- * @param key_prefix
- * @returns
+ * Load a `FixaData` from local storage.
+ *
+ * @function
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @returns {null | string} A signature string or null.
  */
-const loadLocal = (key_prefix: string): null | FixaDataSignature => {
-  const key = prefixStorageKey(key_prefix);
+const loadLocal = (prefix_string: string): null | string => {
+  const key: string = prefixStorageKey(prefix_string);
   const json_string: null | string = localStorage.getItem(key);
   if (!Boolean(json_string)) {
     return null;
   }
 
-  const signature: FixaDataSignature = JSON.parse(json_string!);
-  if (isFixaDataSignature(signature)) {
-    return signature;
-  }
-  return null;
+  const signature_string: string = JSON.parse(json_string!);
+  return signature_string;
 };
 
 /**
- * Load and rebuild `FixaDataSignature`.
- * @param key_prefix
- * @returns
+ * Load `FixaData` from local storage.
+ *
+ * First, a signature strings is loaded
+ * via an auxillary function.
+ *
+ * Then the signature is matched with its counterpart.
+ *
+ * Finally, return an array of `AugmentData` if a match is found.
+ * If a match is not found, return `null` instead.
+ *
+ * @function
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @returns {null | FixaData} An augment array.
  */
-export const loadFixaData = (key_prefix: string): null | FixaData => {
-  const signature: null | FixaDataSignature = loadLocal(key_prefix);
-  if (Boolean(signature)) {
-    return rebuildFixaData(signature!);
+export const loadFixaData = (
+  prefix_string: string,
+): null | FixaData => {
+  const signature_string: null | string = loadLocal(prefix_string);
+
+  if (Boolean(signature_string)) {
+    return lookupFixaData(signature_string!);
   }
   return null;
 };

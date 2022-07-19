@@ -13,7 +13,7 @@ import {
 } from "../augments";
 import {
   FixaData,
-  rebuildFixaData,
+  lookupFixaData,
   FixaDataSignature,
   reduceFixaData,
 } from "../fixas";
@@ -146,7 +146,7 @@ export const loadWeaponItem = (): WeaponItem => {
     : null;
 
   const fixa: null | FixaData = Boolean(signature.fixa)
-    ? rebuildFixaData(signature.fixa!)
+    ? lookupFixaData(signature.fixa!)
     : null;
 
   if (Array.isArray(stored.augments)) {

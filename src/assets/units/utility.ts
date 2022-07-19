@@ -6,7 +6,7 @@ import {
   reduceAugmentData,
   getEmptyAugment,
 } from "../augments";
-import { FixaData, rebuildFixaData, reduceFixaData } from "../fixas";
+import { FixaData, lookupFixaData, reduceFixaData } from "../fixas";
 import { typeguardUnitDataSignature } from "./typeguard";
 import {
   Unit,
@@ -89,7 +89,7 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
   const stored: UnitSignature = JSON.parse(as_string);
   let res: Unit = getUnitTemplate();
   res.unit = unitDataFromSignature(stored.unit);
-  res.fixa = rebuildFixaData(stored.fixa);
+  res.fixa = lookupFixaData(stored.fixa);
 
   if (Array.isArray(stored.augments)) {
     const arr_length = Math.min(

@@ -2,9 +2,9 @@ import DATA_ARR from "./data";
 import { ENHANCEMENT_MAX } from "../constants";
 import { AugmentData, AugmentDataSignature } from "./types";
 
-const AUGMENT_STORAGE_KEY = "augments";
+const LOCAL_STORAGE_KEY = "augments";
 
-const DATA_LOOKUP: { [key: string]: AugmentData } = {};
+const LOOKUP_TABLE: { [key: string]: AugmentData } = {};
 
 /**
  * Using `Map` as a hash table is more convoluted
@@ -20,8 +20,8 @@ const DATA_LOOKUP: { [key: string]: AugmentData } = {};
  * of indexing the lookup table.
  *
  * @function
- * @param {AugmentDataSignature} signature Signature-like object to turn into key.
- * @returns A string which can be used to index items in lookup table.
+ * @param {AugmentDataSignature} signature A signature-like object to turn into key.
+ * @returns {string} A string which can be used to index items in lookup table.
  */
 const makeSignatureString = (
   signature: AugmentDataSignature,
@@ -37,7 +37,7 @@ const makeSignatureString = (
  */
 for (const data of DATA_ARR) {
   const key: string = makeSignatureString(data);
-  DATA_LOOKUP[key] = data;
+  LOOKUP_TABLE[key] = data;
 }
 
 /**
@@ -55,7 +55,7 @@ for (const data of DATA_ARR) {
  *
  * @function
  * @param {number} enhancement Enhancement level.
- * @returns A number of active augment slots.
+ * @returns {number} A number of active augment slots.
  */
 export const getAugmentSlots = (enhancement: number): number => {
   if (enhancement < 0) {
@@ -85,8 +85,9 @@ export const getAugmentSlots = (enhancement: number): number => {
  * This function simply returns an augment array
  * at its "ground state" where every element
  * is null.
+ *
  * @function
- * @returns An array of `null`.
+ * @returns {null[]} An array of `null`.
  */
 const getGroudState = (): null[] => {
   const n: number = getAugmentSlots(ENHANCEMENT_MAX);
@@ -103,19 +104,20 @@ const getGroudState = (): null[] => {
  * This function is responsible for looking up `AugmentData`
  * in the lookup table.
  *
- * If it found the `AugmentData`, it will return it.
- * If it cannot find the corresponding `AugmentData` using
- * the given lookup_key, it will return `null` instead.
+ *
+ * If it found the signature's counterpart, it will return it.
+ * If it cannot, return `null` instead.
  *
  * @function
- * @param signature_string Lookup key to use.
- * @returns Either `AugmentData` or `null`.
+ * @param {string} signature_string Lookup key to use.
+ * @returns {null | AugmentData} An `AugmentData`.
+ * `null` when can't find any match.
  */
 const lookupAugmentData = (
   signature_string: string,
 ): null | AugmentData => {
   const value: undefined | AugmentData =
-    DATA_LOOKUP[signature_string];
+    LOOKUP_TABLE[signature_string];
   const data: null | AugmentData = Boolean(value) ? value : null;
   return data;
 };
@@ -124,11 +126,11 @@ const lookupAugmentData = (
  * Prefix storage key with the given string.
  *
  * @function
- * @param key_prefix A string to prefix the storage key.
- * @returns A prefixed storage key.
+ * @param {string} key_prefix A string to prefix the storage key.
+ * @returns {string} A prefixed storage key.
  */
 const prefixStorageKey = (key_prefix: string): string => {
-  return `${key_prefix}->${AUGMENT_STORAGE_KEY}`;
+  return `${key_prefix}->${LOCAL_STORAGE_KEY}`;
 };
 
 /**
@@ -137,8 +139,8 @@ const prefixStorageKey = (key_prefix: string): string => {
  * then save it to local storage.
  *
  * @function
- * @param prefix_string A string to prefix storage key with.
- * @param data_arr An augment array to save.
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @param {(null | AugmentData)[]} data_arr An augment array to save.
  */
 export const saveAugmentData = (
   prefix_string: string,

@@ -12,7 +12,7 @@ import { AugmentData, AugmentGroups } from "./types";
  * @param {Stat[]} stats Augment stats.
  * @param {Conditional[]} conditionals Augment conditional stats.
  * @param {boolean} isSType Is augment an S variant.
- * @returns An `AugmentData`.
+ * @returns {AugmentData} A An `AugmentData`.
  */
 export const makeAugmentData = (
   name: string,
