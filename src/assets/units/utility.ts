@@ -2,7 +2,7 @@ import UNITS from ".";
 import { ENHANCEMENT_MAX, ENHANCEMENT_MIN } from "../../stores";
 import {
   AugmentDataSignature,
-  rebuildAugmentData,
+  lookupAugmentData,
   reduceAugmentData,
   getEmptyAugment,
 } from "../augments";
@@ -98,7 +98,7 @@ export const loadUnitFromLocal = (key: UnitKey): Unit => {
     );
     for (let i = 0; i < arr_length; i++) {
       const aug_sig = stored.augments[i];
-      res.augments[i] = rebuildAugmentData(aug_sig);
+      res.augments[i] = lookupAugmentData(aug_sig);
     }
   }
 

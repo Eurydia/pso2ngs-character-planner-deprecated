@@ -7,7 +7,7 @@ import {
 } from "../../stores";
 import {
   AugmentDataSignature,
-  rebuildAugmentData,
+  lookupAugmentData,
   reduceAugmentData,
   getEmptyAugment,
 } from "../augments";
@@ -156,7 +156,7 @@ export const loadWeaponItem = (): WeaponItem => {
     );
     for (let i = 0; i < arr_length; i++) {
       const aug_sig = stored.augments[i];
-      item.augments[i] = rebuildAugmentData(aug_sig);
+      item.augments[i] = lookupAugmentData(aug_sig);
     }
   }
 

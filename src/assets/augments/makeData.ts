@@ -2,15 +2,17 @@ import { Stat, Conditional, makeStatPayload } from "../stats";
 import { AugmentData, AugmentGroups } from "./types";
 
 /**
- * Make an augment using provided infomation
- * @param name
- * @param level level of this augment. Use 0 if it doesn't have a level.
- * @param group the group that this augment belongs to.
- * @param conflict augment groups that can't be used with this augment.
- * @param stats stats of the augment.
- * @param conditionals conditional stats, if any.
- * @param isSType is the augment an "s" variant. Defaults to `false`.
- * @returns an augment data
+ * Make an `AugmentData`.
+ *
+ * @function
+ * @param {string} name Augment name.
+ * @param {nubmer} level Augment level. 0 if it doesn't have a level.
+ * @param {string | AugmentGroups} group Augment group.
+ * @param {(string | AugmentGroups)[]} conflict Augment groups that conflict with this augment.
+ * @param {Stat[]} stats Augment stats.
+ * @param {Conditional[]} conditionals Augment conditional stats.
+ * @param {boolean} isSType Is augment an S variant.
+ * @returns An `AugmentData`.
  */
 export const makeAugmentData = (
   name: string,

@@ -1,6 +1,5 @@
 import DATA_ARR from "./data";
 import { ENHANCEMENT_MAX } from "../constants";
-import { isAugmentDataSignature } from "./typeguard";
 import { AugmentData, AugmentDataSignature } from "./types";
 
 const AUGMENT_STORAGE_KEY = "augments";
@@ -21,10 +20,12 @@ const DATA_LOOKUP: { [key: string]: AugmentData } = {};
  * of indexing the lookup table.
  *
  * @function
- * @param {AugmentDataSignature} signature Signature to turn into lookup key.
+ * @param {AugmentDataSignature} signature Signature-like object to turn into key.
  * @returns A string which can be used to index items in lookup table.
  */
-const makeLookupkey = (signature: AugmentDataSignature): string => {
+const makeSignatureString = (
+  signature: AugmentDataSignature,
+): string => {
   const { name, level, isSType } = signature;
   return `${name}~${level}~${isSType}`;
 };
@@ -35,20 +36,31 @@ const makeLookupkey = (signature: AugmentDataSignature): string => {
  * faster.
  */
 for (const data of DATA_ARR) {
-  const key = makeLookupkey(data);
+  const key: string = makeSignatureString(data);
   DATA_LOOKUP[key] = data;
 }
 
 /**
+ * This a simple function. It takes an enhancement level,
+ * then return a number of active augment slots.
+ *
+ * As of Kvaris update, this function returns
+ * - at enhancement `0` to `19`, `2` active slots,
+ * - at enhancement `20` to `39`, `3` active slots,
+ * - at enhancement `40` to `49`, `4` active slots, and
+ * - at enhancement `50`, `5` active slots.
+ *
+ * It also throws an error when the enhancement used
+ * is a negative value. Though, this error should never be thrown EVER.
  *
  * @function
- * @param {number} enhancement
- * @returns
+ * @param {number} enhancement Enhancement level.
+ * @returns A number of active augment slots.
  */
 export const getAugmentSlots = (enhancement: number): number => {
   if (enhancement < 0) {
     throw Error(
-      "Negative enhancement is used obtain active augment slots.",
+      "Negative enhancement is used to obtain active augment slots.",
     );
   }
   if (enhancement >= 50) {
@@ -74,7 +86,7 @@ export const getAugmentSlots = (enhancement: number): number => {
  * at its "ground state" where every element
  * is null.
  * @function
- * @returns Array of `null`,
+ * @returns An array of `null`.
  */
 const getGroudState = (): null[] => {
   const n: number = getAugmentSlots(ENHANCEMENT_MAX);
@@ -88,124 +100,135 @@ const getGroudState = (): null[] => {
 };
 
 /**
- * Reduce `AugmentData` to its signature form.
- * @param data
- * @returns An `AugmentDataSignature`.
+ * This function is responsible for looking up `AugmentData`
+ * in the lookup table.
+ *
+ * If it found the `AugmentData`, it will return it.
+ * If it cannot find the corresponding `AugmentData` using
+ * the given lookup_key, it will return `null` instead.
+ *
+ * @function
+ * @param signature_string Lookup key to use.
+ * @returns Either `AugmentData` or `null`.
  */
-export const reduceAugmentData = (
-  data: AugmentData,
-): AugmentDataSignature => {
-  const { name, level, isSType } = data;
-  return {
-    name,
-    level,
-    isSType,
-  };
-};
-
-/**
- * Rebuild an `AugmentData` from its signature.
- * @param signature
- * @returns An `AugmentData`. `null` when failed to rebuild.
- */
-export const rebuildAugmentData = (
-  signature: AugmentDataSignature,
-): AugmentData | null => {
-  if (!isAugmentDataSignature(signature)) {
-    return null;
-  }
-
-  const lookup_key: string = makeLookupkey(signature);
-  const data: undefined | AugmentData = DATA_LOOKUP[lookup_key];
-  if (Boolean(data)) {
-    return data;
-  }
-
-  return null;
+const lookupAugmentData = (
+  signature_string: string,
+): null | AugmentData => {
+  const value: undefined | AugmentData =
+    DATA_LOOKUP[signature_string];
+  const data: null | AugmentData = Boolean(value) ? value : null;
+  return data;
 };
 
 /**
  * Prefix storage key with the given string.
- * @param prefix
- * @returns
+ *
+ * @function
+ * @param key_prefix A string to prefix the storage key.
+ * @returns A prefixed storage key.
  */
-const prefixStorageKey = (prefix: string): string => {
-  return `${prefix}-${AUGMENT_STORAGE_KEY}`;
+const prefixStorageKey = (key_prefix: string): string => {
+  return `${key_prefix}->${AUGMENT_STORAGE_KEY}`;
 };
 
 /**
- * Save an array of `AugmentData` to local storage.
- * @param key_prefix string to prefix the key with.
- * @param data_arr
+ * This function turns an array of `AugmentData`
+ * into an array of signature strings,
+ * then save it to local storage.
+ *
+ * @function
+ * @param prefix_string A string to prefix storage key with.
+ * @param data_arr An augment array to save.
  */
 export const saveAugmentData = (
-  key_prefix: string,
+  prefix_string: string,
   data_arr: (null | AugmentData)[],
 ): void => {
-  const signature_arr: (null | AugmentDataSignature)[] = [];
+  const signature_string_arr: (null | string)[] = [];
 
   for (const data of data_arr) {
-    const signature: null | AugmentDataSignature = Boolean(data)
-      ? reduceAugmentData(data!)
+    const signature_string: null | string = Boolean(data)
+      ? makeSignatureString(data!)
       : null;
 
-    signature_arr.push(signature);
+    signature_string_arr.push(signature_string);
   }
 
-  const key = prefixStorageKey(key_prefix);
-  const json_string = JSON.stringify(signature_arr);
+  const key = prefixStorageKey(prefix_string);
+  const json_string = JSON.stringify(signature_string_arr);
   localStorage.setItem(key, json_string);
 };
 
 /**
- * Load an array of `AugmentDataSignature` from local storage.
- * @param key_prefix String to prefix storage key with.
- * @returns
+ * Load an array of signature strings from local storage.
+ *
+ * @function
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @returns {(null | string)[]} An array of signature strings.
  */
-const loadLocal = (
-  key_prefix: string,
-): (null | AugmentDataSignature)[] => {
-  const key = prefixStorageKey(key_prefix);
+const loadLocal = (prefix_string: string): (null | string)[] => {
+  const key = prefixStorageKey(prefix_string);
   const json_string: null | string = localStorage.getItem(key);
 
+  // Return ground state since no data is saved.
   if (!Boolean(json_string)) {
     return getGroudState();
   }
 
-  const signature_arr: (null | AugmentDataSignature)[] = JSON.parse(
+  const signature_string_arr: (null | string)[] = JSON.parse(
     json_string!,
   );
-  if (!Array.isArray(signature_arr)) {
+
+  // Return ground state since the signature array
+  // is not acutally an array.
+  if (!Array.isArray(signature_string_arr)) {
     return getGroudState();
   }
 
-  const max_slots: number = getAugmentSlots(ENHANCEMENT_MAX);
-  for (let i = 0; i < max_slots; i++) {
-    const signature: undefined | null | AugmentDataSignature =
-      signature_arr[i];
+  const augment_arr_length = getAugmentSlots(ENHANCEMENT_MAX);
 
-    const checked_signature: null | AugmentDataSignature =
-      Boolean(signature) && isAugmentDataSignature(signature)
-        ? signature
-        : null;
-    signature_arr[i] = checked_signature;
+  // Look through every element and replace `undefined` with `null`.
+  for (let i = 0; i < augment_arr_length; i++) {
+    const signature_string: null | undefined | string =
+      signature_string_arr[i];
+
+    if (typeof signature_string === "undefined") {
+      signature_string_arr[i] = null;
+    }
   }
 
-  return signature_arr;
+  return signature_string_arr;
 };
 
 /**
- * Load `AugmentData` from local storage using the provided key prefix.
- * @param key_prefix
- * @returns
+ * Load `AugmentData` from local storage.
+ *
+ * First, an array of signature strings is loaded
+ * via an auxillary function.
+ *
+ * Then the signatures are matched with their
+ * `AugmentData` counterpart.
+ *
+ * Finally, return an array of `AugmentData`.
+ *
+ * @function
+ * @param {string} prefix_string A string to prefix storage key with.
+ * @returns {AugmentData[]} An augment array.
  */
 export const loadAugmentData = (
-  key_prefix: string,
+  prefix_string: string,
 ): (null | AugmentData)[] => {
-  const signature_arr: (null | AugmentDataSignature)[] =
-    loadLocal(key_prefix);
+  const signature_string_arr: (null | string)[] =
+    loadLocal(prefix_string);
 
   const data_arr: (null | AugmentData)[] = [];
+
+  const augment_arr_length = getAugmentSlots(ENHANCEMENT_MAX);
+  for (let i = 0; i < augment_arr_length; i++) {
+    const signature_string: null | string = signature_string_arr[i];
+
+    data_arr[i] = lookupAugmentData(signature_string!);
+  }
 
   return data_arr;
 };
